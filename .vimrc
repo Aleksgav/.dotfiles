@@ -82,4 +82,3 @@ function! WinMove(key)
   endif
 endfunction
 
-
