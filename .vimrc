@@ -44,6 +44,10 @@ Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 " Initialize plugin system
 call plug#end()
 
@@ -53,9 +57,17 @@ let g:mapleader=','
 colorscheme gruvbox
 set background=dark
 
+" Airline settings
+let g:airline_theme='base16'
+" let g:airline#extensions#tabline#left_sep = '>>> '
+" let g:airline#extensions#tabline#left_alt_sep = '<<<'
+let g:airline#extensions#tabline#enabled = 1
+
 set number
 set expandtab
 set tabstop=2
+
+set ruler
 
 set hlsearch
 set incsearch
