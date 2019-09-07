@@ -1,0 +1,8 @@
+# This is Git's per-user configuration file.
+[user]
+  email = alex.phyp@gmail.com
+  name = aleksgav
+[core]
+  excludesfile = ~/.gitignore-system
+  editor = vim
+
