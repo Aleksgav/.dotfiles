@@ -26,7 +26,7 @@ zplug "robbyrussell/oh-my-zsh", use:"lib/*.zsh", defer:0
 
 zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-history-substring-search", defer: 2
+zplug "zsh-users/zsh-history-substring-search", defer:2
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug 'plugins/bundler', from:oh-my-zsh
