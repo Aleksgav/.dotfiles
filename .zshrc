@@ -9,7 +9,8 @@ export EDITOR='vim'
 
 
 # liquid prompt
-LP_PS1_POSTFIX='> '
+# LP_PS1_POSTFIX='> '
+LP_PS1_POSTFIX=$'\uE0B1 '
 
 # History time stamp
 HIST_STAMPS="dd.mm.yyyy"
