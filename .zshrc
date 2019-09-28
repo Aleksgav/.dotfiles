@@ -9,8 +9,8 @@ export EDITOR='vim'
 
 
 # liquid prompt
-# LP_PS1_POSTFIX='> '
 LP_PS1_POSTFIX=$'\uE0B1 '
+LP_ENABLE_TIME=1
 
 # History time stamp
 HIST_STAMPS="dd.mm.yyyy"
@@ -77,7 +77,7 @@ fi
 zplug load --verbose
 
 
-source /Users/alexg/.rvm/scripts/rvm
+source ~/.rvm/scripts/rvm
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
