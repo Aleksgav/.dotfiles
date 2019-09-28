@@ -11,6 +11,7 @@ export EDITOR='vim'
 # liquid prompt
 LP_PS1_POSTFIX=$'\uE0B1 '
 LP_ENABLE_TIME=1
+LP_ENABLE_JOBS=1
 
 # History time stamp
 HIST_STAMPS="dd.mm.yyyy"
