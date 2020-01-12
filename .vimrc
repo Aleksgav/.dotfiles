@@ -16,7 +16,7 @@ Plug 'morhetz/gruvbox'
 
 " Autocompletion
 "Plug 'ycm-core/YouCompleteMe'
-
+Plug 'Shougo/vinarise.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive' 
 Plug 'airblade/vim-gitgutter'
