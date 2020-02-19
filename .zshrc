@@ -22,14 +22,19 @@ alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
 # Zplug
-source ~/.zplug/init.zsh
+export ZPLUG_HOME=/usr/local/opt/zplug
+source $ZPLUG_HOME/init.zsh
+
+#source ~/.zplug/init.zsh
 
 zplug "robbyrussell/oh-my-zsh", use:"lib/*.zsh", defer:0
 
 zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-history-substring-search", defer:2
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+# this plugin makes errors
+#zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug 'plugins/bundler', from:oh-my-zsh
 zplug 'plugins/cabal', from:oh-my-zsh
