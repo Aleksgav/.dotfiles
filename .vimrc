@@ -58,6 +58,9 @@ let g:mapleader=','
 colorscheme gruvbox
 set background=dark
 
+" vinarise settings
+let g:vinarise_enable_auto_detect = 1
+
 " Airline settings
 let g:airline_theme='base16'
 " let g:airline#extensions#tabline#left_sep = '>>> '

@@ -37,7 +37,7 @@ zplug "zsh-users/zsh-history-substring-search", defer:2
 #zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
 zplug 'plugins/bundler', from:oh-my-zsh
-zplug 'plugins/cabal', from:oh-my-zsh
+# zplug 'plugins/cabal', from:oh-my-zsh
 zplug 'plugins/capistrano', from:oh-my-zsh
 zplug 'plugins/common-aliases', from:oh-my-zsh
 zplug 'plugins/docker', from:oh-my-zsh
@@ -50,8 +50,8 @@ zplug 'plugins/history', from:oh-my-zsh
 zplug 'plugins/node', from:oh-my-zsh
 zplug 'plugins/npm', from:oh-my-zsh
 zplug 'plugins/osx', from:oh-my-zsh
-zplug 'plugins/pip', from:oh-my-zsh
-zplug 'plugins/python', from:oh-my-zsh
+# zplug 'plugins/pip', from:oh-my-zsh
+# zplug 'plugins/python', from:oh-my-zsh
 zplug 'plugins/rails', from:oh-my-zsh
 zplug "plugins/rake", from:oh-my-zsh
 zplug 'plugins/redis-cli', from:oh-my-zsh
@@ -61,7 +61,7 @@ zplug 'plugins/ssh-agent', from:oh-my-zsh
 zplug "plugins/tmux", from:oh-my-zsh, defer:2
 zplug 'plugins/thor', from:oh-my-zsh
 zplug 'plugins/vagrant', from:oh-my-zsh
-zplug 'plugins/vi-mode', from:oh-my-zsh
+# zplug 'plugins/vi-mode', from:oh-my-zsh
 zplug 'plugins/yarn', from:oh-my-zsh
 zplug 'plugins/zsh-autosuggestions', from:oh-my-zsh
 zplug "plugins/zsh_reload", from:oh-my-zsh
