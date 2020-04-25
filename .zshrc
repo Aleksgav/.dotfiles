@@ -85,5 +85,7 @@ zplug load --verbose
 
 source ~/.rvm/scripts/rvm
 
+export GOPATH=$HOME/go
+PATH=$PATH:$GOPATH/bin
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
