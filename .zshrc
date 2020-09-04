@@ -65,6 +65,7 @@ zplug 'plugins/vagrant', from:oh-my-zsh
 zplug 'plugins/yarn', from:oh-my-zsh
 zplug 'plugins/zsh-autosuggestions', from:oh-my-zsh
 zplug "plugins/zsh_reload", from:oh-my-zsh
+
 zplug 'nojhan/liquidprompt'
 
 zplug "k4rthik/git-cal", as:command
@@ -72,18 +73,19 @@ zplug "djui/alias-tips"
 zplug "so-fancy/diff-so-fancy", as:command
 
 
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
+#if ! zplug check --verbose; then
+#    printf "Install? [y/N]: "
+#    if read -q; then
+#        echo; zplug install
+#    fi
+#fi
 
 
 zplug load --verbose
 
 
 source ~/.rvm/scripts/rvm
+source ~/.gvm/scripts/gvm
 
 export GOPATH=$HOME/go
 PATH=$PATH:$GOPATH/bin
