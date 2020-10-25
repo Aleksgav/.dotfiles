@@ -6,7 +6,7 @@
  '(flycheck-check-syntax-automatically
    '(save idle-change idle-buffer-switch new-line mode-enabled))
  '(package-selected-packages
-   '(flycheck rustic org-fancy-priorities org-bullets evil-terminal-cursor-changer evil-multiedit)))
+   '(treemacs-icons-dired treemacs-projectile treemacs-all-the-icons treemacs-evil drag-stuff flycheck rustic org-fancy-priorities org-bullets evil-terminal-cursor-changer evil-multiedit)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
