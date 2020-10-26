@@ -59,6 +59,9 @@
 ;;(after! treemacs
 ;;  (remove-hook 'treemacs-mode-hook #'+treemacs|improve-hl-line-contrast))
 
+(map! :desc "Create sparce tree" :ne "SPC | s" #'org-sparse-tree)
+(map! :desc "Create sparce tree for tags" :ne "SPC | t" #'org-tags-sparse-tree)
+
 (require 'highlight-indent-guides)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 (add-hook 'text-mode-hook 'highlight-indent-guides-mode)
@@ -120,14 +123,26 @@
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
-  (setq org-bullets-bullet-list '("⎈" "✽" "✲" "✱" "✻" "✼")))
+  (setq org-bullets-bullet-list '("⎈" "✽" "✲" "✱" "✻" "✼")
+        org-priority-faces '((65 :foreground "#e45649")
+                             (66 :foreground "#da8548")
+                             (67 :foreground "#0098dd"))
+        org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "STRT(s)" "INPG(i)"
+                                      "WAIT(w)" "HOLD(h)" "|" "DONE(d)" "KILL(k)"
+                                      "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)"))
+        org-todo-keyword-faces
+        '(("[-]" . +org-todo-active)
+         ("STRT" . +org-todo-active)
+         ("[?]" . +org-todo-onhold)
+         ("WAIT" . +org-todo-onhold)
+         ("HOLD" . +org-todo-onhold)
+         ("PROJ" . +org-todo-project))))
 
 (use-package org-fancy-priorities
   :ensure t
-  :hook
-  (org-mode . org-fancy-priorities-mode)
+  :hook (org-mode . org-fancy-priorities-mode)
   :config
-  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+  (setq org-fancy-priorities-list '(" ⚡" "⬆" "⬇" "☕")))
 
 (use-package treemacs
   :ensure t
