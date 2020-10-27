@@ -1,6 +1,8 @@
 export TERM="xterm-256color"
 
-export PATH="/usr/local/sbin:$PATH"
+export GOPATH=$(go env GOPATH)
+
+export PATH="/usr/local/sbin:$GOPATH/bin:$PATH"
 
 # Explicitly set language
 export LC_CTYPE=en_US.UTF-8
@@ -65,7 +67,7 @@ zplug 'plugins/vagrant', from:oh-my-zsh
 zplug 'plugins/yarn', from:oh-my-zsh
 zplug 'plugins/zsh-autosuggestions', from:oh-my-zsh
 zplug "plugins/zsh_reload", from:oh-my-zsh
-
+zplug 'plugins/kubectl', from:oh-my-zsh
 zplug 'nojhan/liquidprompt'
 
 zplug "k4rthik/git-cal", as:command
