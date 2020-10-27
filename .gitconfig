@@ -1,12 +1,10 @@
 # This is Git's per-user configuration file.
 [user]
   email = alex.phyp@gmail.com
-  name = aleksgav
 [core]
   excludesfile = ~/.gitignore-system
   editor = vim
 	pager = diff-so-fancy | less --tabs=4 -RFX
-
 [color]
 	ui = true
 [color "diff-highlight"]
@@ -24,3 +22,6 @@
 [diff-so-fancy]
 	changeHunkIndicators = false
 	stripLeadingSymbols = false
+[includeIf "gitdir:~/work_projects/"]
+  path = .gitconfig_override
+

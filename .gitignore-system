@@ -1,5 +1,7 @@
 .idea
 .todo
+.todo.md
+.task_log
 
 .DS_Store
 
