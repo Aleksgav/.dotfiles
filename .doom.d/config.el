@@ -210,3 +210,11 @@
   :ensure t
   :config (treemacs-icons-dired-mode))
 
+(setq deft-directory "~/org/"
+      deft-extensions '("org" "txt")
+      deft-recursive t)
+
+(setq org-journal-date-prefix "#+TITLE: "
+      org-journal-date-prefix "* "
+      org-journal-date-format "%a, %Y-%m-%d"
+      org-journal-file-format "%Y-%m-%d.org")
