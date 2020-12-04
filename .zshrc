@@ -68,7 +68,7 @@ zplug 'plugins/yarn', from:oh-my-zsh
 zplug 'plugins/zsh-autosuggestions', from:oh-my-zsh
 zplug "plugins/zsh_reload", from:oh-my-zsh
 zplug 'plugins/kubectl', from:oh-my-zsh
-zplug 'nojhan/liquidprompt'
+#zplug 'nojhan/liquidprompt'
 
 zplug "k4rthik/git-cal", as:command
 zplug "djui/alias-tips"
@@ -91,5 +91,8 @@ source ~/.gvm/scripts/gvm
 
 export GOPATH=$HOME/go
 PATH=$PATH:$GOPATH/bin
+
+export STARSHIP_CONFIG=~/.starship.toml
+eval "$(starship init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

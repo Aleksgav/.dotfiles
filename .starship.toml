@@ -1,0 +1,11 @@
+format = "$all"
+
+[kubernetes]
+disabled = false
+
+[status]
+disabled = false
+
+[time]
+disabled = false
+
