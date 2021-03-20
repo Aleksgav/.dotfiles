@@ -10,6 +10,7 @@ tap "kepkin/kongctl"
 tap "kyoh86/tap"
 tap "openresty/brew"
 tap "sambadevi/powerlevel9k"
+
 brew "autoconf"
 brew "automake"
 brew "pkg-config"
@@ -62,6 +63,7 @@ brew "derailed/k9s/k9s"
 brew "kyoh86/tap/richgo"
 brew "openresty/brew/openresty"
 brew "sambadevi/powerlevel9k/powerlevel9k"
+
 cask "chromedriver"
 cask "clion"
 cask "discord"
@@ -96,6 +98,8 @@ cask "windscribe"
 cask "xquartz"
 cask "zeplin"
 cask "zoom"
+
+mas "Edison Mail - Email", id: 1489591003
 mas "Canary Mail", id: 1236045954
 mas "KeyKey", id: 1035137927
 mas "Magnet", id: 441258766
