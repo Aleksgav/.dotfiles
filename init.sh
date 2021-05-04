@@ -11,3 +11,8 @@ ln -s $DOTFILES/.zshrc       $HOME/.zshrc
 ln -s $DOTFILES/.doom.d      $HOME/.doom.d
 ln -s $DOTFILES/.starship.toml $HOME/.starship.toml
 
+# set up macos settings
+defaults write com.apple.dock springboard-columns -int 10
+defaults write com.apple.dock springboard-rows -int 7
+killall Dock
+
