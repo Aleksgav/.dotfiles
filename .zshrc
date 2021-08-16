@@ -18,13 +18,14 @@ LP_ENABLE_JOBS=1
 # History time stamp
 HIST_STAMPS="dd.mm.yyyy"
 
-
 # Aliases
 alias zshconfig="vim ~/.zshrc"
-#alias ohmyzsh="vim ~/.oh-my-zsh"
 
 # zinit
 source /usr/local/opt/zinit/zinit.zsh
+
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
 zinit load robbyrussell/oh-my-zsh
 zinit ice as"completion"
