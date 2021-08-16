@@ -58,7 +58,7 @@ zinit snippet OMZ::plugins/rake
 zinit snippet OMZ::plugins/ruby
 zinit snippet OMZ::plugins/rvm
 zinit snippet OMZ::plugins/ssh-agent
-zinit snippet OMZ::plugins/tmux
+#zinit snippet OMZ::plugins/tmux
 zinit snippet OMZ::plugins/vagrant
 zinit snippet OMZ::plugins/vi-mode
 zinit snippet OMZ::plugins/yarn
