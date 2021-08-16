@@ -20,6 +20,7 @@ brew "coreutils"
 brew "docker"
 brew "diff-so-fancy
 brew "figlet"
+brew "fzf"
 brew "git"
 brew "git-cal"
 brew "git-flow"
