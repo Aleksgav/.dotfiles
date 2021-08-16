@@ -21,70 +21,49 @@ HIST_STAMPS="dd.mm.yyyy"
 
 # Aliases
 alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
+#alias ohmyzsh="vim ~/.oh-my-zsh"
 
-# Zplug
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
+# zinit
+source /usr/local/opt/zinit/zinit.zsh
 
-#source ~/.zplug/init.zsh
+zinit load robbyrussell/oh-my-zsh
+zinit ice as"completion"
+zinit load zsh-users/zsh-autosuggestions
+zinit ice as"completion"
+zinit load zsh-users/zsh-completions
+zinit ice as"completion"
+zinit load djui/alias-tips
+zinit ice as"completion"
+zinit load greymd/docker-zsh-completion
+zinit load zsh-users/zsh-history-substring-search
+zinit load zsh-users/zsh-syntax-highlighting
+zinit load mkwmms/plugin-osx
 
-zplug "robbyrussell/oh-my-zsh", use:"lib/*.zsh", defer:0
-
-zplug "zsh-users/zsh-autosuggestions", defer:2
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-history-substring-search", defer:2
-
-# this plugin makes errors
-#zplug "zsh-users/zsh-syntax-highlighting", defer:2
-
-zplug 'plugins/bundler', from:oh-my-zsh
-# zplug 'plugins/cabal', from:oh-my-zsh
-zplug 'plugins/capistrano', from:oh-my-zsh
-zplug 'plugins/common-aliases', from:oh-my-zsh
-zplug 'plugins/docker', from:oh-my-zsh
-zplug 'plugins/encode64', from:oh-my-zsh
-zplug 'plugins/gem', from:oh-my-zsh
-zplug 'plugins/gpg-agent', from:oh-my-zsh
-zplug 'plugins/git', from:oh-my-zsh
-zplug "plugins/golang", from:oh-my-zsh, defer:2
-zplug 'plugins/history', from:oh-my-zsh
-zplug 'plugins/node', from:oh-my-zsh
-zplug 'plugins/npm', from:oh-my-zsh
-zplug 'plugins/osx', from:oh-my-zsh
-# zplug 'plugins/pip', from:oh-my-zsh
-# zplug 'plugins/python', from:oh-my-zsh
-zplug 'plugins/rails', from:oh-my-zsh
-zplug "plugins/rake", from:oh-my-zsh
-zplug 'plugins/redis-cli', from:oh-my-zsh
-zplug 'plugins/ruby', from:oh-my-zsh
-zplug 'plugins/rvm', from:oh-my-zsh
-zplug 'plugins/ssh-agent', from:oh-my-zsh
-zplug "plugins/tmux", from:oh-my-zsh, defer:2
-zplug 'plugins/thor', from:oh-my-zsh
-zplug 'plugins/vagrant', from:oh-my-zsh
-# zplug 'plugins/vi-mode', from:oh-my-zsh
-zplug 'plugins/yarn', from:oh-my-zsh
-zplug 'plugins/zsh-autosuggestions', from:oh-my-zsh
-zplug "plugins/zsh_reload", from:oh-my-zsh
-zplug 'plugins/kubectl', from:oh-my-zsh
-#zplug 'nojhan/liquidprompt'
-
-zplug "k4rthik/git-cal", as:command
-zplug "djui/alias-tips"
-zplug "so-fancy/diff-so-fancy", as:command
-
-
-#if ! zplug check --verbose; then
-#    printf "Install? [y/N]: "
-#    if read -q; then
-#        echo; zplug install
-#    fi
-#fi
-
-
-zplug load --verbose
-
+zinit snippet OMZ::plugins/bundler
+zinit snippet OMZ::plugins/cabal
+zinit snippet OMZ::plugins/capistrano 
+zinit snippet OMZ::plugins/common-aliases
+zinit snippet OMZ::plugins/encode64
+zinit snippet OMZ::plugins/gem
+zinit snippet OMZ::plugins/gpg-agent
+zinit snippet OMZ::plugins/git
+zinit snippet OMZ::plugins/golang
+zinit snippet OMZ::plugins/history
+zinit snippet OMZ::plugins/node
+zinit snippet OMZ::plugins/npm
+zinit snippet OMZ::plugins/pip
+zinit snippet OMZ::plugins/python
+zinit snippet OMZ::plugins/rails
+zinit snippet OMZ::plugins/rake
+zinit snippet OMZ::plugins/ruby
+zinit snippet OMZ::plugins/rvm
+zinit snippet OMZ::plugins/ssh-agent
+zinit snippet OMZ::plugins/tmux
+zinit snippet OMZ::plugins/vagrant
+zinit snippet OMZ::plugins/vi-mode
+zinit snippet OMZ::plugins/yarn
+zinit snippet OMZ::plugins/zsh_reload
+zinit snippet OMZ::plugins/kubectl
 
 source ~/.rvm/scripts/rvm
 source ~/.gvm/scripts/gvm
