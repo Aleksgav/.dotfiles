@@ -2,12 +2,11 @@
 [user]
   email = alex.phyp@gmail.com
   name = Gavrishchuk Aleksandr
-[core]
-  autocrlf = input
 
 [core]
   excludesfile = ~/.gitignore-system
   editor = vim
+  autocrlf = input
 
 [includeIf "gitdir:~/work_projects/"]
   path = ~/work_projects/.gitconfig_override
