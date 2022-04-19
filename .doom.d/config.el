@@ -2,11 +2,13 @@
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
-
+;; Set maximized window on initial frame and every subsequent frame
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'default-frame-alist '(fullscreen . fullheight))
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "Aleks Gav"
+(setq user-full-name "Aleks Gavr"
       user-mail-address "alex.phyp@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
@@ -21,6 +23,7 @@
 ;; font string. You generally only need these two: (setq doom-font (font-spec
 ;; :family "monospace" :size 12 :weight 'semi-light) doom-variable-pitch-font
 ;; (font-spec :family "sans" :size 13))
+;; (setq doom-font (font-spec :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -35,7 +38,7 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
-(setq projectile-project-search-path '("~/Projects/"))
+(setq projectile-project-search-path '("~/projects/"))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
