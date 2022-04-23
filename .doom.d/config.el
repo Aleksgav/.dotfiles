@@ -31,6 +31,9 @@
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
+(custom-set-faces!
+  '(font-lock-comment-face :slant italic)
+  '(font-lock-keyword-face :slant italic))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -69,7 +72,8 @@
         x-underline-at-descent-line t
         centaur-tabs-height 34)
   (centaur-tabs-headline-match)
-  (centaur-tabs-mode t))
+  (centaur-tabs-mode t)
+  (centaur-tabs-group-by-projectile-project))
 
 (use-package treemacs
   :ensure t
@@ -179,7 +183,7 @@
   :custom
   (flycheck-display-errors-delay .3))
 
-(setq deft-directory "~/org/"
+(setq deft-directory "~/notes/"
       deft-extensions '("org" "txt")
       deft-recursive t)
 
@@ -241,3 +245,5 @@
       org-journal-date-prefix "* "
       org-journal-date-format "%a, %Y-%m-%d"
       org-journal-file-format "%Y-%m-%d.org")
+
+(setq org-roam-directory "~/roam")
