@@ -51,7 +51,7 @@ zinit snippet OMZ::plugins/rvm
 zinit snippet OMZ::plugins/ssh-agent
 #zinit snippet OMZ::plugins/tmux
 zinit snippet OMZ::plugins/vagrant
-zinit snippet OMZ::plugins/vi-mode
+#zinit snippet OMZ::plugins/vi-mode
 zinit snippet OMZ::plugins/yarn
 zinit snippet OMZ::plugins/zsh_reload
 zinit snippet OMZ::plugins/kubectl
@@ -66,7 +66,9 @@ source ~/.rvm/scripts/rvm
 source ~/.gvm/scripts/gvm
 
 export GOPATH=$HOME/go
-PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin
+
+export PATH="$HOME/.emacs.d/bin:$PATH"
 
 export STARSHIP_CONFIG=~/.starship.toml
 eval "$(starship init zsh)"
