@@ -49,7 +49,9 @@
 
 ;; LOOK AND FEEL PACKAGES
 ;;
+(setq doom-themes-treemacs-theme "doom-colors")
 (use-package all-the-icons)
+(use-package treemacs-all-the-icons)
 
 (require 'highlight-indent-guides)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
