@@ -1,5 +1,10 @@
 format = "$all"
 
+[env_var.WORK_TYPE]
+default = " <=> "
+format = "[ $env_value ]($style) "
+style = "bold fg:white bg:green"
+
 [kubernetes]
 disabled = false
 
