@@ -77,6 +77,26 @@
   (centaur-tabs-mode t)
   (centaur-tabs-group-by-projectile-project))
 
+(defun centaur-tabs-hide-tab (x)
+  "Do no to show buffer X in tabs."
+  (let ((name (format "%s" x)))
+    (or
+     ;; Current window is not dedicated window.
+     (window-dedicated-p (selected-window))
+
+     ;; Buffer name not match below blacklist.
+     (string-prefix-p "*typeprof" name)
+     (string-prefix-p "*Compile-Log*" name)
+     (string-prefix-p "*lsp" name)
+     (string-prefix-p "*vterm" name)
+     (string-prefix-p "*scratch" name)
+     (string-prefix-p "*Messages" name)
+
+     ;; Is not magit buffer.
+     (and (string-prefix-p "magit" name)
+	  (not (file-name-extension name)))
+     )))
+
 (use-package treemacs
   :ensure t
   :defer t
