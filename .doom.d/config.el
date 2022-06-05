@@ -28,6 +28,7 @@
 ;; :family "monospace" :size 12 :weight 'semi-light) doom-variable-pitch-font
 ;; (font-spec :family "sans" :size 13))
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16))
+
 (after! doom-themes
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t))
@@ -211,6 +212,37 @@
 
 ;; ORG MODE
 ;;
+
+(setq org-ellipsis " [>>>]")
+(custom-set-faces
+  '(org-ellipsis      ((t (:foreground "#58B5A5")))) ;; background ellipsis color
+)
+
+;; HIDE EMPHASIS MARKERS
+(setq org-hide-emphasis-markers t)
+
+
+;; CUSTOM FONT FACE
+(after! org
+  (custom-set-faces!
+    '(org-document-title :height 1.3)
+    '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
+    '(org-level-2 :inherit outline-2 :weight bold :height 1.15)
+    '(org-level-3 :inherit outline-3 :weight bold :height 1.12)
+    '(org-level-4 :inherit outline-4 :weight bold :height 1.09)
+    '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
+    '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
+    '(org-level-7 :inherit outline-7 :weight semi-bold)
+    '(org-level-8 :inherit outline-8 :weight semi-bold)
+    ;; Ensure that anything that should be fixed-pitch in org buffers appears that way
+    '(org-block nil :foreground nil :inherit 'fixed-pitch)
+    '(org-code nil   :inherit '(shadow fixed-pitch))
+    '(org-table nil   :inherit '(shadow fixed-pitch))
+    '(org-verbatim nil :inherit '(shadow fixed-pitch))
+    '(org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+    '(org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+    '(org-checkbox nil :inherit 'fixed-pitch)))
+
 (use-package org-bullets
   :after org-agenda)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode t)))
