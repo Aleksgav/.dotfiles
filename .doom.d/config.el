@@ -221,7 +221,6 @@
 ;; HIDE EMPHASIS MARKERS
 (setq org-hide-emphasis-markers t)
 
-
 ;; CUSTOM FONT FACE
 (after! org
   (custom-set-faces!
