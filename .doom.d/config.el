@@ -213,6 +213,11 @@
 ;; ORG MODE
 ;;
 
+;; DEFINE CUSTOM FACES
+(defface at-face
+ '((t (:foreground "green")))
+    "Face for @")
+
 (setq org-ellipsis " [>>>]")
 (custom-set-faces
   '(org-ellipsis      ((t (:foreground "#58B5A5")))) ;; background ellipsis color
@@ -220,6 +225,21 @@
 
 ;; HIDE EMPHASIS MARKERS
 (setq org-hide-emphasis-markers t)
+
+;; CUSTOM EMPHASIS FACES
+(setq org-emphasis-alist
+      '(("*" (bold :foreground "deep sky blue"))
+        ("/" (italic :foreground "dark salmon"))
+        ("_" (underline :foreground "cyan"))
+        ("=" org-verbatim verbatim)
+        ("~" org-code verbatim)
+        ("+" (:strike-through t :forground "dark orange"))
+        ;; next lines are not working and I didn't know why
+        ;; https://emacs-orgmode.gnu.narkive.com/scSa2kfp/o-add-entries-to-emphasis-alist
+        ;; https://emacs.stackexchange.com/questions/13820/inline-verbatim-and-code-with-quotes-in-org-mode
+        ("%" (underline :foreground "dark salmon"))
+        (":" (underline :foreground "dark salmon"))
+        ("@" (underline :foreground "cyan"))))
 
 ;; CUSTOM FONT FACE
 (after! org
