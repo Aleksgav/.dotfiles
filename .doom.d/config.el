@@ -167,7 +167,7 @@
 
 ;; LANGUAGE SUPPORT
 ;;
-(setq lsp-rust-server 'rust-alalyzer)
+(setq lsp-rust-server 'rust-analyzer)
 (setq rustic-lsp-server 'rust-analyzer)
 
 ;; PLUGINS
