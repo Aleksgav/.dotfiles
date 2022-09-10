@@ -233,7 +233,7 @@
         ("_" (underline :foreground "cyan"))
         ("=" org-verbatim verbatim)
         ("~" org-code verbatim)
-        ("+" (:strike-through t :forground "dark orange"))
+        ("+" (:strike-through t :foreground "dark orange"))
         ;; next lines are not working and I didn't know why
         ;; https://emacs-orgmode.gnu.narkive.com/scSa2kfp/o-add-entries-to-emphasis-alist
         ;; https://emacs.stackexchange.com/questions/13820/inline-verbatim-and-code-with-quotes-in-org-mode
