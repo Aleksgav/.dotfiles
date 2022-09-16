@@ -21,6 +21,7 @@ brew "git-delta"
 brew "docker"
 brew "diff-so-fancy
 brew "figlet"
+brew "font-fira-sans"
 brew "fzf"
 brew "git"
 brew "git-cal"
