@@ -19,3 +19,6 @@ defaults write com.apple.dock springboard-columns -int 10
 defaults write com.apple.dock springboard-rows -int 7
 killall Dock
 
+# setup emacs app icon
+ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications
+
