@@ -8,28 +8,34 @@ clone_dir = "/Users/aleksgav/.sheldon/repos"
 download_dir = "/Users/aleksgav/.sheldon/downloads"
 
 [[plugins]]
+name = "zsh-defer"
+source_dir = "/Users/aleksgav/.sheldon/repos/github.com/romkatv/zsh-defer"
+files = ["/Users/aleksgav/.sheldon/repos/github.com/romkatv/zsh-defer/zsh-defer.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
 name = "zsh-autosuggestions"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/zsh-users/zsh-autosuggestions"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "docker-zsh-completion"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/greymd/docker-zsh-completion"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/greymd/docker-zsh-completion/docker-zsh-completion.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "rust-zsh-completions"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/ryutok/rust-zsh-completions"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/ryutok/rust-zsh-completions/rust.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "zsh-completions"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/zsh-users/zsh-completions"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/zsh-users/zsh-completions/zsh-completions.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "zsh-history-substring-search"
@@ -41,25 +47,25 @@ apply = ["source"]
 name = "zsh-syntax-highlighting"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/zsh-users/zsh-syntax-highlighting"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "alias-tips"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/djui/alias-tips"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/djui/alias-tips/alias-tips.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "osx-aliases"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/mkwmms/plugin-osx"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/mkwmms/plugin-osx/osx-aliases.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "base16"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/chriskempson/base16-shell"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/chriskempson/base16-shell/base16-shell.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "oh-my-zsh"
@@ -72,7 +78,7 @@ name = "ohmyzsh-plugins"
 source_dir = "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh"
 plugin_dir = "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins"
 files = ["/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/bundler/bundler.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/cabal/cabal.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/capistrano/capistrano.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/common-aliases/common-aliases.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/encode64/encode64.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/gem/gem.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/git/git.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/golang/golang.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/gpg-agent/gpg-agent.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/helm/helm.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/history/history.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/node/node.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/npm/npm.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/pip/pip.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/python/python.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/rake/rake.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/ruby/ruby.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/rust/rust.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/rvm/rvm.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/ssh-agent/ssh-agent.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/tmux/tmux.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/vagrant/vagrant.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/vi-mode/vi-mode.plugin.zsh", "/Users/aleksgav/.sheldon/repos/github.com/ohmyzsh/ohmyzsh/plugins/yarn/yarn.plugin.zsh"]
-apply = ["source"]
+apply = ["defer"]
 
 [[plugins]]
 name = "fzf"
@@ -97,4 +103,8 @@ each = false
 
 [templates.source]
 value = "source \"{{ file }}\""
+each = true
+
+[templates.defer]
+value = "zsh-defer source \"{{ file }}\""
 each = true
