@@ -55,6 +55,10 @@ apply = ["defer"]
 github = "chriskempson/base16-shell"
 apply = ["defer"]
 
+[plugins.autoenv]
+github = "zpm-zsh/autoenv"
+apply = ["defer"]
+
 # oh-my-zsh plugins
 [plugins.oh-my-zsh]
 github = "ohmyzsh/ohmyzsh"
