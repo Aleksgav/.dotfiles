@@ -1,0 +1,88 @@
+# `sheldon` configuration file
+# ----------------------------
+#
+# You can modify this file directly or you can use one of the following
+# `sheldon` commands which are provided to assist in editing the config file:
+#
+# - `sheldon add` to add a new plugin to the config file
+# - `sheldon edit` to open up the config file in the default editor
+# - `sheldon remove` to remove a plugin from the config file
+#
+# See the documentation for more https://github.com/rossmacarthur/sheldon#readme
+
+shell = "zsh"
+
+[plugins]
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+[plugins.docker-zsh-completion]
+github = "greymd/docker-zsh-completion"
+
+[plugins.rust-zsh-completions]
+github = "ryutok/rust-zsh-completions"
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+
+[plugins.alias-tips]
+github = "djui/alias-tips"
+
+[plugins.osx-aliases]
+github = "mkwmms/plugin-osx"
+
+[plugins.base16]
+github = "chriskempson/base16-shell"
+
+# oh-my-zsh plugins
+[plugins.oh-my-zsh]
+github = "ohmyzsh/ohmyzsh"
+
+[plugins.ohmyzsh-plugins]
+github = "ohmyzsh/ohmyzsh"
+dir = "plugins"
+use = ["""{\
+    bundler,\
+    cabal,\
+    capistrano,\
+    common-aliases,\
+    encode64,\
+    gem,\
+    git,\
+    golang,\
+    gpg-agent,\
+    helm,\
+    history,\
+    node,\
+    npm,\
+    pip,\
+    python,\
+    rake,\
+    ruby,\
+    rust,\
+    rvm,\
+    ssh-agent,\
+    tmux,\
+    vagrant,\
+    vi-mode,\
+    yarn\
+    }/*.plugin.zsh"""]
+# apply = ["defer"]
+
+[plugins.fzf]
+github = "junegunn/fzf"
+use = ["shell/completion.zsh", "shell/key-bindings.zsh"]
+
+[plugins.compinit]
+inline = 'autoload -Uz compinit && compinit'
+
+# this oh-my-zsh plugins panicked:
+# kubectl
+# rails

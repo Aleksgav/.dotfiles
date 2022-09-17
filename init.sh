@@ -13,6 +13,16 @@ ln -s $DOTFILES/.zshrc       $HOME/.zshrc
 ln -s $DOTFILES/.doom.d      $HOME/.doom.d
 ln -s $DOTFILES/.starship.toml $HOME/.starship.toml
 ln -s $DOTFILES/.gitconfig_delta $HOME/.gitconfig_delta
+ln -s $DOTFILES/.sheldon $HOME/.sheldon
+
+# install homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# install brew deps
+brew bundle install
+
+# init sheldon
+sheldon lock
 
 # set up macos settings
 defaults write com.apple.dock springboard-columns -int 10
