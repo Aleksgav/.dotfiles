@@ -13,6 +13,7 @@ tap "sambadevi/powerlevel9k"
 
 brew "autoconf"
 brew "automake"
+brew "btop"
 brew "cairo"
 brew "cloc"
 brew "cmake"
