@@ -98,6 +98,9 @@ apply = ["defer"]
 github = "junegunn/fzf"
 use = ["shell/completion.zsh", "shell/key-bindings.zsh"]
 
+[plugins.fzf-tab]
+github = 'Aloxaf/fzf-tab'
+
 [plugins.compinit]
 inline = 'autoload -Uz compinit && compinit'
 
