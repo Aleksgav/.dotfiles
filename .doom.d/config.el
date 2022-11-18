@@ -350,3 +350,10 @@
      org-journal-date-prefix "* "
      org-journal-date-format "%a, %Y-%m-%d"
      org-journal-file-format "%Y-%m-%d.org")
+
+(remove-hook 'text-mode-hook #'spell-fu-mode)
+
+(defun insert-now-timestamp()
+  "Insert Org Mode timestamp ap point with current date and time."
+  (interactive)
+  (org-insert-time-stamp (current-time) t))
