@@ -17,7 +17,7 @@ HIST_STAMPS="dd.mm.yyyy"
 alias zshconfig="vim ~/.zshrc"
 
 # need for sheldon
-export ZSH="$HOME/.sheldon/repos/github.com/ohmyzsh/ohmyzsh"
+export ZSH="$HOME/.local/share/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
 
 source ~/.rvm/scripts/rvm
 source ~/.gvm/scripts/gvm

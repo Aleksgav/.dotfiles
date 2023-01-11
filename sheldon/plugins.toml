@@ -13,7 +13,7 @@
 shell = "zsh"
 
 [templates]
-defer = { value = 'zsh-defer source "{{ file }}"', each = true }
+defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 
 [plugins]
 
@@ -87,6 +87,7 @@ github = 'Aloxaf/fzf-tab'
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
+use = ["{{ name }}.zsh"]
 
 [plugins.zsh-syntax-highlighting]
 github = "zsh-users/zsh-syntax-highlighting"
