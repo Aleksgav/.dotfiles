@@ -13,7 +13,7 @@ ln -s $DOTFILES/.zshrc       $HOME/.zshrc
 ln -s $DOTFILES/.doom.d      $HOME/.doom.d
 ln -s $DOTFILES/.starship.toml $HOME/.starship.toml
 ln -s $DOTFILES/.gitconfig_delta $HOME/.gitconfig_delta
-ln -s $DOTFILES/sheldon $HOME/.config/sheldon
+ln -s $DOTFILES/sheldon $HOME/.sheldon
 
 # install homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
