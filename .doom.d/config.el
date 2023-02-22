@@ -326,8 +326,13 @@
 ;; change `org-directory'. It must be set before org loads!
 (after! org
  (setq org-directory "~/org/"
-       org-agenda-files '("~/org/agenda.org")
-       org-default-notes-file (expand-file-name "notes.org" org-directory))
+       org-agenda-files (list (expand-file-name "agenda.org" org-directory)
+                              (expand-file-name "work.org" org-directory)
+                              (expand-file-name "my.org" org-directory)
+                              (expand-file-name "learn.org" org-directory)
+                              (expand-file-name "projects.org" org-directory))
+       org-default-notes-file (expand-file-name "notes.org" org-directory)
+       org-log-done 'time)
  (map! :map org-mode-map
        :n "M-j" #'org-metadown
        :n "M-k" #'org-metaup)
@@ -346,10 +351,16 @@
         ("HOLD" . +org-todo-onhold)
         ("PROJ" . +org-todo-project))))
 
-(setq org-journal-date-prefix "#+TITLE: "
-     org-journal-date-prefix "* "
-     org-journal-date-format "%a, %Y-%m-%d"
-     org-journal-file-format "%Y-%m-%d.org")
+(use-package org-journal
+  :ensure t
+  :defer t
+  :init
+  :config
+  (setq org-journal-enable-agenda-integration t
+        org-journal-date-prefix "#+TITLE: "
+        org-journal-time-prefix "* "
+        org-journal-date-format "%A, %d %B %Y"
+        org-journal-file-format "%Y-%m-%d.org"))
 
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 
