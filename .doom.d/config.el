@@ -330,6 +330,7 @@
                               (expand-file-name "work.org" org-directory)
                               (expand-file-name "my.org" org-directory)
                               (expand-file-name "learn.org" org-directory)
+                              (expand-file-name "biz.org" org-directory)
                               (expand-file-name "projects.org" org-directory))
        org-default-notes-file (expand-file-name "notes.org" org-directory)
        org-log-done 'time)
