@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e -x
+set -e
 
 os="UNKNOWN"
 function os_detect {
