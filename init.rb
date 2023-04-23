@@ -29,7 +29,7 @@ CMD
 executor.exec('link dotfiles', command)
 err_printer.print(executor.err_output) unless executor.exit_status.zero?
 
-executor.exec('brew bundle install', command)
+executor.exec('Installing brew bundle...', 'brew bundle install -vd')
 err_printer.print(executor.err_output) unless executor.exit_status.zero?
 
 command =<<-CMD
