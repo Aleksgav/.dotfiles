@@ -9,9 +9,6 @@ err_printer = ErrPrinter.new(symbol_h: '=')
 executor.exec('xcode-select', 'xcode-select --install')
 err_printer.print(executor.err_output) unless executor.exit_status.zero?
 
-executor.exec('clone dotfiles', 'cd ~ # && git clone git@github.com:Aleksgav/.dotfiles.git')
-err_printer.print(executor.err_output) unless executor.exit_status.zero?
-
 command =<<-CMD
         export DOTFILES=$HOME/.dotfiles
 

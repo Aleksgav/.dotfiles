@@ -35,6 +35,9 @@ if [[ "$os" == "OSX" ]]; then
     echo "Installing GPG..."
     brew install gpg
 
+    echo "Installing Git..."
+    brew install git
+
     echo "Installing RVM"
     echo "Installing GPG keys..."
     gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
@@ -49,6 +52,9 @@ if [[ "$os" == "OSX" ]]; then
     gem install tty-screen
     gem install tty-spinner
 
+    echo "Clonning .dotfiles..."
+    cd ~ && git clone git@github.com:Aleksgav/.dotfiles.git
+
     echo "Running main installation script..."
-    ./init.rb
+    ~/.dotfiles/init.rb
 fi
