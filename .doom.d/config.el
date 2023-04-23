@@ -369,3 +369,7 @@
   "Insert Org Mode timestamp ap point with current date and time."
   (interactive)
   (org-insert-time-stamp (current-time) t))
+
+(setq yas-snippet-dirs (append yas-snippet-dirs
+                               '("~/.doom.d/snippets")))
+
