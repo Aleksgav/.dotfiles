@@ -1,34 +1,54 @@
 #!/bin/bash
+set -e -x
 
-export DOTFILES=$HOME/.dotfiles
+os="UNKNOWN"
+function os_detect {
+    case "$OSTYPE" in
+        solaris*) os="SOLARIS" ;;
+        darwin*)  os="OSX" ;;
+        linux*)   os="LINUX" ;;
+        bsd*)     os="BSD" ;;
+        msys*)    os="WINDOWS" ;;
+        cygwin*)  os="WINDOWS" ;;
+        *)        os="UNKNOWN" ;;
+    esac
+}
 
-ln -s $DOTFILES/Brewfile $HOME/Brewfile
-ln -s $DOTFILES/.gitignore-system $HOME/.gitignore-system
-ln -s $DOTFILES/.gitconfig   $HOME/.gitconfig
-ln -s $DOTFILES/.tmux.conf   $HOME/.tmux.conf
-ln -s $DOTFILES/.tmux.osx.conf $HOME/.tmux.osx.conf
-ln -s $DOTFILES/.tmux.linux.conf $HOME/.tmux.linux.conf
-ln -s $DOTFILES/.vimrc       $HOME/.vimrc
-ln -s $DOTFILES/.zshrc       $HOME/.zshrc
-ln -s $DOTFILES/.doom.d      $HOME/.doom.d
-ln -s $DOTFILES/.starship.toml $HOME/.starship.toml
-ln -s $DOTFILES/.gitconfig_delta $HOME/.gitconfig_delta
-ln -s $DOTFILES/sheldon $HOME/.sheldon
+echo "Detecting OS..."
+os_detect()
 
-# install homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if [[ "$os" == "UNKNOWN" ]]; then
+    echo "Unknown OS. Exit..."
 
-# install brew deps
-brew bundle install
+    exit 1
+fi
 
-# init sheldon
-sheldon lock
+echo $os
 
-# set up macos settings
-defaults write com.apple.dock springboard-columns -int 10
-defaults write com.apple.dock springboard-rows -int 7
-killall Dock
+if [[ "$os" == "OSX" ]]; then
+    echo "Install OSX additions"
 
-# setup emacs app icon
-ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
+    echo "Installing GPG..."
+    brew install gpg
+
+    echo "Installing RVM"
+    echo "Installing GPG keys..."
+    gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+    echo "Installing RVM..."
+    \curl -sSL https://get.rvm.io | bash -s stable --ruby
+
+    source ~/.rvm/scripts/rvm
+
+    echo "Installing gems..."
+    gem install pastel
+    gem install tty-box
+    gem install tty-screen
+    gem install tty-spinner
+
+    echo "Running main installation script..."
+    ./init.rb
+fi
