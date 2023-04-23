@@ -15,15 +15,15 @@ function os_detect {
 }
 
 echo "Detecting OS..."
-os_detect()
+os_detect
 
-if [[ "$os" == "UNKNOWN" ]]; then
+echo "$os"
+
+if [ "$os" = "UNKNOWN" ]; then
     echo "Unknown OS. Exit..."
 
     exit 1
 fi
-
-echo $os
 
 if [[ "$os" == "OSX" ]]; then
     echo "Install OSX additions"
