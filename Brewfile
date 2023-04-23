@@ -1,4 +1,3 @@
-tap "d12frosted/emacs-plus"
 tap "derailed/k9s"
 tap "homebrew/bundle"
 tap "homebrew/cask"
@@ -7,9 +6,7 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
 tap "kyoh86/tap"
-tap "openresty/brew"
 tap "railwaycat/emacsmacport"
-tap "sambadevi/powerlevel9k"
 
 brew "autoconf"
 brew "automake"
@@ -33,10 +30,6 @@ brew "git-cal"
 brew "git-flow"
 brew "gitui"
 brew "gnupg"
-brew "go"
-brew "go@1.14"
-brew "golang-migrate"
-brew "golangci-lint"
 brew "harfbuzz"
 brew "htop"
 brew "httpie"
@@ -54,7 +47,6 @@ brew "neovim"
 brew "node@10"
 brew "nushell"
 brew "postgresql"
-brew "postgresql@10", restart_service: true
 brew "pygments"
 brew "python@3.8"
 brew "rabbitmq", restart_service: true
@@ -75,8 +67,6 @@ brew "zlib"
 brew "zsh-syntax-highlighting"
 brew "derailed/k9s/k9s"
 brew "kyoh86/tap/richgo"
-brew "openresty/brew/openresty"
-brew "sambadevi/powerlevel9k/powerlevel9k"
 
 cask "chromedriver"
 cask "clion"
@@ -130,7 +120,6 @@ mas "Session", id: 1521432881
 mas "Slack", id: 803453959
 mas "Tayasui Sketches", id: 1178074963
 mas "Telegram", id: 747648890
-mas "Telegram Lite", id: 946399090
 mas "Timelime", id: 589698946
 mas "Trello", id: 1278508951
 mas "Tweetbot", id: 557168941
