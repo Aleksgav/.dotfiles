@@ -53,7 +53,7 @@ if [[ "$os" == "OSX" ]]; then
     gem install tty-spinner
 
     echo "Clonning .dotfiles..."
-    cd ~ && git clone git@github.com:Aleksgav/.dotfiles.git
+    cd ~ && git clone https://github.com/Aleksgav/.dotfiles.git
 
     echo "Running main installation script..."
     ~/.dotfiles/init.rb
