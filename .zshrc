@@ -1,5 +1,7 @@
 export TERM="xterm-256color"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 export GOPATH=$(go env GOPATH)
 
 export PATH="/usr/local/sbin:$GOPATH/bin:$PATH"
@@ -22,15 +24,10 @@ export ZSH="$HOME/.local/share/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
 source ~/.rvm/scripts/rvm
 source ~/.gvm/scripts/gvm
 
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
+export PATH="$HOME/.config/emacs/bin:$PATH"
 
-export PATH="$HOME/.emacs.d/bin:$PATH"
-
-export STARSHIP_CONFIG=~/.starship.toml
 eval "$(starship init zsh)"
 
 eval "$(sheldon source)"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
