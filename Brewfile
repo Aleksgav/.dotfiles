@@ -31,11 +31,8 @@ brew "git-delta"
 brew "git-flow"
 brew "gitui"
 brew "gnupg"
-<<<<<<< Updated upstream
 brew "gotop"
-=======
 brew "google-chrome"
->>>>>>> Stashed changes
 brew "harfbuzz"
 brew "htop"
 brew "httpie"
