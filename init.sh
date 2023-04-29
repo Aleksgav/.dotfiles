@@ -46,15 +46,16 @@ if [[ "$os" == "OSX" ]]; then
 
     source ~/.rvm/scripts/rvm
 
-    echo "Installing gems..."
-    gem install pastel
-    gem install tty-box
-    gem install tty-screen
-    gem install tty-spinner
+    cd ~
 
     echo "Clonning .dotfiles..."
-    cd ~ && git clone https://github.com/Aleksgav/.dotfiles.git
+    git clone https://github.com/Aleksgav/.dotfiles.git
+
+    cd init
+
+    echo "Installing gems..."
+    bundle install
 
     echo "Running main installation script..."
-    ~/.dotfiles/init.rb
+    ./init.rb
 fi
