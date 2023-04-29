@@ -44,6 +44,9 @@ err_printer.print(executor.err_output) unless executor.exit_status.zero?
 command =<<-CMD
         defaults write com.apple.dock springboard-columns -int 10
         defaults write com.apple.dock springboard-rows -int 7
+
+        defaults write com.apple.Dock autohide 1
+
         killall Dock
 CMD
 
