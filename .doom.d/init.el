@@ -170,7 +170,8 @@
        ;;rst               ; ReST in peace
        (ruby +lsp
              +rvm
-             +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+             +rails
+             +tree-sitter)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        (scheme +guile)   ; a fully conniving family of lisps
