@@ -9,9 +9,9 @@ CONFIG_DIR = '~/.config'
 
 install = Init::CLI::Commands::Install.new do |executor|
   executor.register do |register|
-    register.command('xcode-select', 'xcode-select --install')
+    register.command('Xcode select additions', 'xcode-select --install')
 
-    register.command_group('create folders') do |group|
+    register.command_group('Create folders') do |group|
       group.command('create .config folder', 'mkdir -p ~/.config')
       group.command('create projects folder', 'mkdir -p ~/projects')
     end
@@ -35,26 +35,50 @@ install = Init::CLI::Commands::Install.new do |executor|
     CMD
     register.command('link dotfiles', command)
 
-    register.command('Installing brew bundle...', 'brew bundle install -v')
+    register.command('installing brew bundle...', 'brew bundle install -v')
 
-    command =<<-CMD
-            defaults write com.apple.dock springboard-columns -int 10
-            defaults write com.apple.dock springboard-rows -int 7
+    register.command_group('Mac settings') do |group|
+      group.command('set columns on board', 'defaults write com.apple.dock springboard-columns -int 10')
+      group.command('set rows on board', 'defaults write com.apple.dock springboard-rows -int 7')
+      group.command('set dock autohide', 'defaults write com.apple.Dock autohide 1')
+      group.command('restart dock', 'killall Dock')
+    end
 
-            defaults write com.apple.Dock autohide 1
-
-            killall Dock
-    CMD
-    register.command('mac settings', command)
     register.command('init sheldon', 'sheldon lock')
 
-    register.command_group('doom emacs') do |group|
-      command =<<-CMD
-              git clone --depth 1 https://github.com/doomemacs/doomemacs #{CONFIG_DIR}/emacs
-              #{CONFIG_DIR}/emacs/bin/doom install
-      CMD
-      group.command('install doom emacs', command)
+    register.command_group('Doom emacs') do |group|
+      group.command('clone doom emacs', "git clone --depth 1 https://github.com/doomemacs/doomemacs #{CONFIG_DIR}/emacs")
+      group.command('install doom emacs', "#{CONFIG_DIR}/emacs/bin/doom install")
       group.command('emacs icon', 'ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications')
+    end
+
+    register.command_group('Ruby toolchain') do |group|
+      group.command('ruby language server', 'gem install solograph')
+      group.command('static code analyser', 'gem install rubocop')
+    end
+
+    register.command_group('Node toolchain') do |group|
+      group.command('js beautify', 'npm -g install js-beautify')
+    end
+
+    register.command_group('Rust toolchain') do |group|
+      group.command('rust installation', "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh")
+      group.command('add nigthly', 'rustup install nightly')
+      group.command('add clippy', 'cargo +nightly install clippy')
+      group.command('cargo audit', 'cargo install cargo-audit')
+      group.command('cargo deny', 'cargo install cargo-deny')
+      group.command('cargo edit', 'cargo install cargo-edit')
+      group.command('cargo expand', 'cargo install cargo-expand')
+      group.command('cargo tarpaulin', 'cargo install cargo-tarpaulin')
+      group.command('cargo udeps', 'cargo install cargo-udeps --locker')
+      group.command('cargo watch', 'cargo install cargo-watch')
+      group.command('sqlx cli', 'cargo install sqlx-cli')
+    end
+
+    register.command_group('Golang toolchain') do |group|
+      group.command('golang version manager', 'bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)')
+      group.command('golang installing', 'gvm install go1.20.4 --with-protobuf')
+      group.command('set default golang version', 'gvm use 1.20.4 --default')
     end
   end
 end
