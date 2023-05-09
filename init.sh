@@ -57,5 +57,5 @@ if [[ "$os" == "OSX" ]]; then
     bundle install
 
     echo "Running main installation script..."
-    ./init.rb
+    ./init.rb i
 fi

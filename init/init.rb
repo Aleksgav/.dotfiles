@@ -53,7 +53,7 @@ install = Init::CLI::Commands::Install.new do |executor|
     end
 
     register.command_group('Ruby toolchain') do |group|
-      group.command('ruby language server', 'gem install solograph')
+      group.command('ruby language server', 'gem install solargraph')
       group.command('static code analyser', 'gem install rubocop')
     end
 
@@ -70,9 +70,8 @@ install = Init::CLI::Commands::Install.new do |executor|
       group.command('cargo edit', 'cargo install cargo-edit')
       group.command('cargo expand', 'cargo install cargo-expand')
       group.command('cargo tarpaulin', 'cargo install cargo-tarpaulin')
-      group.command('cargo udeps', 'cargo install cargo-udeps --locker')
+      group.command('cargo udeps', 'cargo install cargo-udeps --locked')
       group.command('cargo watch', 'cargo install cargo-watch')
-      group.command('sqlx cli', 'cargo install sqlx-cli')
     end
 
     register.command_group('Golang toolchain') do |group|

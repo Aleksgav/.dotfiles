@@ -22,6 +22,7 @@ GEM
     unicode_utils (1.4.0)
 
 PLATFORMS
+  arm64-darwin-22
   x86_64-darwin-21
 
 DEPENDENCIES
@@ -31,5 +32,8 @@ DEPENDENCIES
   tty-screen
   tty-spinner
 
+RUBY VERSION
+   ruby 3.0.0p0
+
 BUNDLED WITH
-   2.4.9
+   2.4.12
