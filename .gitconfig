@@ -7,6 +7,7 @@
   excludesfile = ~/.gitignore-system
   editor = vim
   autocrlf = input
+  quotePath = false
 
 [includeIf "gitdir:~/work_projects/"]
   path = ~/work_projects/.gitconfig_override
