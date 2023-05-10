@@ -26,6 +26,7 @@ source ~/.gvm/scripts/gvm
 
 export PATH="$HOME/.config/emacs/bin:$PATH"
 
+export STARSHIP_CONFIG=~/.config/starship.toml
 eval "$(starship init zsh)"
 
 eval "$(sheldon source)"

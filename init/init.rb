@@ -29,7 +29,7 @@ install = Init::CLI::Commands::Install.new do |executor|
             ln -s $DOTFILES/.vimrc            $HOME/.vimrc
             ln -s $DOTFILES/.zshrc            $HOME/.zshrc
             ln -s $DOTFILES/.doom.d           $CONFIG_DIR/doom
-            ln -s $DOTFILES/.starship.toml    $CONFIG_DIR/starship.toml
+            ln -s $DOTFILES/starship.toml     $CONFIG_DIR/starship.toml
             ln -s $DOTFILES/.gitconfig_delta  $HOME/.gitconfig_delta
             ln -s $DOTFILES/sheldon           $CONFIG_DIR/sheldon
     CMD
