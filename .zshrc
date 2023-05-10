@@ -1,6 +1,6 @@
 export TERM="xterm-256color"
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(brew shellenv)"
 
 export GOPATH=$(go env GOPATH)
 
