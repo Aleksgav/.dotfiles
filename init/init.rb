@@ -26,6 +26,7 @@ install = Init::CLI::Commands::Install.new do |executor|
             ln -s $DOTFILES/.tmux.conf        $HOME/.tmux.conf
             ln -s $DOTFILES/.tmux.osx.conf    $HOME/.tmux.osx.conf
             ln -s $DOTFILES/.tmux.linux.conf  $HOME/.tmux.linux.conf
+            ln -s $DOTFILES/tmx               /usr/local/bin/tmx
             ln -s $DOTFILES/.vimrc            $HOME/.vimrc
             ln -s $DOTFILES/.zshrc            $HOME/.zshrc
             ln -s $DOTFILES/.doom.d           $CONFIG_DIR/doom
@@ -45,6 +46,8 @@ install = Init::CLI::Commands::Install.new do |executor|
     end
 
     register.command('init sheldon', 'sheldon lock')
+
+    register.command('init tmux plugin manager', 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm')
 
     register.command_group('Doom emacs') do |group|
       group.command('clone doom emacs', "git clone --depth 1 https://github.com/doomemacs/doomemacs #{CONFIG_DIR}/emacs")
