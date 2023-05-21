@@ -85,6 +85,7 @@ brew "pygments"
 brew "python@3.8"
 brew "rabbitmq", restart_service: true
 brew "readline"
+brew "reattach-to-user-namespace"
 brew "redis", restart_service: true
 brew "ripgrep"
 brew "rust-analyzer"
