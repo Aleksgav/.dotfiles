@@ -33,6 +33,9 @@ install = Init::CLI::Commands::Install.new do |executor|
             ln -s $DOTFILES/starship.toml     $CONFIG_DIR/starship.toml
             ln -s $DOTFILES/.gitconfig_delta  $HOME/.gitconfig_delta
             ln -s $DOTFILES/sheldon           $CONFIG_DIR/sheldon
+            ln -s $dotfiles/sketchybar        $config_dir/sketchybar
+            ln -s $dotfiles/skhd              $config_dir/skhd
+            ln -s $dotfiles/yabai             $config_dir/yabai
     CMD
     register.command('link dotfiles', command)
 
@@ -43,6 +46,9 @@ install = Init::CLI::Commands::Install.new do |executor|
       group.command('set rows on board', 'defaults write com.apple.dock springboard-rows -int 7')
       group.command('set dock autohide', 'defaults write com.apple.Dock autohide 1')
       group.command('restart dock', 'killall Dock')
+
+      group.command('disable all finder animations', 'defaults write com.apple.finder DisableAllAnimations -bool true')
+      group.command('restart finder', 'killall Finder')
     end
 
     register.command('init sheldon', 'sheldon lock')
