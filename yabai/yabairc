@@ -9,7 +9,7 @@ yabai -m signal --add event=window_destroyed action="sketchybar --trigger window
 $HOME/.config/yabai/create_spaces.sh
 
 # bar integration
-yabai -m config external_bar all:34:0
+yabai -m config external_bar all:33:0
 
 # new window spawns
 yabai -m config window_placement second_child
