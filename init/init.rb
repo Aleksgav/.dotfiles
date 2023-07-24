@@ -27,6 +27,7 @@ install = Init::CLI::Commands::Install.new do |executor|
             ln -s $DOTFILES/.tmux.osx.conf    $HOME/.tmux.osx.conf
             ln -s $DOTFILES/.tmux.linux.conf  $HOME/.tmux.linux.conf
             ln -s $DOTFILES/tmx               /usr/local/bin/tmx
+            ln -s $DOTFILES/.gemrc            $HOME/.gemrc
             ln -s $DOTFILES/.vimrc            $HOME/.vimrc
             ln -s $DOTFILES/.zshrc            $HOME/.zshrc
             ln -s $DOTFILES/.doom.d           $CONFIG_DIR/doom
