@@ -234,8 +234,28 @@
 ;; DEFT
 ;;
 (setq deft-directory "~/notes/"
-     deft-extensions '("org" "txt")
+     deft-extensions '("org" "txt" "md")
      deft-recursive t)
+
+;; Setup list of deft directories
+(defvar my/deft-dir-list '()
+  "A list of deft directories to pick")
+
+(setq my/deft-dir-list '("~/notes/"
+                         "~/notes/work/"
+                         "~/notes/my/"
+                        ))
+
+(defun my/pick-deft-dir ()
+  "Select directories from a list"
+  (interactive)
+  (setq deft-directory
+        (ido-completing-read "Select directory: " my/deft-dir-list))
+  (deft-refresh))
+
+;; Set keybinings for changing WORKSPACE: C-c w
+(after! deft
+  (map! :map deft-mode-map "C-c w" #'my/pick-deft-dir))
 
 ;; ROAM
 ;;
@@ -372,4 +392,7 @@
 
 (setq yas-snippet-dirs (append yas-snippet-dirs
                                '("~/.doom.d/snippets")))
+
+;; TILE MANAGER proper integration
+(menu-bar-mode t)
 
