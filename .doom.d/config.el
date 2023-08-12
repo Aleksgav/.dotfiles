@@ -221,6 +221,11 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; DEFINE CUSTOM FACES
+(defface at-face
+'((t (:foreground "#FF0000")))
+   "Face for @")
+
 (map! :desc "Create sparce tree" :ne "SPC | s" #'org-sparse-tree)
 (map! :desc "Create sparce tree for tags" :ne "SPC | t" #'org-tags-sparse-tree)
 
@@ -230,6 +235,16 @@
  :init (global-flycheck-mode)
  :custom
  (flycheck-display-errors-delay .3))
+
+;; FIXME DEBUG STUB DONE INPR TODO XXX
+(after! hl-todo
+  (setq hl-todo-keyword-faces
+        (append hl-todo-keyword-faces
+	'(("FIXME"  . "#FF0000")
+          ("DEBUG"  . "#A020F0")
+          ("STUB"   . "#1E90FF")
+          ("DONE"   . "#FFFFFF")
+	  ("INPR"   . "#098544")))))
 
 ;; DEFT
 ;;
@@ -264,12 +279,6 @@
 
 ;; ORG MODE
 ;;
-
-;; DEFINE CUSTOM FACES
-(defface at-face
-'((t (:foreground "green")))
-   "Face for @")
-
 (setq org-ellipsis " [>>>]")
 (custom-set-faces
  '(org-ellipsis ((t (:foreground "#58B5A5")))) ;; background ellipsis color
