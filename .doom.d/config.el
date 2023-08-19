@@ -405,3 +405,7 @@
 ;; TILE MANAGER proper integration
 (menu-bar-mode t)
 
+;; SSH-AGENT INTEGRATION
+(after! doom-cli-env
+  (add-to-list 'doom-env-allow "^SSH_"))
+
