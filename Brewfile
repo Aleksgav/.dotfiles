@@ -122,6 +122,7 @@ brew "zlib"
 brew "zsh-syntax-highlighting"
 brew "derailed/k9s/k9s"
 brew "kyoh86/tap/richgo"
+brew "tako8ki/tap/gobang"
 
 cask "chromedriver"
 cask "clion"
