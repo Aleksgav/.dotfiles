@@ -64,6 +64,7 @@ yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 yabai -m rule --add title="^Check Point Endpoint Security" manage=off
 yabai -m rule --add app="^EndpointConnect" manage=off
+yabai -m rule --add app="^ExpressVPN" manage=off
 
 
 # default layout
