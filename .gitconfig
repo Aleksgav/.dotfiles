@@ -12,6 +12,9 @@
 [includeIf "gitdir:~/work_projects/"]
   path = ~/work_projects/.gitconfig_override
 
+[includeIf "gitdir:~/projects/"]
+  path = ~/projects/.gitconfig_override
+
 [pager]
   diff = delta
   log = delta
