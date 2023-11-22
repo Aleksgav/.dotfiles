@@ -34,9 +34,11 @@ install = Init::CLI::Commands::Install.new do |executor|
             ln -s $DOTFILES/starship.toml     $CONFIG_DIR/starship.toml
             ln -s $DOTFILES/.gitconfig_delta  $HOME/.gitconfig_delta
             ln -s $DOTFILES/sheldon           $CONFIG_DIR/sheldon
-            ln -s $dotfiles/sketchybar        $config_dir/sketchybar
-            ln -s $dotfiles/skhd              $config_dir/skhd
-            ln -s $dotfiles/yabai             $config_dir/yabai
+            ln -s $DOTFILES/sketchybar        $CONFIG_DIR/sketchybar
+            ln -s $DOTFILES/skhd              $CONFIG_DIR/skhd
+            ln -s $DOTFILES/yabai             $CONFIG_DIR/yabai
+            ln -s $DOTFILES/alacritty         $CONFIG_DIR/alacritty
+            ln -s $DOTFILES/zellij            $CONFIG_DIR/zellij
     CMD
     register.command('link dotfiles', command)
 
