@@ -63,7 +63,8 @@ ctrl + alt - s : yabai --start-service
 ctrl + alt - r : yabai --restart-service
 
 # applications shortcuts
-ctrl + cmd - t : open -na /Applications/iTerm.app
+# ctrl + cmd - t : open -na /Applications/iTerm.app
+ctrl + cmd - t : open -na /Applications/Alacritty.app
 ctrl + cmd - p : open "x-apple.systempreferences:"
 ctrl + cmd - a : open -a "About This Mac"
 ctrl + cmd - c : open -na /Applications/Google\ Chrome.app
