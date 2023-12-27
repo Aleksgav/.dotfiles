@@ -14,6 +14,16 @@ function os_detect {
     esac
 }
 
+distro="UNKNOWN"
+function linux_distibution_detect {
+    . /etc/os-release
+
+    case "$ID" in
+        manjaro*) distro="MANJARO" ;;
+        *)        distro="UNKNOWN" ;;
+    esac
+}
+
 echo "Detecting OS..."
 os_detect
 
@@ -26,36 +36,22 @@ if [ "$os" = "UNKNOWN" ]; then
 fi
 
 if [[ "$os" == "OSX" ]]; then
-    echo "Install OSX additions"
+    . init_osx.sh
 
-    echo "Installing Homebrew..."
-    /bin/bash -c "$(sudo curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+    exit 0
+fi
 
-    echo "Installing GPG..."
-    brew install gpg
+if [[ "$os" == "LINUX" ]]; then
+    echo "Detecting distro ..."
 
-    echo "Installing Git..."
-    brew install git
+    . /etc/os-release
 
-    echo "Installing RVM"
-    echo "Installing GPG keys..."
-    gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-    echo "Installing RVM..."
-    \curl -sSL https://get.rvm.io | bash -s stable --ruby
+    case "$ID" in
+        manjaro*) . init_linux_manjaro.sh ;;
+        *)
+            echo "Unknown distro. Exit..."
+            ;;
+    esac
 
-    source ~/.rvm/scripts/rvm
-
-    cd ~
-
-    echo "Clonning .dotfiles..."
-    git clone https://github.com/Aleksgav/.dotfiles.git
-
-    cd init
-
-    echo "Installing gems..."
-    bundle install
-
-    echo "Running main installation script..."
-    ./init.rb i
+    exit 0
 fi
