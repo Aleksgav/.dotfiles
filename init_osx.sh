@@ -20,14 +20,7 @@ echo "Installing RVM..."
 
 source ~/.rvm/scripts/rvm
 
-cd ~
-
-echo "Clonning .dotfiles..."
-git clone https://github.com/Aleksgav/.dotfiles.git
-
-cd .dotfiles
-
-cd init
+cd ~/.dotfiles/init
 
 echo "Installing gems..."
 bundle install

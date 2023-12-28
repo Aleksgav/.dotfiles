@@ -20,14 +20,7 @@ echo "Installing ruby"
 rvm get head
 rvm install 3.2 --default
 
-cd ~
-
-echo "Clonning .dotfiles..."
-git clone https://github.com/Aleksgav/.dotfiles.git
-
-cd .dotfiles
-
-cd init
+cd ~/.dotfiles/init
 
 echo "Installing gems..."
 bundle install
