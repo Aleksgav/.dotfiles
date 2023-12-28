@@ -25,6 +25,8 @@ cd ~
 echo "Clonning .dotfiles..."
 git clone https://github.com/Aleksgav/.dotfiles.git
 
+cd .dotfiles
+
 cd init
 
 echo "Installing gems..."
