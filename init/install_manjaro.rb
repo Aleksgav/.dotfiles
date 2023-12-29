@@ -40,20 +40,20 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
     end
 
     register.command_group('Fonts') do |group|
-      group.command('ttf-fira-code', 'pamac install ttf-fira-code')
-      group.command('ttf-firacode-nerd', 'pamac install ttf-firacode-nerd')
-      group.command('ttf-hack-nerd', 'pamac install ttf-hack-nerd')
+      group.command('ttf-fira-code', 'pamac install ttf-fira-code --no-confirm')
+      group.command('ttf-firacode-nerd', 'pamac install ttf-firacode-nerd --no-confirm')
+      group.command('ttf-hack-nerd', 'pamac install ttf-hack-nerd --no-confirm')
     end
 
     register.command_group('Dev tools') do |group|
-      group.command('Autoconf', 'pamac install autoconf')
-      group.command('Automake', 'pamac install automake')
-      group.command('make', 'pamac install make')
-      group.command('cmake', 'pamac install cmake')
-      group.command('coreutils', 'pamac install coreutils')
-      group.command('gcc', 'pamac install gcc')
-      group.command('gdb', 'pamac install gdb')
-      group.command('gnupg', 'pamac install gnupg')
+      group.command('Autoconf', 'pamac install autoconf --no-confirm')
+      group.command('Automake', 'pamac install automake --no-confirm')
+      group.command('make', 'pamac install make --no-confirm')
+      group.command('cmake', 'pamac install cmake --no-confirm')
+      group.command('coreutils', 'pamac install coreutils --no-confirm')
+      group.command('gcc', 'pamac install gcc --no-confirm')
+      group.command('gdb', 'pamac install gdb --no-confirm')
+      group.command('gnupg', 'pamac install gnupg --no-confirm')
     end
 
     register.command_group('Libs') do |group|
