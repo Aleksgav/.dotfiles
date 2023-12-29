@@ -87,7 +87,8 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
     register.command_group('Golang & toolchain') do |group|
       group.command('golang', 'pamac install go --no-confirm')
       group.command('golang version manager', 'bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)')
-      group.command('golang installing', 'gvm install go1.20.4 --with-protobuf')
+      group.command('reload bash', 'source ~/.bashrc')
+      group.command('golang installing via gvm', 'gvm install go1.20.4')
       group.command('set default golang version', 'gvm use 1.20.4 --default')
       group.command('golangci-lint', 'snap install golangci-lint --no-confirm')
       group.command('gopls', 'pamac install gopls --no-confirm')
