@@ -69,7 +69,7 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
     end
 
     register.command_group('Rust & toolchain') do |group|
-      group.command('rust installation', "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh")
+      group.command('rust installation', "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y")
       group.command('add nigthly', 'rustup install nightly')
       group.command('add clippy', 'cargo +nightly install clippy')
       group.command('cargo audit', 'cargo install cargo-audit')
