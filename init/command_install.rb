@@ -21,7 +21,7 @@ module Init
         end
 
         def call(**options)
-          executor.run(**options)
+          executor.run(**options.slice(:dry_run))
         end
 
         private
