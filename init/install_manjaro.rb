@@ -46,6 +46,7 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
     end
 
     register.command_group('Dev tools') do |group|
+      group.command('Base devel', 'pamac install base-devel --no-confirm')
       group.command('Autoconf', 'pamac install autoconf --no-confirm')
       group.command('Automake', 'pamac install automake --no-confirm')
       group.command('make', 'pamac install make --no-confirm')
@@ -76,8 +77,10 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
       group.command('add clippy', 'rustup component add clippy')
       group.command('cargo audit', 'cargo install cargo-audit')
       group.command('cargo deny', 'cargo install cargo-deny')
+      # TODO
       group.command('cargo edit', 'cargo install cargo-edit')
       group.command('cargo expand', 'cargo install cargo-expand')
+      # TODO
       group.command('cargo tarpaulin', 'cargo install cargo-tarpaulin')
       group.command('cargo udeps', 'cargo install cargo-udeps --locked')
       group.command('cargo watch', 'cargo install cargo-watch')
