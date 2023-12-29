@@ -26,4 +26,4 @@ echo "Installing gems..."
 bundle install
 
 echo "Running main installation script..."
-./init.rb i --dry-run
+./init.rb manjaro --dry-run
