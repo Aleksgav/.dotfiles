@@ -73,18 +73,15 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
       group.command('rust installation', "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y")
       group.command('reload bash', 'source ~/.bashrc')
       group.command('add nigthly', 'rustup install nightly')
-      # group.command('add clippy', 'cargo +nightly install clippy')
       group.command('add clippy', 'rustup component add clippy')
       group.command('cargo audit', 'cargo install cargo-audit')
       group.command('cargo deny', 'cargo install cargo-deny')
-      # TODO
       group.command('cargo edit', 'cargo install cargo-edit')
       group.command('cargo expand', 'cargo install cargo-expand')
-      # TODO
       group.command('cargo tarpaulin', 'cargo install cargo-tarpaulin')
       group.command('cargo udeps', 'cargo install cargo-udeps --locked')
       group.command('cargo watch', 'cargo install cargo-watch')
-      group.command('rust analyzer', 'pamac install rust-analyzer')
+      group.command('rust analyzer', 'rustup component add rust-analyzer')
     end
 
     register.command_group('Golang & toolchain') do |group|
