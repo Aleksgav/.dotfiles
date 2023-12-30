@@ -37,6 +37,7 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
     register.command_group('Manjaro settings') do |group|
       group.command('Flatpack plugin', 'pamac install libpamac-flatpak-plugin')
       group.command('Snap plugin', 'pamac install libpamac-snap-plugin')
+      # NOTE temporary disable
       # group.command('Set zsh as default', 'sudo chsh -s $(zsh)')
     end
 
@@ -90,6 +91,7 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
       group.command('golang version manager', 'bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)')
       group.command('reload bash', 'source ~/.bashrc')
       group.command('golang installing via gvm', 'gvm install go1.20.4')
+      # NOTE temporary disable
       # group.command('set default golang version', 'gvm use go1.20.4 --default')
       # group.command('golangci-lint', 'snap install golangci-lint')
       # group.command('gopls', 'pamac install gopls --no-confirm')
@@ -155,7 +157,8 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
       group.command('cabal-install', 'pamac install cabal-install --no-confirm')
       group.command('ghc', 'pamac install ghc --no-confirm')
       group.command('haskell-language-server', 'pamac install haskell-language-server --no-confirm')
-      group.command('haskell-stack', 'pamac install stack --no-confirm')
+      # NOTE temporary disable
+      # group.command('haskell-stack', 'pamac install stack --no-confirm')
     end
 
     register.command_group('Git tools') do |group|
