@@ -197,11 +197,11 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
       group.command('alacritty', 'pamac install alacritty --no-confirm')
       group.command('k9s', 'pamac install k9s --no-confirm')
       group.command('task', 'pamac install task --no-confirm')
+      group.command('timewarrior', 'pamac install timew --no-confirm')
       group.command('taskwarrior-tui', 'pamac install taskwarrior-tui --no-confirm')
-      group.command('timewarrior', 'pamac install timewarrior --no-confirm')
       group.command('unrar', 'pamac install unrar --no-confirm')
       group.command('gotop', 'span install gotop --no-confirm')
-      group.command('kubectl', 'pamac install kubtctl --no-confirm')
+      group.command('kubectl', 'pamac install kubectl --no-confirm')
       group.command('aspell', 'pamac install aspell --no-confirm')
     end
 
@@ -238,24 +238,24 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
       group.command('notion', 'pamac install notion --no-confirm')
       group.command('telegram-desktop', 'pamac install telegram-desktop --no-confirm')
       group.command('vlc', 'pamac install vlc --no-confirm')
-      # group.command('zeplin', 'snap install zeplin')
-      # group.command('zoom', 'snap install zoom-client')
       group.command('home-assistant', 'pamac install home-assistant --no-confirm')
       group.command('discord', 'pamac install discord --no-confirm')
       group.command('ghidra', 'pamac install ghidra --no-confirm')
+      # group.command('zeplin', 'snap install zeplin')
+      # group.command('zoom', 'snap install zoom-client')
       # group.command('redisinsight', 'snap install redisinsight')
+      # group.command('postman', 'snap install postman')
+      # group.command('skype', 'snap install skype')
+      # group.command('sublime-text', 'snap install sublime-text')
+      # group.command('Outline client', 'snap install outline-client --edge --devmode')
       # via
+      # graphql-playground
     end
 
     register.command_group('Other') do |group|
       group.command('python-pygments', 'pamac install python-pygments --no-confirm')
       group.command('gobang', 'cargo install --version 0.1.0-alpha.5 gobang')
-      # group.command('postman', 'snap install postman')
-      # group.command('skype', 'snap install skype')
-      # group.command('sublime-text', 'snap install sublime-text')
-      # group.command('Outline client', 'snap install outline-client --edge --devmode')
       # chromedriver
-      # graphql-playground
     end
 
     register.command_group('Shell') do |group|
