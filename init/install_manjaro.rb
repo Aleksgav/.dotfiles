@@ -217,11 +217,11 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
       # editorconfig
     end
 
-    register.command_group('Doom emacs') do |group|
-      group.command('emacs-nativecomp', 'pamac install emacs-nativecomp --no-confirm')
-      group.command('clone doom emacs', "git clone --depth 1 https://github.com/doomemacs/doomemacs #{CONFIG_DIR}/emacs")
-      group.command('install doom emacs', "#{CONFIG_DIR}/emacs/bin/doom install")
-    end
+    # register.command_group('Doom emacs') do |group|
+    #   group.command('emacs-nativecomp', 'pamac install emacs --no-confirm')
+    #   group.command('clone doom emacs', "git clone --depth 1 https://github.com/doomemacs/doomemacs #{CONFIG_DIR}/emacs")
+    #   group.command('install doom emacs', "#{CONFIG_DIR}/emacs/bin/doom install --env")
+    # end
 
     register.command_group('Servers') do |group|
       group.command('postgresql', 'pamac install postgresql --no-confirm')
