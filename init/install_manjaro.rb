@@ -37,7 +37,7 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
     register.command_group('Manjaro settings') do |group|
       group.command('Flatpack plugin', 'pamac install libpamac-flatpak-plugin')
       group.command('Snap plugin', 'pamac install libpamac-snap-plugin')
-      group.command('Set zsh as default', 'sudo chsh -s $(zsh)')
+      # group.command('Set zsh as default', 'sudo chsh -s $(zsh)')
     end
 
     register.command_group('Fonts') do |group|
