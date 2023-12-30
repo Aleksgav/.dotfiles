@@ -37,6 +37,7 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
     register.command_group('Manjaro settings') do |group|
       group.command('Flatpack plugin', 'pamac install libpamac-flatpak-plugin')
       group.command('Snap plugin', 'pamac install libpamac-snap-plugin')
+      group.command('Set zsh as default', 'sudo chsh -s $(zsh)')
     end
 
     register.command_group('Fonts') do |group|
@@ -89,8 +90,8 @@ INSTALL_MANJARO = Init::CLI::Commands::Install.new do |executor|
       group.command('golang version manager', 'bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)')
       group.command('reload bash', 'source ~/.bashrc')
       group.command('golang installing via gvm', 'gvm install go1.20.4')
-      group.command('set default golang version', 'gvm use 1.20.4 --default')
-      group.command('golangci-lint', 'snap install golangci-lint --no-confirm')
+      group.command('set default golang version', 'gvm use go1.20.4 --default')
+      group.command('golangci-lint', 'snap install golangci-lint')
       group.command('gopls', 'pamac install gopls --no-confirm')
       #
       # gomodifytags
