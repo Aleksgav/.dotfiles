@@ -11,6 +11,7 @@ ManjaroMain = Packager::Installation.new do
   group('Manjaro settings') do
     package MnjPkg::SnapPlugin
     package MnjPkg::FlatpakPlugin
+
     # NOTE temporary disable
     # package MnjPkg::ZshDefault
   end
@@ -65,12 +66,11 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Gvm
     package MnjPkg::ReloadBash
     package MnjPkg::Go1204Gvm
+    package MnjPkg::Go1204GvmDefault
+    package MnjPkg::GolangcilintSnap
+    package MnjPkg::Gopls
 
     # NOTE temporary disable
-    # group.command('set default golang version', 'gvm use go1.20.4 --default')
-    # group.command('golangci-lint', 'snap install golangci-lint')
-    # group.command('gopls', 'pamac install gopls --no-confirm')
-    #
     # gomodifytags
     # gotests
   end
@@ -220,12 +220,12 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Discord
     package MnjPkg::Ghidra
 
-    # group.command('zeplin', 'snap install zeplin')
-    # group.command('zoom', 'snap install zoom-client')
-    # group.command('redisinsight', 'snap install redisinsight')
-    # group.command('postman', 'snap install postman')
-    # group.command('skype', 'snap install skype')
-    # group.command('sublime-text', 'snap install sublime-text')
+    package MnjPkg::Zeplin
+    package MnjPkg::Zoom
+    package MnjPkg::Redisinsight
+    package MnjPkg::Postman
+    package MnjPkg::Skype
+
     # group.command('Outline client', 'snap install outline-client --edge --devmode')
     # via
     # graphql-playground
