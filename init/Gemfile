@@ -11,6 +11,6 @@ gem "tty-box"
 gem "tty-prompt"
 gem "tty-screen"
 gem "tty-spinner"
-
+gem "open3"
 gem "dry-cli"
 
