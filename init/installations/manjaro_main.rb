@@ -28,6 +28,7 @@ ManjaroMain = Packager::Installation.new do
   group('Fonts') do
     package MnjPkg::FontTtfFiraCode
     package MnjPkg::FontTtfFiracodeNerd
+    package MnjPkg::FontTtfFiraSans
     package MnjPkg::FontTtfHackNerd
   end
 
