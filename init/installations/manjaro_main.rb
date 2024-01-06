@@ -17,11 +17,7 @@ ManjaroMain = Packager::Installation.new do
   end
 
   # TODO или .zshrc не слинковался или перезатерся
-  # TODO vim не работает
-  # TODO emacs не работает
-  # TODO со шрифтами проблема (возможно поэтому emacs не работает)
   # TODO не установил почтовые программы и тд
-  # TODO Протестировать alacritty в безрамочном режиме
   # TODO snap установка не работает как нужно
   package MnjPkg::LinkDotfiles
 
@@ -226,6 +222,8 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Redisinsight
     package MnjPkg::Postman
     package MnjPkg::Skype
+    package MnjPkg::MattermostDesktop
+
 
     # group.command('Outline client', 'snap install outline-client --edge --devmode')
     # via
