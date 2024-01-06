@@ -45,8 +45,6 @@ module Packager
                 :sudo_require
 
     def install(context)
-      raise NotCompatibleError if !compatibile?(context)
-
       command = make_command(context)
 
       Open3.popen3(command)
@@ -58,10 +56,6 @@ module Packager
       else
         command
       end
-    end
-
-    def compatibile?(context)
-      context.os == target_os || context.distro == target_distro
     end
   end
 end
