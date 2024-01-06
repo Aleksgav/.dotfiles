@@ -21,11 +21,13 @@ module CLI
       end
 
       def call(**options)
-        CONTEXT.pass = TTY::Prompt.new.mask('Input sudo password:', required: true) do |val|
+        context = Context.new
+
+        context.pass = TTY::Prompt.new.mask('Input sudo password:', required: true) do |val|
           val.modify :chomp
         end
 
-        installator.run(installation, **options.slice(:dry_run))
+        installator.run(installation, context, **options.slice(:dry_run))
       end
     end
   end

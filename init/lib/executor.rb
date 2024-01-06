@@ -16,7 +16,9 @@ class Executor
     init_styles
   end
 
-  def run(installation, **options)
+  def run(installation, context, **options)
+    @context = context
+
     installation.installation.each do |value|
       case value
       in Packager::Package then exec(value, **options)
@@ -26,6 +28,8 @@ class Executor
   end
 
   private
+
+  attr_reader :context
 
   def exec(package, **options)
     spinner = TTY::Spinner.new(spinner_title, **spinner_format)
@@ -49,7 +53,7 @@ class Executor
     spinner.run do |spnr|
       spnr.success(ok_suffix) and next([0, 'success']) if dry_run
 
-      *, stderr, wait_thr = package.install
+      *, stderr, wait_thr = package.install(context)
 
       wait_thr.value.exitstatus.zero? ? spnr.success(ok_suffix) : spnr.error(err_suffix)
 
