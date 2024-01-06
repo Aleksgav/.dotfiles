@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     dry-cli (1.0.0)
+    open3 (0.1.2)
     pastel (0.8.0)
       tty-color (~> 0.5)
     strings (0.2.1)
@@ -37,6 +38,7 @@ PLATFORMS
 
 DEPENDENCIES
   dry-cli
+  open3
   pastel
   tty-box
   tty-prompt
