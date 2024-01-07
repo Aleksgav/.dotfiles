@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
-Exec=sh -c "sleep 10; conky;"
+Exec=sh -c "~/.config/conky/start.sh"
 Name=Conky
 Comment=Autostart conky at login

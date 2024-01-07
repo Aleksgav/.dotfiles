@@ -49,6 +49,9 @@ module Linux
         mv -f $CONFIG_DIR/zellij{,.bak}
         ln -s $DOTFILES/zellij            $CONFIG_DIR/zellij
 
+        ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
+        ln -s $DOTFILES/conky             $CONFIG_DIR/conky
+
         mv -f $CONFIG_DIR/nvim{,.bak}
         mv ~/.local/share/nvim{,.bak}
         mv ~/.local/state/nvim{,.bak}

@@ -5,6 +5,7 @@ MnjPkg = Linux::Manjaro
 ManjaroMain = Packager::Installation.new do
   group('Create folders') do
     package MnjPkg::ConfigFolder
+    package MnjPkg::ConfigAutostartFolder
     package MnjPkg::ProjectsFolder
   end
 
@@ -241,6 +242,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::PythonPygments
     package MnjPkg::Gobang
 
+    package MnjPkg::Conky
     # chromedriver
   end
 

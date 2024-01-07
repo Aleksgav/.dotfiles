@@ -1,0 +1,34 @@
+Changelog
+--------------------------------------------------------
+Arrakis - Conky Theme
+[ Draco Themes Pack ] 
+
+by Closebox73
+
+Social
+X		: https://twitter.com/closebox73
+Discord	: https://discord.com/users/1115644269802311750
+Github	: https://github.com/closebox73
+Pling	: https://pling.com/u/closebox73x
+--------------------------------------------------------
+
+v1.0
+date : 02 Sep 2022
+-	Initial release
+
+
+v2.1
+date : 02 Jan 2024
+-	Add override_uutf8_locale line
+-	New weather.sh
+-	New weather-icon-text.sh
+-	Change main font from Dosis to be Barlow
+-	Add Fahrenheit version
+-	Add Trash info
+-	Some minor change
+
+
+
+
+
+
