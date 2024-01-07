@@ -189,12 +189,16 @@ ManjaroMain = Packager::Installation.new do
   end
 
   group('Editor & tools') do
-    package MnjPkg::Neovim
     package MnjPkg::EditorconfigChecker
     package MnjPkg::TreeSitter
     package MnjPkg::YamlLanguageServer
 
     # editorconfig
+  end
+
+  group('Vim') do
+    package MnjPkg::Neovim
+    package MnjPkg::LazyVim
   end
 
   group('Doom emacs') do
