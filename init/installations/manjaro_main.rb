@@ -109,17 +109,6 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::OpenJdk
   end
 
-  group('Ansible & tools') do
-    package MnjPkg::Ansible
-    package MnjPkg::AnsibleLanguageServer
-    package MnjPkg::AnsibleLint
-  end
-
-  group('Terraform & tools') do
-    package MnjPkg::Terraform
-    # terrafrom-ls
-  end
-
   group('GRPC & tools') do
     package MnjPkg::Buf
     package MnjPkg::Grpc
@@ -135,6 +124,17 @@ ManjaroMain = Packager::Installation.new do
 
     # NOTE temporary disable
     # group.command('haskell-stack', 'pamac install stack --no-confirm')
+  end
+
+  group('Ansible & tools') do
+    package MnjPkg::Ansible
+    package MnjPkg::AnsibleLanguageServer
+    package MnjPkg::AnsibleLint
+  end
+
+  group('Terraform & tools') do
+    package MnjPkg::Terraform
+    # terrafrom-ls
   end
 
   group('Git & tools') do
@@ -188,7 +188,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::DockerCompose
   end
 
-  group('Editor & tools') do
+  group('Editors tools') do
     package MnjPkg::EditorconfigChecker
     package MnjPkg::TreeSitter
     package MnjPkg::YamlLanguageServer
@@ -231,7 +231,6 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Postman
     package MnjPkg::Skype
     package MnjPkg::MattermostDesktop
-
 
     # group.command('Outline client', 'snap install outline-client --edge --devmode')
     # via
