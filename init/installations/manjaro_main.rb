@@ -89,7 +89,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Python
   end
 
-  group('Roby toolchain') do
+  group('Ruby toolchain') do
     package MnjPkg::RubySolargraph
     package MnjPkg::RubyRubocop
   end
@@ -192,6 +192,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Neovim
     package MnjPkg::EditorconfigChecker
     package MnjPkg::TreeSitter
+    package MnjPkg::YamlLanguageServer
 
     # editorconfig
   end
