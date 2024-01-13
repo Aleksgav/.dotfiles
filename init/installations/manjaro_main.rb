@@ -216,6 +216,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Feh
     package MnjPkg::Rofi
     package MnjPkg::Slock
+    package MnjPkg::Picom
   end
 
   group('Servers') do
