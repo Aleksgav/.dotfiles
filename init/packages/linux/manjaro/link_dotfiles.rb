@@ -49,6 +49,11 @@ module Linux
         mv -f $CONFIG_DIR/zellij{,.bak}
         ln -s $DOTFILES/zellij            $CONFIG_DIR/zellij
 
+        ln -s $DOTFILES/leftwm            $CONFIG_DIR/leftwm
+        sudo ln -s $DOTFILES/leftwm/leftwm.desktop /usr/share/xsessions
+
+        ln -s $DOTFILES/rofi              $CONFIG_DIR/rofi
+
         ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
         ln -s $DOTFILES/conky             $CONFIG_DIR/conky
 
