@@ -205,6 +205,17 @@ ManjaroMain = Packager::Installation.new do
   group('Doom emacs') do
     package MnjPkg::Emacs
     package MnjPkg::DoomEmacs
+    package MnjPkg::EmacsDaemon
+  end
+
+  group('Window manager') do
+    package MnjPkg::Leftwm
+    package MnjPkg::LeftwmTheme
+    # package MnjPkg::LeftwmThemeAscent
+    package MnjPkg::Polybar
+    package MnjPkg::Feh
+    package MnjPkg::Rofi
+    package MnjPkg::Slock
   end
 
   group('Servers') do
