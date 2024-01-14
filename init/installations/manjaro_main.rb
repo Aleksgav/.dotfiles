@@ -150,6 +150,7 @@ ManjaroMain = Packager::Installation.new do
   group('CLI tools') do
     package MnjPkg::Bat
     package MnjPkg::Btop
+    package MnjPkg::Bottom
     package MnjPkg::Xclip
     package MnjPkg::Cloc
     package MnjPkg::Direnv
