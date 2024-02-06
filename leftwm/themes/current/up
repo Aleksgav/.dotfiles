@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 export $(dbus-launch)
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P)"
+POLYBAR_CONFIG_PATH=~/.config/polybar/config.ini
 
 #down the last running theme
 if [ -f "/tmp/leftwm-theme-down" ]; then
@@ -77,7 +78,7 @@ if [ -x "$(command -v polybar)" ]; then
   pkill polybar
   monitors="$(polybar -m | sed s/:.*// | tac)"
   while read -r display; do
-    MONITOR=$display polybar -c "$SCRIPTPATH/polybar.config" &> /dev/null &
+    MONITOR=$display polybar -c "$POLYBAR_CONFIG_PATH" &> /dev/null &
   done <<< "$monitors"
   exit 0
 fi

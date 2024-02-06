@@ -52,6 +52,8 @@ module Linux
         ln -s $DOTFILES/leftwm            $CONFIG_DIR/leftwm
         sudo ln -s $DOTFILES/leftwm/leftwm.desktop /usr/share/xsessions
 
+        ln -s $DOTFILES/polybar           $CONFIG_DIR/polybar
+
         ln -s $DOTFILES/rofi              $CONFIG_DIR/rofi
 
         ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
