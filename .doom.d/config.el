@@ -257,8 +257,10 @@
   "A list of deft directories to pick")
 
 (setq my/deft-dir-list '("~/notes/"
-                         "~/notes/work/"
                          "~/notes/my/"
+                         "~/notes/old/"
+                         "~/notes/good/"
+                         "~/notes/work/"
                         ))
 
 (defun my/pick-deft-dir ()
