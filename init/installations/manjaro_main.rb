@@ -183,6 +183,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Gotop
     package MnjPkg::Kubectl
     package MnjPkg::Aspell
+    package MnjPkg::Glow
   end
 
   group('Docker & tools') do
