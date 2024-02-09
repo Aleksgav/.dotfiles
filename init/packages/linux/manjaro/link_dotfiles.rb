@@ -54,6 +54,8 @@ module Linux
 
         ln -s $DOTFILES/polybar           $CONFIG_DIR/polybar
 
+        ln -s $DOTFILES/dunst             $CONFIG_DIR/dunst
+
         ln -s $DOTFILES/rofi              $CONFIG_DIR/rofi
 
         ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
