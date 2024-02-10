@@ -184,6 +184,10 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Kubectl
     package MnjPkg::Aspell
     package MnjPkg::Glow
+    package MnjPkg::Bandwhich
+    package MnjPkg::Kmon
+    package MnjPkg::Xplr
+    package MnjPkg::GpgTui
   end
 
   group('Docker & tools') do
