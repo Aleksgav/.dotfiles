@@ -247,7 +247,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::HomeAssistant
     package MnjPkg::Discord
     package MnjPkg::Ghidra
-
+    package MnjPkg::Flameshot
     package MnjPkg::Zeplin
     package MnjPkg::Zoom
     package MnjPkg::SonicPi
