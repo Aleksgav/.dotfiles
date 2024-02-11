@@ -250,6 +250,7 @@ ManjaroMain = Packager::Installation.new do
 
     package MnjPkg::Zeplin
     package MnjPkg::Zoom
+    package MnjPkg::SonicPi
     package MnjPkg::Redisinsight
     package MnjPkg::Postman
     package MnjPkg::Skype
