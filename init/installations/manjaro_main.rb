@@ -189,7 +189,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Kmon
     package MnjPkg::Xplr
     package MnjPkg::GpgTui
-    package MnjPkg::LxqtPolicykit
+    # package MnjPkg::LxqtPolicykit
   end
 
   group('Docker & tools') do
