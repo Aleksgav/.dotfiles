@@ -12,6 +12,7 @@ ManjaroMain = Packager::Installation.new do
   group('Manjaro settings') do
     package MnjPkg::SnapPlugin
     package MnjPkg::FlatpakPlugin
+    package MnjPkg::Appimagelauncher
 
     # NOTE temporary disable
     # package MnjPkg::ZshDefault
