@@ -189,6 +189,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Kmon
     package MnjPkg::Xplr
     package MnjPkg::GpgTui
+    package MnjPkg::OutlineClientCli
     # package MnjPkg::LxqtPolicykit
   end
 
