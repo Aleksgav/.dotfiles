@@ -59,11 +59,15 @@
         (command: PrevScratchPadWindow, value: "main", modifier: ["modkey", "Shift", "Control"], key: "period"),
         // applications
         (command: Execute, value: "google-chrome-stable", modifier: ["modkey", "Shift"], key: "c"),
-        (command: Execute, value: "emacsclient -nc", modifier: ["modkey", "Shift"], key: "e"),
-        (command: Execute, value: "~/.config/rofi/launchers/type-4/launcher.sh", modifier: ["modkey", "Shift"], key: "m"),
-        (command: Execute, value: "~/.config/rofi/launchers/type-3/launcher.sh", modifier: ["modkey", "Shift"], key: "k"),
+        (command: Execute, value: "emacsclient -c -a 'emacs'", modifier: ["modkey", "Shift"], key: "e"),
+        (command: Execute, value: "~/.config/rofi/launchers/type-4/launcher.sh", modifier: ["modkey", "Alt"], key: "p"),
+        (command: Execute, value: "~/.config/rofi/launchers/type-3/launcher.sh", modifier: ["modkey", "Control"], key: "p"),
         (command: Execute, value: "~/.config/rofi/launchers/type-1/launcher.sh", modifier: ["modkey"], key: "p"),
         (command: Execute, value: "alacritty", modifier: ["modkey", "Shift"], key: "Return"),
+        (command: Execute, value: "thunar", modifier: ["modkey", "Shift"], key: "f"),
+        (command: Execute, value: "alacritty -e btm", modifier: ["modkey"], key: "b"),
+        (command: Execute, value: "pavucontrol", modifier: ["modkey"], key: "v"),
+        (command: Execute, value: "flameshot gui", modifier: ["modkey", "Shift"], key: "p"),
         // windows
         (command: ToggleFloating, modifier: ["modkey", "Control"], key: "f"),
         (command: ToggleFullScreen, modifier: ["modkey"], key: "f"),
@@ -81,7 +85,6 @@
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
         (command: Execute, value: "loginctl kill-session $XDG_SESSION_ID", modifier: ["modkey", "Shift"], key: "x"),
         (command: Execute, value: "xsecurelock", modifier: ["modkey", "Control"], key: "l"),
-        // (command: Execute, value: "slock", modifier: ["modkey", "Control"], key: "l"),
         // workspace
         (command: MoveToLastWorkspace, value: "", modifier: ["modkey", "Shift"], key: "w"),
         (command: FocusWorkspaceNext, value: "", modifier: ["modkey"], key: "l"),
