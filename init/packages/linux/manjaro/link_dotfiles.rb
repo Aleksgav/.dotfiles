@@ -58,6 +58,8 @@ module Linux
 
         ln -s $DOTFILES/rofi              $CONFIG_DIR/rofi
 
+        ln -s $DOTFILES/xsecurelock/xsecurelock /usr/lib/systemd/system-sleep/xsecurelock
+
         ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
         ln -s $DOTFILES/conky             $CONFIG_DIR/conky
 

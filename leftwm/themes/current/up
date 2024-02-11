@@ -73,6 +73,11 @@ fi
 #set the theme.toml config
 leftwm-command "LoadTheme $SCRIPTPATH/theme.toml"
 
+if [ -x "$(command -v xsecurelock)" ]; then
+  xset s 300 5
+  xss-lock -n /usr/lib/xsecurelock/dimmer -l -- xsecurelock &
+fi
+
 #boot polybar based on the number of monitors found
 if [ -x "$(command -v polybar)" ]; then
   pkill polybar

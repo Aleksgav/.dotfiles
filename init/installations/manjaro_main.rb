@@ -222,6 +222,9 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Feh
     package MnjPkg::Rofi
     package MnjPkg::Slock
+    package MnjPkg::XssLock
+    package MnjPkg::Xsecurelock
+    package MnjPkg::Xscreensaver
     package MnjPkg::Picom
     package MnjPkg::Dunst
   end
@@ -252,6 +255,8 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Skype
     package MnjPkg::MattermostDesktop
 
+    package MnjPkg::Mplayer
+    package MnjPkg::Mpv
     # group.command('Outline client', 'snap install outline-client --edge --devmode')
     # via
     # graphql-playground
