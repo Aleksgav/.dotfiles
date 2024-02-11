@@ -1,22 +1,22 @@
 [global]
     follow = keyboard
-    width = (200, 250)
-    height = 95
+    width = (250, 400)
+    height = 180
     origin = top-right
-    offset = 10x30
+    offset = 10x50
     scale = 0
     notification_limit = 10
     progress_bar = true
     progress_bar_height = 1
     progress_bar_frame_width = 0
-    progress_bar_min_width = 50
-    progress_bar_max_width = 250
+    progress_bar_min_width = 250
+    progress_bar_max_width = 400
     progress_bar_corner_radius = 0
     icon_corner_radius = 0
     indicate_hidden = yes
     transparency = 20
     separator_height = 1
-    padding = 5
+    padding = 10
     horizontal_padding = 5
     text_icon_padding = 0
     frame_width = 1
@@ -25,7 +25,7 @@
     separator_color = frame
     sort = yes
     idle_threshold = 120
-    font = FiraCode Nerd Font 7
+    font = FiraCode Nerd Font 11
     line_height = 5
     markup = full
     format = "<span foreground='#f3f4f5'><b>%s %p</b></span>\n%b"
@@ -62,13 +62,13 @@
 
 [urgency_low]
     background = "#151515"
-    foreground = "#8D502B"
+    foreground = "#F3F4F5"
     frame_color = "#2C2C2C"
     timeout = 10
 
 [urgency_normal]
     background = "#151515"
-    foreground = "#8D502B"
+    foreground = "#F3F4F5"
     frame_color = "#2C2C2C"
     highlight = "#B25E00"
     timeout = 10
