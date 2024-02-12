@@ -85,6 +85,7 @@
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
         (command: Execute, value: "loginctl kill-session $XDG_SESSION_ID", modifier: ["modkey", "Shift"], key: "x"),
         (command: Execute, value: "xsecurelock", modifier: ["modkey", "Control"], key: "l"),
+        (command: Execute, value: "xsecurelock", modifier: ["modkey", "Control"], key: "q"),
         // workspace
         (command: MoveToLastWorkspace, value: "", modifier: ["modkey", "Shift"], key: "w"),
         (command: FocusWorkspaceNext, value: "", modifier: ["modkey"], key: "l"),
