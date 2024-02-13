@@ -202,6 +202,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::EditorconfigChecker
     package MnjPkg::TreeSitter
     package MnjPkg::YamlLanguageServer
+    package MnjPkg::BashLanguageServer
 
     # editorconfig
   end
