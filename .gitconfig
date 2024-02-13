@@ -28,9 +28,8 @@
   path = ~/.gitconfig_delta
 
 [delta]
-#  features = collared-trogon 
-#  features = tangara-chilensis
-  features = woolly-mammoth
+#  features = collared-trogon
+  features = tangara-chilensis
   line-numbers = true
   navigate = true
   side-by-side = true
@@ -38,7 +37,5 @@
 [delta "interactive"]
   keep-plus-minus-markers = false
 
-#[url "ssh://git@github.com/"]
-	#insteadOf = https://github.com/
 [init]
 	defaultBranch = master
