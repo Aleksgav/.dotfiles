@@ -46,6 +46,8 @@ module Linux
         mv -f $CONFIG_DIR/alacritty{,.bak}
         ln -s $DOTFILES/alacritty         $CONFIG_DIR/alacritty
 
+        ln -s $DOTFILES/bat               $CONFIG_DIR/bat
+
         mv -f $CONFIG_DIR/zellij{,.bak}
         ln -s $DOTFILES/zellij            $CONFIG_DIR/zellij
 
