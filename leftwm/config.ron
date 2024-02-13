@@ -64,7 +64,7 @@
         (command: Execute, value: "~/.config/rofi/launchers/type-4/launcher.sh", modifier: ["modkey", "Alt"], key: "p"),
         (command: Execute, value: "~/.config/rofi/launchers/type-3/launcher.sh", modifier: ["modkey", "Control"], key: "p"),
         (command: Execute, value: "~/.config/rofi/launchers/type-1/launcher.sh", modifier: ["modkey"], key: "p"),
-        (command: Execute, value: "alacritty", modifier: ["modkey", "Shift"], key: "Return"),
+        (command: Execute, value: "alacritty -e zellij", modifier: ["modkey", "Shift"], key: "Return"),
         (command: Execute, value: "thunar", modifier: ["modkey", "Shift"], key: "f"),
         (command: Execute, value: "alacritty -e btm", modifier: ["modkey"], key: "b"),
         (command: Execute, value: "pavucontrol", modifier: ["modkey"], key: "v"),
