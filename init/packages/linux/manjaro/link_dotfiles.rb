@@ -67,6 +67,8 @@ module Linux
         ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
         ln -s $DOTFILES/conky             $CONFIG_DIR/conky
 
+        ln -s ~/.dotfiles/.mbsyncrc ~/.mbsyncrc
+
         mv -f $CONFIG_DIR/nvim{,.bak}
         mv ~/.local/share/nvim{,.bak}
         mv ~/.local/state/nvim{,.bak}
