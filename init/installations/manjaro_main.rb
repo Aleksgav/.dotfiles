@@ -144,6 +144,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::GitDelta
     package MnjPkg::GitUi
     package MnjPkg::Tig
+    package MnjPkg::PreCommit
 
     # git-cal
   end
