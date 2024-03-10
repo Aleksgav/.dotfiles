@@ -5,7 +5,7 @@
 
 [core]
   excludesfile = ~/.gitignore-system
-  editor = vim
+  editor = nvim
   autocrlf = input
   quotePath = false
 
