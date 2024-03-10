@@ -193,6 +193,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::OutlineClientCli
     package MnjPkg::Isync
     package MnjPkg::Mu
+    package MnjPkg::Syncthing
     # package MnjPkg::LxqtPolicykit
   end
 
