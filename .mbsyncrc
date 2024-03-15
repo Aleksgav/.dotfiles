@@ -1,7 +1,7 @@
 IMAPAccount gmail
 Host imap.gmail.com
 User alex.phyp@gmail.com
-PassCmd "cat ~/insecpass"
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mbsyncgmail.gpg"
 SSLType IMAPS
 
 IMAPStore gmail-remote
