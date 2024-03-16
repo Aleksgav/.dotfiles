@@ -9,12 +9,33 @@ Account gmail
 
 MaildirStore gmail-local
 Subfolders Verbatim
-Path ~/Mail/
-Inbox ~/Mail/Inbox
+Path ~/Mail/Gmail/
+Inbox ~/Mail/Gmail/Inbox
 
 Channel gmail
 Far :gmail-remote:
 Near :gmail-local:
 Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
+Create Both
+SyncState *
+
+IMAPAccount mailru
+Host imap.mail.ru
+User _jason@mail.ru
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mbsyncmailru.gpg"
+SSLType IMAPS
+
+IMAPStore mailru-remote
+Account mailru
+
+MaildirStore mailru-local
+Subfolders Verbatim
+Path ~/Mail/Mailru/
+Inbox ~/Mail/Mailru/Inbox
+
+Channel mailru
+Far :mailru-remote:
+Near :mailru-local:
+Patterns *
 Create Both
 SyncState *
