@@ -1,0 +1,287 @@
+swap_tiled_layout name="BASE" {
+    tab {
+        pane {
+             pane
+        }
+        pane size=1 borderless=true {
+             plugin location="file:~/.dotfiles/zellij/plugins/zjstatus.wasm" {
+                  mode_normal        "#[bg=#b1bbfa,fg=black] NL #[bg=black,fg=#b1bbfa]"
+                  mode_locked        "#[bg=#ef0101,fg=black] LD #[bg=black,fg=#ef0101]"
+                  mode_resize        "#[bg=#e165f0,fg=black] RS #[bg=black,fg=#e165f0]"
+                  mode_pane          "#[bg=#8665f0,fg=black] PN #[bg=black,fg=#8665f0]"
+                  mode_tab           "#[bg=#ac65f0,fg=black] TB #[bg=black,fg=#ac65f0]"
+                  mode_scroll        "#[bg=#7f65f0,fg=black] SC #[bg=black,fg=#7f65f0]"
+                  mode_enter_search  "#[bg=#00f566,fg=black] ES #[bg=black,fg=#00f566]"
+                  mode_search        "#[bg=#e0f9f6,fg=black] SE #[bg=black,fg=#e0f9f6]"
+                  mode_rename_tab    "#[bg=#009eef,fg=black] RT #[bg=black,fg=#009eef]"
+                  mode_rename_pane   "#[bg=#4100f0,fg=black] RP #[bg=black,fg=#4100f0]"
+                  mode_session       "#[bg=#ad01f0,fg=black] SS #[bg=black,fg=#ad01f0]"
+                  mode_move          "#[bg=#5200f0,fg=black] MV #[bg=black,fg=#5200f0]"
+                  mode_tmux          "#[bg=#ffc387,fg=black] TX #[bg=black,fg=#ffc387]"
+                  mode_prompt        "#[bg=#89B4FA] PRO "
+
+                  format_left  "{mode}{tabs}"
+
+                  datetime          "#[fg=black,bg=#b1bbfa] {format} "
+                  datetime_format   "%a|%d/%m/%Y|%H:%M"
+                  datetime_timezone "Europe/Moscow"
+
+                  format_right "#[fg=#181825,bg=#b1bbfa]{datetime} {swap_layout}"
+                  format_space "#[bg=#181825]"
+
+                  tab_normal              "#[fg=#181825,bg=#4C4C59] #[fg=#000000,bg=#4C4C59]{index}  {name} #[fg=#4C4C59,bg=#181825]"
+                  tab_normal_fullscreen   "#[fg=#6C7086,bg=#181825] {index} {name} [] "
+                  tab_normal_sync         "#[fg=#6C7086,bg=#181825] {index} {name} <> "
+                  tab_active              "#[fg=#181825,bg=#ffffff,bold,italic] {index}  {name} #[fg=#ffffff,bg=#181825]"
+                  tab_active_fullscreen   "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} [] "
+                  tab_active_sync         "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} <> "
+
+                  hide_frame_for_single_pane "false"
+             }
+        }
+    }
+}
+
+
+swap_tiled_layout name="RSTA" {
+    tab {
+        pane split_direction="vertical" {
+             pane
+             pane split_direction="horizontal" stacked=true {
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+             }
+        }
+        pane size=1 borderless=true {
+             plugin location="file:~/.dotfiles/zellij/plugins/zjstatus.wasm" {
+                  mode_normal        "#[bg=#b1bbfa,fg=black] NL #[bg=black,fg=#b1bbfa]"
+                  mode_locked        "#[bg=#ef0101,fg=black] LD #[bg=black,fg=#ef0101]"
+                  mode_resize        "#[bg=#e165f0,fg=black] RS #[bg=black,fg=#e165f0]"
+                  mode_pane          "#[bg=#8665f0,fg=black] PN #[bg=black,fg=#8665f0]"
+                  mode_tab           "#[bg=#ac65f0,fg=black] TB #[bg=black,fg=#ac65f0]"
+                  mode_scroll        "#[bg=#7f65f0,fg=black] SC #[bg=black,fg=#7f65f0]"
+                  mode_enter_search  "#[bg=#00f566,fg=black] ES #[bg=black,fg=#00f566]"
+                  mode_search        "#[bg=#e0f9f6,fg=black] SE #[bg=black,fg=#e0f9f6]"
+                  mode_rename_tab    "#[bg=#009eef,fg=black] RT #[bg=black,fg=#009eef]"
+                  mode_rename_pane   "#[bg=#4100f0,fg=black] RP #[bg=black,fg=#4100f0]"
+                  mode_session       "#[bg=#ad01f0,fg=black] SS #[bg=black,fg=#ad01f0]"
+                  mode_move          "#[bg=#5200f0,fg=black] MV #[bg=black,fg=#5200f0]"
+                  mode_tmux          "#[bg=#ffc387,fg=black] TX #[bg=black,fg=#ffc387]"
+                  mode_prompt        "#[bg=#89B4FA] PRO "
+
+                  format_left  "{mode}{tabs}"
+
+                  datetime          "#[fg=black,bg=#b1bbfa] {format} "
+                  datetime_format   "%a|%d/%m/%Y|%H:%M"
+                  datetime_timezone "Europe/Moscow"
+
+                  format_right "#[fg=#181825,bg=#b1bbfa]{datetime} {swap_layout}"
+                  format_space "#[bg=#181825]"
+
+                  tab_normal              "#[fg=#181825,bg=#4C4C59] #[fg=#000000,bg=#4C4C59]{index}  {name} #[fg=#4C4C59,bg=#181825]"
+                  tab_normal_fullscreen   "#[fg=#6C7086,bg=#181825] {index} {name} [] "
+                  tab_normal_sync         "#[fg=#6C7086,bg=#181825] {index} {name} <> "
+                  tab_active              "#[fg=#181825,bg=#ffffff,bold,italic] {index}  {name} #[fg=#ffffff,bg=#181825]"
+                  tab_active_fullscreen   "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} [] "
+                  tab_active_sync         "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} <> "
+
+                  hide_frame_for_single_pane "false"
+             }
+        }
+    }
+}
+
+
+swap_tiled_layout name="RROW" {
+    tab {
+        pane split_direction="vertical" {
+             pane
+             pane split_direction="horizontal" {
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+                  pane
+             }
+        }
+        pane size=1 borderless=true {
+             plugin location="file:~/.dotfiles/zellij/plugins/zjstatus.wasm" {
+                  mode_normal        "#[bg=#b1bbfa,fg=black] NL #[bg=black,fg=#b1bbfa]"
+                  mode_locked        "#[bg=#ef0101,fg=black] LD #[bg=black,fg=#ef0101]"
+                  mode_resize        "#[bg=#e165f0,fg=black] RS #[bg=black,fg=#e165f0]"
+                  mode_pane          "#[bg=#8665f0,fg=black] PN #[bg=black,fg=#8665f0]"
+                  mode_tab           "#[bg=#ac65f0,fg=black] TB #[bg=black,fg=#ac65f0]"
+                  mode_scroll        "#[bg=#7f65f0,fg=black] SC #[bg=black,fg=#7f65f0]"
+                  mode_enter_search  "#[bg=#00f566,fg=black] ES #[bg=black,fg=#00f566]"
+                  mode_search        "#[bg=#e0f9f6,fg=black] SE #[bg=black,fg=#e0f9f6]"
+                  mode_rename_tab    "#[bg=#009eef,fg=black] RT #[bg=black,fg=#009eef]"
+                  mode_rename_pane   "#[bg=#4100f0,fg=black] RP #[bg=black,fg=#4100f0]"
+                  mode_session       "#[bg=#ad01f0,fg=black] SS #[bg=black,fg=#ad01f0]"
+                  mode_move          "#[bg=#5200f0,fg=black] MV #[bg=black,fg=#5200f0]"
+                  mode_tmux          "#[bg=#ffc387,fg=black] TX #[bg=black,fg=#ffc387]"
+                  mode_prompt        "#[bg=#89B4FA] PRO "
+
+                  format_left  "{mode}{tabs}"
+
+                  datetime          "#[fg=black,bg=#b1bbfa] {format} "
+                  datetime_format   "%a|%d/%m/%Y|%H:%M"
+                  datetime_timezone "Europe/Moscow"
+
+                  format_right "#[fg=#181825,bg=#b1bbfa]{datetime} {swap_layout}"
+                  format_space "#[bg=#181825]"
+
+                  tab_normal              "#[fg=#181825,bg=#4C4C59] #[fg=#000000,bg=#4C4C59]{index}  {name} #[fg=#4C4C59,bg=#181825]"
+                  tab_normal_fullscreen   "#[fg=#6C7086,bg=#181825] {index} {name} [] "
+                  tab_normal_sync         "#[fg=#6C7086,bg=#181825] {index} {name} <> "
+                  tab_active              "#[fg=#181825,bg=#ffffff,bold,italic] {index}  {name} #[fg=#ffffff,bg=#181825]"
+                  tab_active_fullscreen   "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} [] "
+                  tab_active_sync         "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} <> "
+
+                  hide_frame_for_single_pane "false"
+             }
+        }
+    }
+}
+
+swap_tiled_layout name="COLS" {
+    tab {
+        pane split_direction="vertical" {
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+        }
+        pane size=1 borderless=true {
+             plugin location="file:~/.dotfiles/zellij/plugins/zjstatus.wasm" {
+                  mode_normal        "#[bg=#b1bbfa,fg=black] NL #[bg=black,fg=#b1bbfa]"
+                  mode_locked        "#[bg=#ef0101,fg=black] LD #[bg=black,fg=#ef0101]"
+                  mode_resize        "#[bg=#e165f0,fg=black] RS #[bg=black,fg=#e165f0]"
+                  mode_pane          "#[bg=#8665f0,fg=black] PN #[bg=black,fg=#8665f0]"
+                  mode_tab           "#[bg=#ac65f0,fg=black] TB #[bg=black,fg=#ac65f0]"
+                  mode_scroll        "#[bg=#7f65f0,fg=black] SC #[bg=black,fg=#7f65f0]"
+                  mode_enter_search  "#[bg=#00f566,fg=black] ES #[bg=black,fg=#00f566]"
+                  mode_search        "#[bg=#e0f9f6,fg=black] SE #[bg=black,fg=#e0f9f6]"
+                  mode_rename_tab    "#[bg=#009eef,fg=black] RT #[bg=black,fg=#009eef]"
+                  mode_rename_pane   "#[bg=#4100f0,fg=black] RP #[bg=black,fg=#4100f0]"
+                  mode_session       "#[bg=#ad01f0,fg=black] SS #[bg=black,fg=#ad01f0]"
+                  mode_move          "#[bg=#5200f0,fg=black] MV #[bg=black,fg=#5200f0]"
+                  mode_tmux          "#[bg=#ffc387,fg=black] TX #[bg=black,fg=#ffc387]"
+                  mode_prompt        "#[bg=#89B4FA] PRO "
+
+                  format_left  "{mode}{tabs}"
+
+                  datetime          "#[fg=black,bg=#b1bbfa] {format} "
+                  datetime_format   "%a|%d/%m/%Y|%H:%M"
+                  datetime_timezone "Europe/Moscow"
+
+                  format_right "#[fg=#181825,bg=#b1bbfa]{datetime} {swap_layout}"
+                  format_space "#[bg=#181825]"
+
+                  tab_normal              "#[fg=#181825,bg=#4C4C59] #[fg=#000000,bg=#4C4C59]{index}  {name} #[fg=#4C4C59,bg=#181825]"
+                  tab_normal_fullscreen   "#[fg=#6C7086,bg=#181825] {index} {name} [] "
+                  tab_normal_sync         "#[fg=#6C7086,bg=#181825] {index} {name} <> "
+                  tab_active              "#[fg=#181825,bg=#ffffff,bold,italic] {index}  {name} #[fg=#ffffff,bg=#181825]"
+                  tab_active_fullscreen   "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} [] "
+                  tab_active_sync         "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} <> "
+
+                  hide_frame_for_single_pane "false"
+             }
+        }
+    }
+}
+
+swap_tiled_layout name="ROWS" max_panes=255 {
+    tab {
+        pane split_direction="horizontal" {
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+             pane
+        }
+        pane size=1 borderless=true {
+             plugin location="file:~/.dotfiles/zellij/plugins/zjstatus.wasm" {
+                  mode_normal        "#[bg=#b1bbfa,fg=black] NL #[bg=black,fg=#b1bbfa]"
+                  mode_locked        "#[bg=#ef0101,fg=black] LD #[bg=black,fg=#ef0101]"
+                  mode_resize        "#[bg=#e165f0,fg=black] RS #[bg=black,fg=#e165f0]"
+                  mode_pane          "#[bg=#8665f0,fg=black] PN #[bg=black,fg=#8665f0]"
+                  mode_tab           "#[bg=#ac65f0,fg=black] TB #[bg=black,fg=#ac65f0]"
+                  mode_scroll        "#[bg=#7f65f0,fg=black] SC #[bg=black,fg=#7f65f0]"
+                  mode_enter_search  "#[bg=#00f566,fg=black] ES #[bg=black,fg=#00f566]"
+                  mode_search        "#[bg=#e0f9f6,fg=black] SE #[bg=black,fg=#e0f9f6]"
+                  mode_rename_tab    "#[bg=#009eef,fg=black] RT #[bg=black,fg=#009eef]"
+                  mode_rename_pane   "#[bg=#4100f0,fg=black] RP #[bg=black,fg=#4100f0]"
+                  mode_session       "#[bg=#ad01f0,fg=black] SS #[bg=black,fg=#ad01f0]"
+                  mode_move          "#[bg=#5200f0,fg=black] MV #[bg=black,fg=#5200f0]"
+                  mode_tmux          "#[bg=#ffc387,fg=black] TX #[bg=black,fg=#ffc387]"
+                  mode_prompt        "#[bg=#89B4FA] PRO "
+
+                  format_left  "{mode}{tabs}"
+
+                  datetime          "#[fg=black,bg=#b1bbfa] {format} "
+                  datetime_format   "%a|%d/%m/%Y|%H:%M"
+                  datetime_timezone "Europe/Moscow"
+
+                  format_right "#[fg=#181825,bg=#b1bbfa]{datetime} {swap_layout}"
+                  format_space "#[bg=#181825]"
+
+                  tab_normal              "#[fg=#181825,bg=#4C4C59] #[fg=#000000,bg=#4C4C59]{index}  {name} #[fg=#4C4C59,bg=#181825]"
+                  tab_normal_fullscreen   "#[fg=#6C7086,bg=#181825] {index} {name} [] "
+                  tab_normal_sync         "#[fg=#6C7086,bg=#181825] {index} {name} <> "
+                  tab_active              "#[fg=#181825,bg=#ffffff,bold,italic] {index}  {name} #[fg=#ffffff,bg=#181825]"
+                  tab_active_fullscreen   "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} [] "
+                  tab_active_sync         "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} <> "
+
+                  hide_frame_for_single_pane "false"
+             }
+        }
+    }
+}

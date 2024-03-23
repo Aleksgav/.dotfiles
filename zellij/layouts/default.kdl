@@ -23,7 +23,7 @@ layout {
             datetime_format   "%a|%d/%m/%Y|%H:%M"
             datetime_timezone "Europe/Moscow"
 
-            format_right "#[fg=#181825,bg=#b1bbfa]{datetime}"
+            format_right "#[fg=#181825,bg=#b1bbfa]{datetime} {swap_layout}"
             format_space "#[bg=#181825]"
 
             tab_normal              "#[fg=#181825,bg=#4C4C59] #[fg=#000000,bg=#4C4C59]{index}  {name} #[fg=#4C4C59,bg=#181825]"
