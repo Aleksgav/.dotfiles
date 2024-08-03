@@ -193,7 +193,8 @@
             +tree-sitter)               ; the tubes
        (yaml +lsp
              +tree-sitter)              ; JSON, but readable
-       ;;zig               ; C, but simpler
+       (zig +lsp               ; C, but simpler
+            +tree-sitter)
 
        :email
        (mu4e +org +gmail)
