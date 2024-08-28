@@ -58,22 +58,29 @@
         (command: ToggleScratchPad, value: "nmtui", modifier: ["modkey", "Alt"], key: "n"),
         (command: ToggleScratchPad, value: "volume", modifier: ["modkey", "Alt"], key: "v"),
         (command: ToggleScratchPad, value: "cmus", modifier: ["modkey", "Alt"], key: "x"),
+
         (command: ReleaseScratchPad, modifier: ["modkey", "Control", "Shift"], key: "p"),
         (command: AttachScratchPad, value: "info", modifier: ["modkey", "Control", "Shift"], key: "a"),
         (command: NextScratchPadWindow, value: "info", modifier: ["modkey", "Shift", "Control"], key: "comma"),
         (command: PrevScratchPadWindow, value: "info", modifier: ["modkey", "Shift", "Control"], key: "period"),
+
         // applications
         (command: Execute, value: "google-chrome-stable", modifier: ["modkey", "Shift"], key: "c"),
         (command: Execute, value: "emacsclient -c -a 'emacs'", modifier: ["modkey", "Shift"], key: "e"),
+        (command: Execute, value: "alacritty", modifier: ["modkey", "Shift"], key: "Return"),
+        (command: Execute, value: "alacritty -e zellij", modifier: ["modkey", "Shift", "Alt"], key: "Return"),
+        (command: Execute, value: "alacritty -e yazi", modifier: ["modkey", "Shift"], key: "y"),
+
+        (command: Execute, value: "~/.config/rofi/launchers/type-1/launcher.sh", modifier: ["modkey"], key: "p"),
         (command: Execute, value: "~/.config/rofi/launchers/type-4/launcher.sh", modifier: ["modkey", "Alt"], key: "p"),
         (command: Execute, value: "~/.config/rofi/launchers/type-3/launcher.sh", modifier: ["modkey", "Control"], key: "p"),
-        (command: Execute, value: "~/.config/rofi/launchers/type-1/launcher.sh", modifier: ["modkey"], key: "p"),
-        (command: Execute, value: "alacritty -e zellij", modifier: ["modkey", "Shift"], key: "Return"),
-        (command: Execute, value: "alacritty", modifier: ["modkey", "Alt"], key: "Return"),
+
         (command: Execute, value: "thunar", modifier: ["modkey", "Shift"], key: "f"),
+        (command: Execute, value: "flameshot gui", modifier: ["modkey", "Shift"], key: "p"),
+
         (command: Execute, value: "alacritty -e btm", modifier: ["modkey"], key: "b"),
         (command: Execute, value: "pavucontrol", modifier: ["modkey"], key: "v"),
-        (command: Execute, value: "flameshot gui", modifier: ["modkey", "Shift"], key: "p"),
+
         // windows
         (command: ToggleFloating, modifier: ["modkey", "Control"], key: "f"),
         (command: ToggleFullScreen, modifier: ["modkey"], key: "f"),
@@ -87,22 +94,26 @@
         (command: MoveWindowDown, value: "", modifier: ["modkey", "Shift"], key: "Down"),
         (command: FocusWindowUp, value: "", modifier: ["modkey"], key: "Up"),
         (command: FocusWindowDown, value: "", modifier: ["modkey"], key: "Down"),
+
         // leftwm
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
         (command: Execute, value: "loginctl kill-session $XDG_SESSION_ID", modifier: ["modkey", "Shift"], key: "x"),
         (command: Execute, value: "xsecurelock", modifier: ["modkey", "Control"], key: "l"),
         (command: Execute, value: "xsecurelock", modifier: ["modkey", "Control"], key: "q"),
+
         // workspace
         (command: MoveToLastWorkspace, value: "", modifier: ["modkey", "Shift"], key: "w"),
         (command: FocusWorkspaceNext, value: "", modifier: ["modkey"], key: "l"),
         (command: FocusWorkspacePrevious, value: "", modifier: ["modkey"], key: "h"),
         (command: FocusWorkspaceNext, value: "", modifier: ["modkey"], key: "Right"),
         (command: FocusWorkspacePrevious, value: "", modifier: ["modkey"], key: "Left"),
+
         // layout
         (command: NextLayout, value: "", modifier: ["modkey", "Control"], key: "k"),
         (command: PreviousLayout, value: "", modifier: ["modkey", "Control"], key: "j"),
         (command: NextLayout, value: "", modifier: ["modkey", "Control"], key: "Up"),
         (command: PreviousLayout, value: "", modifier: ["modkey", "Control"], key: "Down"),
+
         // tags
         (command: SwapTags, value: "", modifier: ["modkey"], key: "w"),
         (command: GotoTag, value: "1", modifier: ["modkey"], key: "1"),
