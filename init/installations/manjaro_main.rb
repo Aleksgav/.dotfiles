@@ -202,6 +202,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Yazi
     package MnjPkg::Cmus
     package MnjPkg::Lazygit
+    package MnjPkg::Nnn
   end
 
   group('Docker & tools') do
