@@ -2,9 +2,9 @@
 
 module Linux
   module Manjaro
-    Isync = Packager::Package::Builder.build do
-      title 'Isync'
-      command 'pamac install isync --no-confirm'
+    Yazi = Packager::Package::Builder.build do
+      title 'Yazi file manager'
+      command 'pamac install yazi --no-confirm'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true

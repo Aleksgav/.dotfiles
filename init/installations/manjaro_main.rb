@@ -46,6 +46,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::LibCairo
     package MnjPkg::LibHarfbuzz
     package MnjPkg::LibPango
+    package MnjPkg::Popper
   end
 
   group('Rust & toolchain') do
@@ -195,6 +196,10 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Mu
     package MnjPkg::Syncthing
     # package MnjPkg::LxqtPolicykit
+    package MnjPkg::Ffmpegthumbnailer
+    package MnjPkg::P7zip
+    package MnjPkg::Zoxide
+    package MnjPkg::Yazi
   end
 
   group('Docker & tools') do

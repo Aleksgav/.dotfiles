@@ -2,9 +2,9 @@
 
 module Linux
   module Manjaro
-    Isync = Packager::Package::Builder.build do
-      title 'Isync'
-      command 'pamac install isync --no-confirm'
+    Popper = Packager::Package::Builder.build do
+      title 'Popper'
+      command 'pamac install popper --no-confirm'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true

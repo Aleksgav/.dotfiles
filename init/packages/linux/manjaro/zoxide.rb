@@ -2,9 +2,9 @@
 
 module Linux
   module Manjaro
-    Isync = Packager::Package::Builder.build do
-      title 'Isync'
-      command 'pamac install isync --no-confirm'
+    Zoxide = Packager::Package::Builder.build do
+      title 'Zoxide'
+      command 'pamac install zoxide --no-confirm'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
