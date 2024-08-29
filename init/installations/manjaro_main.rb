@@ -200,6 +200,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::P7zip
     package MnjPkg::Zoxide
     package MnjPkg::Yazi
+    package MnjPkg::Cmus
   end
 
   group('Docker & tools') do
