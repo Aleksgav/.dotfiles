@@ -36,7 +36,7 @@ module Packager
       alias_method :sudo, :sudo_require
     end
 
-    SUDO_PREFIX = 'sodo -S <<< '
+    SUDO_PREFIX = 'sudo -S <<< '
 
     attr_accessor :title,
                 :command,
