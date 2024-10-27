@@ -70,15 +70,10 @@
 (use-package all-the-icons)
 (use-package treemacs-all-the-icons)
 
-(require 'highlight-indent-guides)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 (add-hook 'text-mode-hook 'highlight-indent-guides-mode)
 (setq highlight-indent-guides-auto-enabled nil)
 (setq highlight-indent-guides-method 'character)
-
-(set-face-background 'highlight-indent-guides-odd-face "darkgray")
-(set-face-background 'highlight-indent-guides-even-face "dimgray")
-(set-face-foreground 'highlight-indent-guides-character-face "dimgray")
 
 (use-package centaur-tabs
  :demand
@@ -405,7 +400,7 @@
                                '("~/.doom.d/snippets")))
 
 ;; TILE MANAGER proper integration
-(menu-bar-mode t)
+;; (menu-bar-mode t)
 
 ;; SSH-AGENT INTEGRATION
 (after! doom-cli-env
