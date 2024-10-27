@@ -206,19 +206,15 @@ save_to_clipboard = false
 semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
 
 [window]
-decorations = "none"
+decorations = "None"
 decorations_theme_variant = "None"
 dynamic_padding = false
 dynamic_title = true
 opacity = 0.9
 # option_as_alt = "Both"
 resize_increments = false
-startup_mode = "Windowed"
+startup_mode = "Maximized"
 title = "Alacritty"
-
-[window.dimensions]
-columns = 500
-lines = 200
 
 [window.padding]
 x = 5
