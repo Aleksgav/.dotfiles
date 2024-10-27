@@ -3,7 +3,7 @@
 
 require_relative 'lib/init'
 
-installator = Executor.new(Packager::ErrPrinter.new(symbol_h: '='))
+installator = Executor.new()
 manjaro_install_command = CLI::Commands::Install[ManjaroMain, installator]
 osx_install_command = CLI::Commands::Install[OSXMain, installator]
 

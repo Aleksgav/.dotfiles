@@ -46,7 +46,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::LibCairo
     package MnjPkg::LibHarfbuzz
     package MnjPkg::LibPango
-    package MnjPkg::Popper
+    package MnjPkg::Poppler
   end
 
   group('Rust & toolchain') do

@@ -2,16 +2,17 @@
 
 require 'pastel'
 
-module Styles
-  pastel = Pastel.new
+module Packager
+  module Styles
+    pastel = Pastel.new
 
-  SPINNER = pastel.blue.bold.detach
+    HEADER_ERR = pastel.white.on_red.bold.detach
+    HEADER_OUT = pastel.white.bold.detach
 
-  WHITE = pastel.white.detach
-  PACKAGE = pastel.green.underline.detach
-  SUCCESS_MARK = pastel.green.bold.detach
-  ERROR_MARK = pastel.red.bold.detach
+    ERR_PREFIX = pastel.red.bold.detach
+    OUT_PREFIX = pastel.green.bold.detach
 
-  ERROR = pastel.red.bold.detach
-  SUCCESS = pastel.white.bold.detach
+    PKG_TITLE_PREFIX = pastel.bold.green.detach
+    PKG_TITLE = pastel.white.detach
+  end
 end
