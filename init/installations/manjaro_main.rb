@@ -230,7 +230,7 @@ ManjaroMain = Packager::Installation.new do
 
   group('Doom emacs') do
     package MnjPkg::Emacs
-    package MnjPkg::DoomEmacs
+    # package MnjPkg::DoomEmacs
     package MnjPkg::EmacsDaemon
   end
 
