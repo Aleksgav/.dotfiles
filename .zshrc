@@ -1,23 +1,27 @@
 export TERM="xterm-256color"
 
 #homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export GOPATH=$(go env GOPATH)
 
 export PATH="/usr/local/sbin:$GOPATH/bin:$PATH"
 
+# Explicitly set keyboard layouts
+setxkbmap us,ru
+setxkbmap -option grp:switch,grp:win_space_toggle
+
 # Explicitly set language
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # History time stamp
 HIST_STAMPS="dd.mm.yyyy"
 
 # Aliases
-alias zshconfig="vim ~/.zshrc"
+alias zshconfig="nvim ~/.zshrc"
 
 # need for sheldon
 export ZSH="$HOME/.local/share/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
@@ -31,6 +35,11 @@ export STARSHIP_CONFIG=~/.config/starship.toml
 eval "$(starship init zsh)"
 
 eval "$(sheldon source)"
+
+# This should run only once for user session
+# Remove this to another place
+find ~/.ssh -name 'id_*' ! -name '*.pub' -exec ssh-add -q {} \;
+doom env -a '^SSH_' &> /dev/null
 
 # emacs vterm integgration
 vterm_printf() {
@@ -46,3 +55,10 @@ vterm_printf() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
