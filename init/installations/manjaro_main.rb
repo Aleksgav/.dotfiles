@@ -51,7 +51,6 @@ ManjaroMain = Packager::Installation.new do
 
   group('Rust & toolchain') do
     package MnjPkg::RustLangRustup
-    package MnjPkg::ReloadCargo
     package MnjPkg::RustupAddNightly
     package MnjPkg::RustupAddClippy
     package MnjPkg::RustupAddRustAnalyser
@@ -67,10 +66,9 @@ ManjaroMain = Packager::Installation.new do
   group('Golang & toolchain') do
     package MnjPkg::Golang
     package MnjPkg::Gvm
-    package MnjPkg::ReloadBash
     package MnjPkg::Go1204Gvm
     package MnjPkg::Go1204GvmDefault
-    package MnjPkg::GolangcilintSnap
+    package MnjPkg::GolangcilintInstall161
     package MnjPkg::Gopls
 
     # NOTE temporary disable
