@@ -93,6 +93,7 @@ ManjaroMain = Packager::Installation.new do
   end
 
   group('Ruby toolchain') do
+    package MnjPkg::RubyGems
     package MnjPkg::RubySolargraph
     package MnjPkg::RubyRubocop
   end
