@@ -2,9 +2,9 @@
 
 module Linux
   module Manjaro
-    Opera = Packager::Package::Builder.build do
-      title 'Opera'
-      command 'pamac build opera --no-confirm'
+    Fasm = Packager::Package::Builder.build do
+      title 'Fasm'
+      command 'pamac install fasm --no-confirm'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true

@@ -79,6 +79,7 @@ ManjaroMain = Packager::Installation.new do
 
   group('Asm') do
     package MnjPkg::Nasm
+    package MnjPkg::Fasm
   end
 
   group('Lua & tools') do
