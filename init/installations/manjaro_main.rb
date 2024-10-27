@@ -67,7 +67,8 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Golang
     package MnjPkg::Gvm
     package MnjPkg::Go1204Gvm
-    package MnjPkg::Go1204GvmDefault
+    package MnjPkg::Go123Gvm
+    package MnjPkg::GoGvmDefault
     package MnjPkg::GolangcilintInstall161
     package MnjPkg::Gopls
 
