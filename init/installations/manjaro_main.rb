@@ -13,9 +13,6 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::SnapPlugin
     package MnjPkg::FlatpakPlugin
     package MnjPkg::Appimagelauncher
-
-    # NOTE temporary disable
-    # package MnjPkg::ZshDefault
   end
 
   # TODO или .zshrc не слинковался или перезатерся
@@ -295,6 +292,7 @@ ManjaroMain = Packager::Installation.new do
 
   group('Shell') do
     package MnjPkg::Zsh
+    package MnjPkg::ZshDefault
     package MnjPkg::Shellcheck
     package MnjPkg::Nushell
     package MnjPkg::ZshSyntaxHighliting
