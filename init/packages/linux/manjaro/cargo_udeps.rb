@@ -4,7 +4,7 @@ module Linux
   module Manjaro
     CargoUdeps = Packager::Package::Builder.build do
       title 'Cargo udeps'
-      command 'cargo install cargo-udeps --locked'
+      command '~/.cargo/bin/cargo install cargo-udeps --locked'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false

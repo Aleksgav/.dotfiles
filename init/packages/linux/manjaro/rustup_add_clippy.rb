@@ -4,7 +4,7 @@ module Linux
   module Manjaro
      RustupAddClippy = Packager::Package::Builder.build do
       title 'Rustup add clippy'
-      command 'rustup component add clippy'
+      command '~/.cargo/bin/rustup component add clippy'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false

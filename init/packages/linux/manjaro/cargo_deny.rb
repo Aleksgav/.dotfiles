@@ -4,7 +4,7 @@ module Linux
   module Manjaro
      CargoDeny = Packager::Package::Builder.build do
       title 'Cargo deny'
-      command 'cargo install cargo-deny'
+      command '~/.cargo/bin/cargo install cargo-deny'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false

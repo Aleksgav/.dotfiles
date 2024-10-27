@@ -4,7 +4,7 @@ module Linux
   module Manjaro
      CargoEdit = Packager::Package::Builder.build do
       title 'Cargo edit'
-      command 'cargo install cargo-edit'
+      command '~/.cargo/bin/cargo install cargo-edit'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false
