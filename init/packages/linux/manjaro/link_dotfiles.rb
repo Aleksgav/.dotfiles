@@ -70,6 +70,8 @@ module Linux
         ln -s ~/.dotfiles/.mbsyncrc ~/.mbsyncrc
         mkdir ~/Mail
 
+        mkdir -p ~/.ssh
+
         mv -f $CONFIG_DIR/nvim{,.bak}
         mv ~/.local/share/nvim{,.bak}
         mv ~/.local/state/nvim{,.bak}
