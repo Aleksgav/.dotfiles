@@ -4,7 +4,7 @@ module Linux
   module Manjaro
     Superfile = Packager::Package::Builder.build do
       title 'Superfile'
-      command 'pamac build superfile --no-confirm'
+      command 'bash -c "$(curl -sLo- https://superfile.netlify.app/install.sh)"'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
