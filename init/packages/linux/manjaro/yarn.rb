@@ -4,7 +4,7 @@ module Linux
   module Manjaro
     Yarn = Packager::Package::Builder.build do
       title 'Yarn'
-      command 'pamac install yarn --no-confirm'
+      command '. $HOME/.config/nvm/nvm.sh && npm install --global yarn'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
