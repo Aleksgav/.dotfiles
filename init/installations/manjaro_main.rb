@@ -51,7 +51,7 @@ ManjaroMain = Packager::Installation.new do
 
   group('Rust & toolchain') do
     package MnjPkg::RustLangRustup
-    package MnjPkg::ReloadBash
+    package MnjPkg::ReloadCargo
     package MnjPkg::RustupAddNightly
     package MnjPkg::RustupAddClippy
     package MnjPkg::RustupAddRustAnalyser

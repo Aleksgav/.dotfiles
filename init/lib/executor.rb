@@ -68,10 +68,4 @@ class Executor
 
     puts err ? Styles::HEADER_ERR[output] : Styles::HEADER_OUT[output]
   end
-
-    Packager::Styles
-
-  # def pastel
-  #   @pastel ||= Pastel.new
-  # end
 end
