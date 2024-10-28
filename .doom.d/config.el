@@ -35,9 +35,9 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'semi-light)
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 20 :weight 'semi-light)
     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15)
-    doom-unicode-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'semi-light))
+    doom-unicode-font (font-spec :family "FiraCode Nerd Font" :size 20 :weight 'semi-light))
 
 ;;(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'semi-light)
 ;;    doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15))
@@ -256,6 +256,8 @@
                          "~/notes/old/"
                          "~/notes/good/"
                          "~/notes/work/"
+                         "~/org/journal/"
+                         "~/roam/"
                         ))
 
 (defun my/pick-deft-dir ()
@@ -276,11 +278,6 @@
 
 ;; ORG MODE
 ;;
-(setq org-ellipsis " [>>>]")
-(custom-set-faces
- '(org-ellipsis ((t (:foreground "#58B5A5")))) ;; background ellipsis color
-)
-
 ;; HIDE EMPHASIS MARKERS
 (setq org-hide-emphasis-markers t)
 
@@ -301,6 +298,10 @@
 
 ;; CUSTOM FONT FACE
 (after! org
+ (setq org-ellipsis " [>>>]")
+ (custom-set-faces
+  '(org-ellipsis ((t (:foreground "#58B5A5")))) ;; background ellipsis color
+ )
  (custom-set-faces!
    '(org-document-title :height 1.3)
    '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
