@@ -39,7 +39,7 @@
         // "RightWiderLeftStack",
         // "LeftWiderRightStack",
     ],
-    layout_mode: Workspace,
+    layout_mode: Tag,
     insert_behavior: Bottom,
     scratchpad: [
         (name: "info", value: "alacritty -e glow -p ~/xnotes/info.md", x: 0.1, y: 0.1, width: 0.8, height: 0.8),
@@ -136,4 +136,5 @@
         (command: MoveToTag, value: "9", modifier: ["modkey", "Shift"], key: "9"),
     ],
     workspaces: [],
+    auto_derive_workspace: true,
 )
