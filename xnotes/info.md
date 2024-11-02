@@ -46,10 +46,10 @@
 ## Workspace / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / 
 
 - Move To Last Workspace ```Meta-Shift-w```
-- Focus Workspace Next ```Meta-l```
-- Focus Workspace Prev ```Meta-h```
-- Focus Workspace Next ```Meta-Right```
-- Focus Workspace Prev ```Meta-Left```
+- Move To Next Workspace ```Meta-Shift-l``` | ```Meta-Shift-Right```
+- Move To Prew Workspace ```Meta-Shift-h``` | ```Meta-Shift-Left```
+- Focus Workspace Next ```Meta-l``` | ```Meta-Right```
+- Focus Workspace Prev ```Meta-h``` | ```Meta-Left```
 
 ## Layout / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / 
 

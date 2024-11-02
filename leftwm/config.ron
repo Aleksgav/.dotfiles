@@ -103,6 +103,10 @@
 
         // workspace
         (command: MoveToLastWorkspace, value: "", modifier: ["modkey", "Shift"], key: "w"),
+        (command: MoveWindowToNextWorkspace, value: "", modifier: ["modkey", "Shift"], key: "l"),
+        (command: MoveWindowToNextWorkspace, value: "", modifier: ["modkey", "Shift"], key: "Right"),
+        (command: MoveWindowToPreviousWorkspace , value: "", modifier: ["modkey", "Shift"], key: "h"),
+        (command: MoveWindowToPreviousWorkspace , value: "", modifier: ["modkey", "Shift"], key: "Left"),
         (command: FocusWorkspaceNext, value: "", modifier: ["modkey"], key: "l"),
         (command: FocusWorkspacePrevious, value: "", modifier: ["modkey"], key: "h"),
         (command: FocusWorkspaceNext, value: "", modifier: ["modkey"], key: "Right"),
