@@ -84,6 +84,7 @@ module Linux
       command cmd
       os TARGET_OS
       distro TARGET_DISTRO
+      # TODO здесь нужно все поправить
       sudo_require false
     end
   end

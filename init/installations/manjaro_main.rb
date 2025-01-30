@@ -3,6 +3,15 @@
 MnjPkg = Linux::Manjaro
 
 ManjaroMain = Packager::Installation.new do
+  package MnjPkg::TestingSucc
+  package MnjPkg::TestingSucc
+  # package MnjPkg::TestingErr
+
+  group('testing') do
+    package MnjPkg::TestingSucc
+    package MnjPkg::TestingSucc
+  end
+
   group('Create folders') do
     package MnjPkg::ConfigFolder
     package MnjPkg::ConfigAutostartFolder
