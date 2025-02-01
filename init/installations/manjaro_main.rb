@@ -37,6 +37,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::FontOtfFiramonoNerd
     package MnjPkg::FontTtfNotoNerd
     package MnjPkg::FontNotoEmoji
+    package MnjPkg::FontTtfNerdSymbolsMono
   end
 
   group('Dev tools') do
