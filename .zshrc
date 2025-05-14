@@ -26,8 +26,8 @@ alias zshconfig="nvim ~/.zshrc"
 # need for sheldon
 export ZSH="$HOME/.local/share/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
 
-source ~/.rvm/scripts/rvm
-source ~/.gvm/scripts/gvm
+#source ~/.rvm/scripts/rvm
+#source ~/.gvm/scripts/gvm
 
 export PATH="$HOME/.config/emacs/bin:$PATH"
 
@@ -60,6 +60,27 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+alias n='NVIM_APPNAME=nvim-lazy nvim' # LazyVim
+alias nz='NVIM_APPNAME=nvim-zero nvim' # ZeroVim
+nn() {
+  select config in lazy
+  do NVIM_APPNAME=nvim-$config nvim $@; break; done
+}
+
+nnn() {
+  # Assumes all configs exist in directories named ~/.config/nvim-*
+  local config=$(fd --max-depth 1 --glob 'nvim-*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
+ 
+  # If I exit fzf without selecting a config, don't open Neovim
+  [[ -z $config ]] && echo "No config selected" && return
+ 
+  # Open Neovim with the selected config
+  NVIM_APPNAME=$(basename $config) nvim $@
+}
+
+alias cgb='git branch --sort=-committerdate | fzf --header "Checkout Branch" --preview "git diff --color=always {1}" --pointer="" | xargs git checkout'
+
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+#export PATH="$PATH:$HOME/.rvm/bin"
 eval "$(mise activate zsh)"

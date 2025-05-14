@@ -39,4 +39,4 @@
   keep-plus-minus-markers = false
 
 [init]
-	defaultBranch = master
+  defaultBranch = master
