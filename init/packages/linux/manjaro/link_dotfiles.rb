@@ -3,7 +3,7 @@
 module Linux
   module Manjaro
     LinkDotfiles = Packager::Package::Builder.build do
-      cmd =<<-CMD
+      cmd = <<-CMD
         export DOTFILES=$HOME/.dotfiles
         export CONFIG_DIR=#{CONFIG_DIR}
 
@@ -78,13 +78,15 @@ module Linux
         mv ~/.local/share/nvim{,.bak}
         mv ~/.local/state/nvim{,.bak}
         mv ~/.cache/nvim{,.bak}
+
+        ln -s ~/.dotfiles/nvim-ng ~/.config/nvim-ng
       CMD
 
       title 'Link Dotfiles'
       command cmd
       os TARGET_OS
       distro TARGET_DISTRO
-      # TODO здесь нужно все поправить
+      # TODO: здесь нужно все поправить
       sudo_require false
     end
   end
