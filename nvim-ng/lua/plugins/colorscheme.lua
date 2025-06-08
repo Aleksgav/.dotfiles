@@ -9,7 +9,14 @@ return {
       }
     end,
   },
-  { "rebelot/kanagawa.nvim" },
+  {
+    "rebelot/kanagawa.nvim",
+    opts = function()
+      return {
+        transparent = true,
+      }
+    end,
+  },
   {
     "thesimonho/kanagawa-paper.nvim",
     lazy = false,
