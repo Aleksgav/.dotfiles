@@ -63,12 +63,12 @@ export NVM_DIR="$HOME/.nvm"
 alias n='NVIM_APPNAME=nvim-lazy nvim' # LazyVim
 alias nz='NVIM_APPNAME=nvim-zero nvim' # ZeroVim
 alias ng='NVIM_APPNAME=nvim-ng nvim' # ZeroNG
-nn() {
+nv() {
   select config in lazy
   do NVIM_APPNAME=nvim-$config nvim $@; break; done
 }
 
-nnn() {
+nnv() {
   # Assumes all configs exist in directories named ~/.config/nvim-*
   local config=$(fd --max-depth 1 --glob 'nvim-*' ~/.config | fzf --prompt="Neovim Configs > " --height=~50% --layout=reverse --border --exit-0)
  
