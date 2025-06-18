@@ -80,6 +80,8 @@ module Linux
         mv ~/.cache/nvim{,.bak}
 
         ln -s ~/.dotfiles/nvim-ng ~/.config/nvim-ng
+
+        cp -f ~/.dotfiles/xorg.conf.d/00-keyboard.conf /etc/X11/xorg.conf.d/
       CMD
 
       title 'Link Dotfiles'
