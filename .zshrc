@@ -79,7 +79,7 @@ nnv() {
   NVIM_APPNAME=$(basename $config) nvim $@
 }
 
-alias fng='ng $(fzf --preview "bat {} --color=always")'
+alias fng='fzf --height=40% --layout=reverse --walker-skip=.git,node_modules,target --border --preview="bat {} --color=always" --bind="enter:become(NVIM_APPNAME=nvim-ng nvim {})"'
 
 alias cgb='git branch --sort=-committerdate | fzf --header "Checkout Branch" --preview "git diff --color=always {1}" --pointer="" | xargs git checkout'
 
