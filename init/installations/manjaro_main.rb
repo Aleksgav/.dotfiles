@@ -24,7 +24,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Appimagelauncher
   end
 
-  # TODO или .zshrc не слинковался или перезатерся
+  # TODO: или .zshrc не слинковался или перезатерся
   # TODO не установил почтовые программы и тд
   # TODO snap установка не работает как нужно
   package MnjPkg::LinkDotfiles
@@ -79,7 +79,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::GolangcilintInstall161
     package MnjPkg::Gopls
 
-    # NOTE temporary disable
+    # NOTE: temporary disable
     # gomodifytags
     # gotests
   end
@@ -136,7 +136,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Ghc
     package MnjPkg::HaskellLanguageServer
 
-    # NOTE temporary disable
+    # NOTE: temporary disable
     # group.command('haskell-stack', 'pamac install stack --no-confirm')
   end
 
@@ -169,6 +169,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Cloc
     package MnjPkg::Direnv
     package MnjPkg::DiffSoFancy
+    package MnjPkg::Dysk
     package MnjPkg::Htop
     package MnjPkg::Httpie
     package MnjPkg::Curlie
