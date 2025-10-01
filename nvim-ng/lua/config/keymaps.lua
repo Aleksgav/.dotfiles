@@ -6,6 +6,7 @@ local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
 keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+keymap.set("n", "<leader>P", "<CMD>NeovimProjectHistory<CR>", { desc = "Open project history" })
 
 -- Increment/decrement
 keymap.set("n", "+", "<C-a>")
