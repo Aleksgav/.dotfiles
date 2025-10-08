@@ -1,0 +1,10 @@
+[tools]
+go = "latest"
+node = "latest"
+ruby = "3.4.2"
+rust = "latest"
+zig = "latest"
+zls = "0.14"
+
+[settings]
+idiomatic_version_file_enable_tools = []
