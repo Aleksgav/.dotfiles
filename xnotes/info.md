@@ -2,8 +2,8 @@
 
 ## Scratch pad / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
 
-- Toggle **info** `Meta-Shift-i`
-- Toggle **nm** `Meta-Shift-n`
+- Toggle **info** `Meta-Alt-i`
+- Toggle **nm** `Meta-Alt-n`
 - Release `Meta-Control-Shift-p`
 - Attach `Meta-Control-Shift-a`
 - Next `Meta-Control-Shift-,`
