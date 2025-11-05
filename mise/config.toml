@@ -1,8 +1,10 @@
 [tools]
+ghcup = "latest"
 go = "latest"
 node = "latest"
 ruby = "latest"
 rust = "latest"
+stack = "latest"
 zig = "latest"
 zls = "latest"
 
