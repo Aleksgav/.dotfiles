@@ -1,10 +1,10 @@
 [tools]
 go = "latest"
 node = "latest"
-ruby = "3.4.2"
+ruby = "latest"
 rust = "latest"
 zig = "latest"
-zls = "0.14"
+zls = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
