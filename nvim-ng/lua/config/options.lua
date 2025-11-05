@@ -5,9 +5,16 @@
 -- vim.g.lazyvim_picker = "fzf"
 
 vim.opt.spell = true
-vim.opt.spelllang = { "en_us" }
+vim.opt.spelllang = { "ru_ru", "en_us" }
 
 vim.g.lazyvim_picker = "fzf"
+
+vim.filetype.add({
+  extension = {
+    thor = "thor",
+  },
+})
+vim.treesitter.language.register("ruby", "thor")
 
 -- Undercurl
 -- if not working see:
