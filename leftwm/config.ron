@@ -48,6 +48,7 @@
     insert_behavior: Bottom,
     scratchpad: [
         (name: "info", value: "alacritty", args: ["-e", "glow", "-p", "xnotes/info.md"], x: 0.1, y: 0.1, width: 0.8, height: 0.8),
+        (name: "notes", value: "alacritty", args: ["-e", "glow", "-p", "xnotes"], x: 0.1, y: 0.1, width: 0.8, height: 0.8),
         (name: "nmtui", value: "alacritty", args: ["-e", "nmtui"], x: 0.1, y: 0.1, width: 0.8, height: 0.8),
         (name: "volume", value: "alacritty", args: ["-e", "alsamixer"], x: 0.1, y: 0.1, width: 0.8, height: 0.8),
         (name: "cmus", value: "alacritty", args: ["-e", "cmus"], x: 0.1, y: 0.1, width: 0.8, height: 0.8),
@@ -60,6 +61,7 @@
     keybind: [
         // Scratch pad
         (command: ToggleScratchPad, value: "info", modifier: ["modkey", "Alt"], key: "i"),
+        (command: ToggleScratchPad, value: "notes", modifier: ["modkey", "Alt"], key: "s"),
         (command: ToggleScratchPad, value: "nmtui", modifier: ["modkey", "Alt"], key: "n"),
         (command: ToggleScratchPad, value: "volume", modifier: ["modkey", "Alt"], key: "v"),
         (command: ToggleScratchPad, value: "cmus", modifier: ["modkey", "Alt"], key: "x"),
