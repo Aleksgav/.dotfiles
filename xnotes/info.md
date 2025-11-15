@@ -3,6 +3,7 @@
 ## Scratch pad / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /
 
 - Toggle **info** `Meta-Alt-i`
+- Toggle **sticky notes** `Meta-Alt-s`
 - Toggle **nm** `Meta-Alt-n`
 - Release `Meta-Control-Shift-p`
 - Attach `Meta-Control-Shift-a`
