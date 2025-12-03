@@ -42,6 +42,7 @@ ManjaroMain = Packager::Installation.new do
 
   group('Dev tools') do
     package MnjPkg::BaseDevel
+    package MnjPkg::Gdb
   end
 
   group('Libs') do
