@@ -67,7 +67,7 @@ module Linux
         ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
         ln -s $DOTFILES/conky             $CONFIG_DIR/conky
 
-        ln -s ~/.dotfiles/.mbsyncrc ~/.mbsyncrc
+        ln -s $DOTFILES/.mbsyncrc ~/.mbsyncrc
         mkdir ~/Mail
 
         mkdir -p ~/.ssh
@@ -79,10 +79,12 @@ module Linux
         mv ~/.local/state/nvim{,.bak}
         mv ~/.cache/nvim{,.bak}
 
-        ln -s ~/.dotfiles/nvim-ng ~/.config/nvim-ng
-        ln -s ~/.dotfiles/mise ~/.config/mise
+        ln -s $DOTFILES/nvim-ng ~/.config/nvim-ng
+        ln -s $DOTFILES/mise ~/.config/mise
 
-        cp -f ~/.dotfiles/xorg.conf.d/00-keyboard.conf /etc/X11/xorg.conf.d/
+        cp -f $DOTFILES/xorg.conf.d/00-keyboard.conf /etc/X11/xorg.conf.d/
+
+        ln -s $DOTFILES/.Xresources ~/.Xresources
       CMD
 
       title 'Link Dotfiles'
