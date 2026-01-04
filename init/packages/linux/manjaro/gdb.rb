@@ -2,7 +2,7 @@
 
 module Linux
   module Manjaro
-    Cmus = Packager::Package::Builder.build do
+    Gdb = Packager::Package::Builder.build do
       title 'Gdb'
       command 'pamac install gdb --no-confirm'
       os TARGET_OS
