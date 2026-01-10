@@ -45,6 +45,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Gdb
     package MnjPkg::Just
     package MnjPkg::JustLsp
+    package MnjPkg::OpenAPITUI
   end
 
   group('Libs') do
