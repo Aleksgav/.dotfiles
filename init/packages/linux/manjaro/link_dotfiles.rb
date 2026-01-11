@@ -72,8 +72,6 @@ module Linux
 
         mkdir -p ~/.ssh
 
-        ln -s ~/.dotfiles/xnotes ~/xnotes
-
         mv -f $CONFIG_DIR/nvim{,.bak}
         mv ~/.local/share/nvim{,.bak}
         mv ~/.local/state/nvim{,.bak}
