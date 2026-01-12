@@ -67,6 +67,9 @@ module Linux
         ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
         ln -s $DOTFILES/conky             $CONFIG_DIR/conky
 
+        mv -f $CONFIG_DIR/glow{,.bak}
+        ln -s $DOTFILES/glow              $CONFIG_DIR/glow
+
         ln -s $DOTFILES/.mbsyncrc ~/.mbsyncrc
         mkdir ~/Mail
 
