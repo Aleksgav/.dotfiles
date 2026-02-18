@@ -2,7 +2,7 @@
 ghcup = "latest"
 go = "latest"
 node = "latest"
-ruby = "latest"
+ruby = "3.4.8"
 rust = "latest"
 stack = "latest"
 zig = "latest"
