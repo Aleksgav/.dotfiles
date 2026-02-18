@@ -2,7 +2,7 @@
 
 module OSX
   module Any
-     CargoExpand = Packager::Package::Builder.build do
+    CargoExpand = Packager::Package::Builder.build do
       title 'Cargo expand'
       command 'cargo install cargo-expand'
       os TARGET_OS
