@@ -81,6 +81,7 @@ module Linux
         mv ~/.cache/nvim{,.bak}
 
         ln -s $DOTFILES/nvim-ng ~/.config/nvim-ng
+        ln -s $DOTFILES/nvim ~/.config/nvim
         ln -s $DOTFILES/mise ~/.config/mise
 
         cp -f $DOTFILES/xorg.conf.d/00-keyboard.conf /etc/X11/xorg.conf.d/
