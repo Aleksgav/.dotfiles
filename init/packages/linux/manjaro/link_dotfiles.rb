@@ -62,6 +62,7 @@ module Linux
 
         ln -s $DOTFILES/xsecurelock/xsecurelock /usr/lib/systemd/system-sleep/xsecurelock
 
+        #TODO: add sudo
         ln -s $DOTFILES/picom/picom.conf /etc/xdg/picom.conf
 
         ln -s $DOTFILES/autostart/conky.desktop $CONFIG_DIR/autostart/conky.desktop
