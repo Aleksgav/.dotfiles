@@ -76,7 +76,8 @@ use = ["""{\
     tmux,\
     vagrant,\
     vi-mode,\
-    yarn\
+    yarn,\
+    direnv\
     }/*.plugin.zsh"""]
 
 [plugins.compinit]
