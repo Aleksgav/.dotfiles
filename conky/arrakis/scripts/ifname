@@ -1,0 +1,14 @@
+#!/bin/bash
+
+
+IF_NAME=$(ip -o -4 route show to default | awk '{print $5}')
+
+if [[ "${IF_NAME}" != "" ]]; then
+	if  [[ $1 = "-i" ]]; then
+    echo "  ${IF_NAME}"
+	else
+    echo "${IF_NAME}"
+	fi
+else
+echo "None"
+fi
