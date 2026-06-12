@@ -208,7 +208,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Kmon
     package MnjPkg::Xplr
     package MnjPkg::GpgTui
-    package MnjPkg::OutlineClientCli
+    # package MnjPkg::OutlineClientCli
     package MnjPkg::Isync
     package MnjPkg::Mu
     package MnjPkg::Syncthing
