@@ -50,7 +50,7 @@ module Packager
       alias sudo sudo_require
     end
 
-    SUDO_PREFIX = 'sudo -S <<< '
+    SUDO_PREFIX = "sudo -S -p '' "
 
     attr_accessor :title,
                   :command,
@@ -59,17 +59,25 @@ module Packager
                   :sudo_require
 
     def install(context)
-      command = make_command(context)
+      stdin, stdout, stderr, wait_thr = Open3.popen3(make_command)
 
-      Open3.popen3(command)
+      feed_password(stdin, context.pass) if sudo_require
+      stdin.close
+
+      [stdin, stdout, stderr, wait_thr]
     end
 
-    def make_command(context)
-      if sudo_require
-        SUDO_PREFIX.dup << '"' << context.pass << '" ' << command
-      else
-        command
-      end
+    private
+
+    def make_command
+      sudo_require ? SUDO_PREFIX + command : command
+    end
+
+    def feed_password(stdin, pass)
+      stdin.sync = true # broken pipe surface fast fail
+      stdin.puts(pass)
+    rescue Errno::EPIPE
+      # cached sudo creds
     end
   end
 end
