@@ -21,7 +21,7 @@ ManjaroMain = Packager::Installation.new do
   group('Manjaro settings') do
     package MnjPkg::SnapPlugin
     package MnjPkg::FlatpakPlugin
-    package MnjPkg::Appimagelauncher
+    # package MnjPkg::Appimagelauncher
   end
 
   # TODO: или .zshrc не слинковался или перезатерся
