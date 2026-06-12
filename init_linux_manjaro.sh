@@ -8,7 +8,7 @@ pamac install make --no-confirm
 echo "Installing autoconf"
 pamac install autoconf --no-confirm
 
-echi "Install mise"
+echo "Install mise"
 curl https://mise.run/bash | sh
 # pamac install mise --no-confirm
 # echo "Adding RVM keys"
