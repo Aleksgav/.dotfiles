@@ -14,7 +14,7 @@ curl https://mise.run/bash | sh
 source ~/.bashrc
 
 mise trust
-
+mise settings ruby.compile=false
 mise use -g ruby@3.4.9
 
 # pamac install mise --no-confirm
