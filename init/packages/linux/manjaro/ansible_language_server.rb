@@ -4,7 +4,7 @@ module Linux
   module Manjaro
     AnsibleLanguageServer = Packager::Package::Builder.build do
       title 'Ansible Language Server'
-      command 'pamac install ansible-language-server --no-confirm'
+      command 'pamac build ansible-language-server --no-confirm'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
