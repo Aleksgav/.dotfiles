@@ -4,7 +4,7 @@ module Linux
   module Manjaro
     JustLsp = Packager::Package::Builder.build do
       title 'Just lsp'
-      command 'pamac install just-lsp'
+      command 'pamac install just-lsp --no-confirm'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
