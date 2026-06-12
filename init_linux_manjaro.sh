@@ -11,13 +11,13 @@ pamac install autoconf --no-confirm
 echo "Install mise"
 curl https://mise.run/bash | sh
 
-source ~/.bashrc
+export PATH="$HOME/.local/bin:$PATH"
 
 mise trust
 mise settings ruby.compile=false
 mise use -g ruby@3.4.9
 
-source ~/.bashrc
+eval "$(mise activate bash --shims)"
 
 cd ~/.dotfiles/init
 
