@@ -3,7 +3,12 @@
 
 require_relative 'lib/init'
 
-installator = Executor.new()
+user_bindirs = %w[~/.cargo/bin ~/go/bin].map { |dir| File.expand_path(dir) }
+ENV['PATH'] = (user_bindirs + ENV.fetch('PATH', '').split(File::PATH_SEPARATOR))
+              .uniq
+              .join(File::PATH_SEPARATOR)
+
+installator = Executor.new
 manjaro_install_command = CLI::Commands::Install[ManjaroMain, installator]
 osx_install_command = CLI::Commands::Install[OSXMain, installator]
 
