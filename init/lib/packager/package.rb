@@ -5,7 +5,7 @@ module Packager
     class Builder
       class << self
         def build(&block)
-          builder = self.new(&block)
+          builder = new(&block)
 
           builder.build
         end
@@ -14,7 +14,7 @@ module Packager
       def initialize(&block)
         @package = Package.new
 
-        instance_eval &block
+        instance_eval(&block)
       end
 
       def build
@@ -25,24 +25,38 @@ module Packager
 
       attr_reader :package
 
-      def title(title) package.title = title end
-      def command(command) package.command = command end
-      def target_os(target_os) package.target_os = target_os end
-      def target_distro(target_distro) package.target_distro = target_distro end
-      def sudo_require(sudo_require) package.sudo_require = sudo_require end
+      def title(title)
+        package.title = title
+      end
 
-      alias_method :distro, :target_distro
-      alias_method :os, :target_os
-      alias_method :sudo, :sudo_require
+      def command(command)
+        package.command = command
+      end
+
+      def target_os(target_os)
+        package.target_os = target_os
+      end
+
+      def target_distro(target_distro)
+        package.target_distro = target_distro
+      end
+
+      def sudo_require(sudo_require)
+        package.sudo_require = sudo_require
+      end
+
+      alias distro target_distro
+      alias os target_os
+      alias sudo sudo_require
     end
 
     SUDO_PREFIX = 'sudo -S <<< '
 
     attr_accessor :title,
-                :command,
-                :target_os,
-                :target_distro,
-                :sudo_require
+                  :command,
+                  :target_os,
+                  :target_distro,
+                  :sudo_require
 
     def install(context)
       command = make_command(context)
