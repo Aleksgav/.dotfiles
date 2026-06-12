@@ -7,7 +7,7 @@ module Linux
       command 'pamac install just-lsp'
       os TARGET_OS
       distro TARGET_DISTRO
-      sudo_require false
+      sudo_require true
     end
   end
 end
