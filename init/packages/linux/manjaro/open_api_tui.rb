@@ -2,7 +2,7 @@
 
 module Linux
   module Manjaro
-    OpenAPITUI = Packager::Package::Builder.build do
+    OpenApiTui = Packager::Package::Builder.build do
       title 'OpenAPI TUI'
       command 'pamac install openapi-tui --no-confirm'
       os TARGET_OS
