@@ -4,7 +4,7 @@ module Linux
   module Manjaro
     Stylelint = Packager::Package::Builder.build do
       title 'Stylelint'
-      command 'pamac install stylelint --no-confirm'
+      command 'pamac build stylelint --no-confirm'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
