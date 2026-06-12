@@ -15,7 +15,7 @@ source ~/.bashrc
 
 mise trust
 
-mise use -g ruby@3.2
+mise use -g ruby@3.4.9
 
 # pamac install mise --no-confirm
 # echo "Adding RVM keys"

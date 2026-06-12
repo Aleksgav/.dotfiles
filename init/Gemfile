@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-ruby File.read(File.join(__dir__, ".ruby-version")).strip
+ruby '3.4.9'
 
-source "https://rubygems.org"
+ruby File.read(File.join(__dir__, '.ruby-version')).strip
 
-gem "zeitwerk", "~> 2.6"
+source 'https://rubygems.org'
 
-gem "pastel"
-gem "tty-prompt"
-gem "open3"
-gem "dry-cli"
+gem 'zeitwerk', '~> 2.6'
 
+gem 'dry-cli'
+gem 'open3'
+gem 'pastel'
+gem 'tty-prompt'
