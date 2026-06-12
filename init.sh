@@ -3,48 +3,49 @@ set -e
 
 os="UNKNOWN"
 function os_detect {
-    case "$OSTYPE" in
-        solaris*) os="SOLARIS" ;;
-        darwin*)  os="OSX" ;;
-        linux*)   os="LINUX" ;;
-        bsd*)     os="BSD" ;;
-        msys*)    os="WINDOWS" ;;
-        cygwin*)  os="WINDOWS" ;;
-        *)        os="UNKNOWN" ;;
-    esac
+  case "$OSTYPE" in
+  solaris*) os="SOLARIS" ;;
+  darwin*) os="OSX" ;;
+  linux*) os="LINUX" ;;
+  bsd*) os="BSD" ;;
+  msys*) os="WINDOWS" ;;
+  cygwin*) os="WINDOWS" ;;
+  *) os="UNKNOWN" ;;
+  esac
 }
 
 distro="UNKNOWN"
 function linux_distibution_detect {
-    . /etc/os-release
+  . /etc/os-release
 
-    case "$ID" in
-        manjaro*) distro="MANJARO" ;;
-        *)        distro="UNKNOWN" ;;
-    esac
+  case "$ID" in
+  manjaro*) distro="MANJARO" ;;
+  *) distro="UNKNOWN" ;;
+  esac
 }
 
 function linux_manjaro_install {
-    pamac install git
+  pamac upgrade --no-confirm
+  pamac install git --no-confirm
 
-    echo "Clonning .dotfiles..."
-    git clone https://github.com/Aleksgav/.dotfiles.git
+  echo "Clonning .dotfiles..."
+  git clone https://github.com/Aleksgav/.dotfiles.git
 
-    cd ~/.dotfiles
+  cd ~/.dotfiles
 
-    . init_linux_manjaro.sh
+  . init_linux_manjaro.sh
 }
 
 function osx_install {
-    echo "Install Xcode"
-    xcode-select --install
+  echo "Install Xcode"
+  xcode-select --install
 
-    echo "Clonning .dotfiles..."
-    git clone https://github.com/Aleksgav/.dotfiles.git
+  echo "Clonning .dotfiles..."
+  git clone https://github.com/Aleksgav/.dotfiles.git
 
-    cd ~/.dotfiles
+  cd ~/.dotfiles
 
-    . init_osx.sh
+  . init_osx.sh
 }
 
 echo "Detecting OS..."
@@ -53,26 +54,26 @@ os_detect
 echo "$os"
 
 if [ "$os" = "UNKNOWN" ]; then
-    echo "Unknown OS. Exit..."
+  echo "Unknown OS. Exit..."
 
-    exit 1
+  exit 1
 fi
 
 if [[ "$os" == "OSX" ]]; then
-    osx_install
+  osx_install
 
-    exit 0
+  exit 0
 fi
 
 if [[ "$os" == "LINUX" ]]; then
-    echo "Detecting distro ..."
+  echo "Detecting distro ..."
 
-    . /etc/os-release
+  . /etc/os-release
 
-    case "$ID" in
-        manjaro*) linux_manjaro_install ;;
-        *) echo "Unknown distro. Exit..." ;;
-    esac
+  case "$ID" in
+  manjaro*) linux_manjaro_install ;;
+  *) echo "Unknown distro. Exit..." ;;
+  esac
 
-    exit 0
+  exit 0
 fi
