@@ -29,11 +29,17 @@ class Executor
   end
 
   def exec_command(package, dry_run: false)
-    puts Styles::PKG_TITLE_PREFIX['[ '] + Styles::PKG_TITLE[package.title] + Styles::PKG_TITLE_PREFIX[' ]']
+    package.steps.each do |step|
+      run_step(package, step, dry_run: dry_run)
+    end
+  end
+
+  def run_step(package, step, dry_run: false)
+    puts step_title(package, step)
 
     return if dry_run
 
-    _stdin, stdout, stderr, wait_thr = package.install(context)
+    _stdin, stdout, stderr, wait_thr = step.run(context)
 
     out_reader = Thread.new { stdout.read }
     err_reader = Thread.new { stderr.read }
@@ -51,6 +57,13 @@ class Executor
   rescue SystemCallError => e
     # Prevent abort execution on error
     print_err(e.message)
+  end
+
+  def step_title(package, step)
+    label = package.title
+    label += " (#{step.label_suffix})" if step.label_suffix
+
+    Styles::PKG_TITLE_PREFIX['[ '] + Styles::PKG_TITLE[label] + Styles::PKG_TITLE_PREFIX[' ]']
   end
 
   def print_out(output)

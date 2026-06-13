@@ -2,6 +2,33 @@
 
 module Packager
   class Package
+    SUDO_PREFIX = "sudo -S -p '' "
+
+    Step = Struct.new(:command, :sudo_require, :label_suffix, keyword_init: true) do
+      def run(context)
+        # Instead of exception get error 127
+        stdin, stdout, stderr, wait_thr = Open3.popen3('sh', '-c', make_command)
+
+        feed_password(stdin, context.pass) if sudo_require
+        stdin.close
+
+        [stdin, stdout, stderr, wait_thr]
+      end
+
+      private
+
+      def make_command
+        sudo_require ? SUDO_PREFIX + command : command
+      end
+
+      def feed_password(stdin, pass)
+        stdin.sync = true # broken pipe surface fast fail
+        stdin.puts(pass)
+      rescue Errno::EPIPE
+        # cached sudo creds
+      end
+    end
+
     class Builder
       class << self
         def build(&block)
@@ -45,40 +72,43 @@ module Packager
         package.sudo_require = sudo_require
       end
 
+      # Optional steps
+      # Each call appends a step
+      def pre_install(command, sudo: false)
+        package.pre_install << Step.new(command: command, sudo_require: sudo, label_suffix: 'pre')
+      end
+
+      def post_install(command, sudo: false)
+        package.post_install << Step.new(command: command, sudo_require: sudo, label_suffix: 'post')
+      end
+
       alias distro target_distro
       alias os target_os
       alias sudo sudo_require
     end
 
-    SUDO_PREFIX = "sudo -S -p '' "
-
     attr_accessor :title,
                   :command,
                   :target_os,
                   :target_distro,
-                  :sudo_require
+                  :sudo_require,
+                  :pre_install,
+                  :post_install
 
-    def install(context)
-      # Instead of exception get error 127
-      stdin, stdout, stderr, wait_thr = Open3.popen3('sh', '-c', make_command)
+    def initialize
+      @pre_install = []
+      @post_install = []
+    end
 
-      feed_password(stdin, context.pass) if sudo_require
-      stdin.close
-
-      [stdin, stdout, stderr, wait_thr]
+    # Ordered executable steps: [pre] -> main -> [post].
+    def steps
+      [*pre_install, main_step, *post_install]
     end
 
     private
 
-    def make_command
-      sudo_require ? SUDO_PREFIX + command : command
-    end
-
-    def feed_password(stdin, pass)
-      stdin.sync = true # broken pipe surface fast fail
-      stdin.puts(pass)
-    rescue Errno::EPIPE
-      # cached sudo creds
+    def main_step
+      Step.new(command: command, sudo_require: sudo_require, label_suffix: nil)
     end
   end
 end

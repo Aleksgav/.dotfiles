@@ -24,9 +24,6 @@ ManjaroMain = Packager::Installation.new do
     # package MnjPkg::Appimagelauncher
   end
 
-  # TODO: или .zshrc не слинковался или перезатерся
-  # TODO не установил почтовые программы и тд
-  # TODO snap установка не работает как нужно
   package MnjPkg::LinkDotfiles
 
   group('Fonts') do
@@ -239,7 +236,8 @@ ManjaroMain = Packager::Installation.new do
 
   group('Vim') do
     package MnjPkg::Neovim
-    package MnjPkg::LazyVim
+    # Should be removed, see Neovim
+    # package MnjPkg::LazyVim
   end
 
   group('Doom emacs') do
