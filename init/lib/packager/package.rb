@@ -59,7 +59,8 @@ module Packager
                   :sudo_require
 
     def install(context)
-      stdin, stdout, stderr, wait_thr = Open3.popen3(make_command)
+      # Instead of exception get error 127
+      stdin, stdout, stderr, wait_thr = Open3.popen3('sh', '-c', make_command)
 
       feed_password(stdin, context.pass) if sudo_require
       stdin.close

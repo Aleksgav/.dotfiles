@@ -48,6 +48,9 @@ class Executor
     # Failure: output all
     print_out(out) unless out.empty?
     print_err(err) unless err.empty?
+  rescue SystemCallError => e
+    # Prevent abort execution on error
+    print_err(e.message)
   end
 
   def print_out(output)
