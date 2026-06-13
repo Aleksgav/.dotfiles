@@ -12,8 +12,8 @@ module Linux
         Linker.link '.tmux.conf', '~/.tmux.conf'
         Linker.link '.tmux.linux.conf', '~/.tmux.linux.conf'
       end
-      # tmx wrapper lives in a root owned dir
-      post_install 'mv -f /usr/local/bin/tmx{,.bak}; ln -s $HOME/.dotfiles/tmx /usr/local/bin/tmx', sudo: true
+      # Single shell command: because sudo needed
+      post_install 'ln -sf "$HOME/.dotfiles/tmx" /usr/local/bin/tmx', sudo: true
     end
   end
 end
