@@ -268,8 +268,8 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Rabbitmq
     package MnjPkg::Redis
     package MnjPkg::Sqlite
-    package MnjPkg::Tarantool
-    package MnjPkg::CartridgeCli
+    # package MnjPkg::Tarantool
+    # package MnjPkg::CartridgeCli
   end
 
   group('GUI apps') do
