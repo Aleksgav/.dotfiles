@@ -7,7 +7,7 @@ module Linux
       command 'systemctl --user enable --now emacs'
       os TARGET_OS
       distro TARGET_DISTRO
-      sudo_require true
+      sudo_require false
     end
   end
 end
