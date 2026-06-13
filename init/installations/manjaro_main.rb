@@ -76,11 +76,11 @@ ManjaroMain = Packager::Installation.new do
 
   group('Golang & toolchain') do
     package MnjPkg::Golang
-    package MnjPkg::Gvm
-    package MnjPkg::Go1204Gvm
-    package MnjPkg::Go123Gvm
-    package MnjPkg::GoGvmDefault
-    package MnjPkg::GolangcilintInstall161
+    # package MnjPkg::Gvm
+    # package MnjPkg::Go1204Gvm
+    # package MnjPkg::Go123Gvm
+    # package MnjPkg::GoGvmDefault
+    package MnjPkg::Golangcilint
     package MnjPkg::Gopls
 
     # NOTE: temporary disable
