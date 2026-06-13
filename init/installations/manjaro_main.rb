@@ -287,7 +287,6 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::SonicPi
     package MnjPkg::Redisinsight
     package MnjPkg::Postman
-    package MnjPkg::Skype
     package MnjPkg::MattermostDesktop
 
     package MnjPkg::Mplayer
