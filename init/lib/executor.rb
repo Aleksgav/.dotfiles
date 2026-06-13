@@ -29,34 +29,40 @@ class Executor
   end
 
   def exec_command(package, dry_run: false)
-    puts Styles::PKG_TITLE_PREFIX["[ "] + Styles::PKG_TITLE[package.title] + Styles::PKG_TITLE_PREFIX[" ]"]
+    puts Styles::PKG_TITLE_PREFIX['[ '] + Styles::PKG_TITLE[package.title] + Styles::PKG_TITLE_PREFIX[' ]']
 
     return if dry_run
 
-    stdin, stdout, stderr, wait_thr = package.install(context)
+    _stdin, stdout, stderr, wait_thr = package.install(context)
 
-    wait_thr.run
+    out_reader = Thread.new { stdout.read }
+    err_reader = Thread.new { stderr.read }
+    out = out_reader.value
+    err = err_reader.value
 
-    print_out(stdout) unless stdout.eof?
+    status = wait_thr.value
 
-    wait_thr.value
+    # Success: stay quiet
+    return if status.exitstatus&.zero?
 
-    print_err(stderr) unless wait_thr.value.exitstatus.zero?
+    # Failure: output all
+    print_out(out) unless out.empty?
+    print_err(err) unless err.empty?
   end
 
-  def print_out(stdout)
-    print_header("STDOUT")
+  def print_out(output)
+    print_header('STDOUT')
 
-    until stdout.eof?
-       puts Styles::OUT_PREFIX["-> "] << stdout.gets.chomp
+    output.each_line do |line|
+      puts Styles::OUT_PREFIX['-> '] << line.chomp
     end
   end
 
-  def print_err(stderr)
-    print_header("STDERR", err: true)
+  def print_err(output)
+    print_header('STDERR', err: true)
 
-    until stderr.eof?
-      puts Styles::ERR_PREFIX["-> "] << stderr.gets
+    output.each_line do |line|
+      puts Styles::ERR_PREFIX['-> '] << line.chomp
     end
   end
 
@@ -64,7 +70,7 @@ class Executor
     screen_width = TTY::Screen.width
     left_pad = (screen_width - message.length) / 2
 
-    output = " " + message + " " + "/" * (screen_width - message.length - 3) + " "
+    output = ' ' + message + ' ' + '/' * (screen_width - message.length - 3) + ' '
 
     puts err ? Styles::HEADER_ERR[output] : Styles::HEADER_OUT[output]
   end
