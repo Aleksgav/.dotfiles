@@ -110,8 +110,8 @@ ManjaroMain = Packager::Installation.new do
   end
 
   group('Node & toolchain') do
-    package MnjPkg::Nvm
-    package MnjPkg::Nodejs20Nvm
+    # package MnjPkg::Nvm
+    package MnjPkg::Nodejs
 
     # package MnjPkg::Nodejs
     package MnjPkg::Yarn
