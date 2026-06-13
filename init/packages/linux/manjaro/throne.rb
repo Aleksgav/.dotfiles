@@ -2,9 +2,9 @@
 
 module Linux
   module Manjaro
-    Nekoray = Packager::Package::Builder.build do
-      title 'Nekoray'
-      command 'pamac build nekoray-bin --no-confirm'
+    Throne = Packager::Package::Builder.build do
+      title 'Throne'
+      command 'pamac build throne-bin --no-confirm'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true

@@ -292,7 +292,7 @@ ManjaroMain = Packager::Installation.new do
 
     package MnjPkg::Mplayer
     package MnjPkg::Mpv
-    package MnjPkg::Nekoray
+    package MnjPkg::Throne
     # group.command('Outline client', 'snap install outline-client --edge --devmode')
     # via
     # graphql-playground
