@@ -4,6 +4,9 @@ module OSX
   module Any
     Tpm = Packager::Package::Builder.build do
       title 'TPM (Tmux Plugin Manager)'
+      pre_install do
+        Linker.backup '~/.tmux/plugins/tpm'
+      end
       command 'git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm'
       os TARGET_OS
       distro TARGET_DISTRO
