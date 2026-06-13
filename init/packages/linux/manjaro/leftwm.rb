@@ -9,7 +9,7 @@ module Linux
       distro TARGET_DISTRO
       sudo_require false
       post_install { Linker.link 'leftwm', "#{CONFIG_DIR}/leftwm" }
-      post_install 'ln -s $HOME/.dotfiles/leftwm/leftwm.desktop /usr/share/xsessions', sudo: true
+      post_install 'ln -sf "$HOME/.dotfiles/leftwm/leftwm.desktop" /usr/share/xsessions/leftwm.desktop', sudo: true
     end
   end
 end
