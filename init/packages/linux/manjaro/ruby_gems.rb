@@ -3,18 +3,11 @@
 module Linux
   module Manjaro
     RubyGems = Packager::Package::Builder.build do
-      cmd =<<-CMD
+      cmd = <<~CMD
         gem install activesupport
         gem install erb
         gem install gettext
         gem install multi_json
-      CMD
-
-      link = <<~CMD
-        export DOTFILES=$HOME/.dotfiles
-
-        mv -f $HOME/.gemrc{,.bak}
-        ln -s $DOTFILES/.gemrc            $HOME/.gemrc
       CMD
 
       title 'Ruby systemwide gems'
@@ -22,7 +15,7 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false
-      post_install link
+      post_install { Linker.link '.gemrc', '~/.gemrc' }
     end
   end
 end

@@ -2,33 +2,6 @@
 
 module Packager
   class Package
-    SUDO_PREFIX = "sudo -S -p '' "
-
-    Step = Struct.new(:command, :sudo_require, :label_suffix, keyword_init: true) do
-      def run(context)
-        # Instead of exception get error 127
-        stdin, stdout, stderr, wait_thr = Open3.popen3('sh', '-c', make_command)
-
-        feed_password(stdin, context.pass) if sudo_require
-        stdin.close
-
-        [stdin, stdout, stderr, wait_thr]
-      end
-
-      private
-
-      def make_command
-        sudo_require ? SUDO_PREFIX + command : command
-      end
-
-      def feed_password(stdin, pass)
-        stdin.sync = true # broken pipe surface fast fail
-        stdin.puts(pass)
-      rescue Errno::EPIPE
-        # cached sudo creds
-      end
-    end
-
     class Builder
       class << self
         def build(&block)
@@ -72,14 +45,20 @@ module Packager
         package.sudo_require = sudo_require
       end
 
-      # Optional steps
-      # Each call appends a step
-      def pre_install(command, sudo: false)
-        package.pre_install << Step.new(command: command, sudo_require: sudo, label_suffix: 'pre')
+      # Optional steps. Each call appends a step.
+      # Pass a shell string (optionally `sudo: true`) or a Ruby block.
+      def pre_install(command = nil, sudo: false, &block)
+        package.pre_install << step(command, sudo: sudo, label_suffix: 'pre', &block)
       end
 
-      def post_install(command, sudo: false)
-        package.post_install << Step.new(command: command, sudo_require: sudo, label_suffix: 'post')
+      def post_install(command = nil, sudo: false, &block)
+        package.post_install << step(command, sudo: sudo, label_suffix: 'post', &block)
+      end
+
+      def step(command, sudo:, label_suffix:, &block)
+        return RubyStep.new(block: block, label_suffix: label_suffix) if block
+
+        ShellStep.new(command: command, sudo_require: sudo, label_suffix: label_suffix)
       end
 
       alias distro target_distro
@@ -101,14 +80,17 @@ module Packager
     end
 
     # Ordered executable steps: [pre] -> main -> [post].
+    # The main step can be omitted for step-only packages (no `command`).
     def steps
-      [*pre_install, main_step, *post_install]
+      [*pre_install, *main_step, *post_install]
     end
 
     private
 
     def main_step
-      Step.new(command: command, sudo_require: sudo_require, label_suffix: nil)
+      return [] unless command
+
+      [ShellStep.new(command: command, sudo_require: sudo_require, label_suffix: nil)]
     end
   end
 end

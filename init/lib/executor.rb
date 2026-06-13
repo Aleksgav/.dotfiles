@@ -39,24 +39,14 @@ class Executor
 
     return if dry_run
 
-    _stdin, stdout, stderr, wait_thr = step.run(context)
-
-    out_reader = Thread.new { stdout.read }
-    err_reader = Thread.new { stderr.read }
-    out = out_reader.value
-    err = err_reader.value
-
-    status = wait_thr.value
+    result = step.execute(context)
 
     # Success: stay quiet
-    return if status.exitstatus&.zero?
+    return if result.ok?
 
     # Failure: output all
-    print_out(out) unless out.empty?
-    print_err(err) unless err.empty?
-  rescue SystemCallError => e
-    # Prevent abort execution on error
-    print_err(e.message)
+    print_out(result.out) unless result.out.empty?
+    print_err(result.err) unless result.err.empty?
   end
 
   def step_title(package, step)
