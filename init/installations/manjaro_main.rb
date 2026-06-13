@@ -278,7 +278,7 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Notion
     package MnjPkg::TelegramDesktop
     package MnjPkg::Vlc
-    package MnjPkg::HomeAssistant
+    # package MnjPkg::HomeAssistant
     package MnjPkg::Discord
     package MnjPkg::Ghidra
     package MnjPkg::Flameshot
