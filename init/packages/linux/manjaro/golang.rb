@@ -3,11 +3,11 @@
 module Linux
   module Manjaro
     Golang = Packager::Package::Builder.build do
-      title 'Golang (pamac)'
-      command 'pamac install go --no-confirm'
+      title 'Golang (mise)'
+      command 'mise install go'
       os TARGET_OS
       distro TARGET_DISTRO
-      sudo_require true
+      sudo_require false
     end
   end
 end

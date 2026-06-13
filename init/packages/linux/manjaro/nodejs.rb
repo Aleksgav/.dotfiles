@@ -4,10 +4,10 @@ module Linux
   module Manjaro
     Nodejs = Packager::Package::Builder.build do
       title 'Nodejs'
-      command 'pamac install nodejs --no-confirm'
+      command 'mise install node'
       os TARGET_OS
       distro TARGET_DISTRO
-      sudo_require true
+      sudo_require false
     end
   end
 end
