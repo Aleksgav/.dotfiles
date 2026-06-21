@@ -119,10 +119,9 @@ ArchMain = Packager::Installation.new do
     # git-cal
   end
 
-  # TODO: Postpone
-  # group('AUR helper') do
-  #   package ArchPkg::Yay
-  # end
+  group('AUR helper') do
+    package ArchPkg::Yay
+  end
 
   group('CLI tools') do
     package ArchPkg::Bat
@@ -159,8 +158,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Timewarrior
     package ArchPkg::TaskwarriorTui
     package ArchPkg::Unrar
-    # gotop: AUR-only on Arch (Manjaro uses snap). Enable the Yay group first.
-    # package ArchPkg::Gotop
     package ArchPkg::Kubectl
     package ArchPkg::Aspell
     package ArchPkg::Glow
@@ -169,8 +166,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Xplr
     package ArchPkg::GpgTui
     package ArchPkg::Isync
-    # mu (maildir-utils): AUR-only on Arch. Enable the Yay group first.
-    # package ArchPkg::Mu
+    package ArchPkg::Mu
     package ArchPkg::Syncthing
     package ArchPkg::Ffmpegthumbnailer
     package ArchPkg::P7zip
