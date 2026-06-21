@@ -164,7 +164,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Jq
     package ArchPkg::Ripgrep
     package ArchPkg::TimerRs
-    package ArchPkg::Tldr
     package ArchPkg::Tealdeer
     package ArchPkg::Tmux
     package ArchPkg::Tpm
