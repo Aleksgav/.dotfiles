@@ -123,6 +123,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Yay
   end
 
+  group('Audio') do
+    package ArchPkg::Audio
+  end
+
   group('CLI tools') do
     package ArchPkg::Bat
     package ArchPkg::Btop
