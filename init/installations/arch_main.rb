@@ -125,6 +125,7 @@ ArchMain = Packager::Installation.new do
   group('System') do
     package ArchPkg::DbusBroker
     package ArchPkg::Rtkit
+    package ArchPkg::Openssh
   end
 
   group('Audio') do

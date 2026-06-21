@@ -42,6 +42,9 @@ eval "$(starship init zsh)"
 
 eval "$(sheldon source)"
 
+# Talk to the persistent ssh-agent systemd user service (enable: systemctl --user enable --now ssh-agent.service)
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 # This should run only once for user session
 # Remove this to another place
 find ~/.ssh -name 'id_*' ! -name '*.pub' -exec ssh-add -q {} \;
