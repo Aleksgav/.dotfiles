@@ -93,6 +93,11 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::AnsibleLint
   end
 
+  group('Terraform & tools') do
+    package ArchPkg::Terraform
+    # terrafrom-ls
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
