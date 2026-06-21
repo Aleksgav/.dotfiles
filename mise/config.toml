@@ -10,3 +10,7 @@ zls = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
+
+# Use precompiled Ruby binaries instead of building from source
+[settings.ruby]
+compile = false

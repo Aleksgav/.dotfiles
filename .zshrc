@@ -1,5 +1,8 @@
 export TERM="xterm-256color"
 
+export PATH="$HOME/.local/bin:$PATH"
+eval "$(mise activate zsh)"
+
 #homebrew
 # eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -86,10 +89,6 @@ alias fng='fzf --height=40% --layout=reverse --walker-skip=.git,node_modules,tar
 
 alias cgb='git branch --sort=-committerdate | fzf --header "Checkout Branch" --preview "git diff --color=always {1}" --pointer="" | xargs git checkout'
 
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-#export PATH="$PATH:$HOME/.rvm/bin"
-eval "$(mise activate zsh)"
 
 # >>> forge initialize >>>
 # !! Contents within this block are managed by 'forge zsh setup' !!
