@@ -124,7 +124,11 @@ ArchMain = Packager::Installation.new do
   end
 
   group('Audio') do
-    package ArchPkg::Audio
+    package ArchPkg::AudioFirmware
+    package ArchPkg::Alsa
+    package ArchPkg::Pipewire
+    package ArchPkg::Wireplumber
+    package ArchPkg::Pavucontrol
   end
 
   group('CLI tools') do
