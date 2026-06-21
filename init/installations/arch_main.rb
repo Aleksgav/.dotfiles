@@ -9,18 +9,38 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::ProjectsFolder
   end
 
+  package ArchPkg::LinkDotfiles
+
   group('Build prerequisites') do
     package ArchPkg::Git
     package ArchPkg::BaseDevel
     package ArchPkg::Gdb
   end
 
+  group('Golang & toolchain') do
+    package ArchPkg::Golang
+    package ArchPkg::Golangcilint
+    package ArchPkg::Gopls
+  end
+
+  group('Rust & toolchain') do
+    package ArchPkg::RustLangRustup
+    package ArchPkg::RustupAddNightly
+    package ArchPkg::RustupAddClippy
+    package ArchPkg::RustupAddRustAnalyser
+    package ArchPkg::CargoAudit
+    package ArchPkg::CargoDeny
+    package ArchPkg::CargoEdit
+    package ArchPkg::CargoExpand
+    package ArchPkg::CargoTarpaulin
+    package ArchPkg::CargoUdeps
+    package ArchPkg::CargoWatch
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
   # end
-
-  package ArchPkg::LinkDotfiles
 
   group('Fonts') do
     package ArchPkg::FontTtfFiraCode
