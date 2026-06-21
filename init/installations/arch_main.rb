@@ -247,4 +247,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Conky
     # chromedriver
   end
+
+  group('Virtualization') do
+    package ArchPkg::VirtualboxHostModulesArch
+    package ArchPkg::Virtualbox
+    package ArchPkg::VirtualboxGuestUtils
+  end
 end
