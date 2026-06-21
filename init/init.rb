@@ -10,9 +10,11 @@ ENV['PATH'] = (user_bindirs + ENV.fetch('PATH', '').split(File::PATH_SEPARATOR))
 
 installator = Executor.new
 manjaro_install_command = CLI::Commands::Install[ManjaroMain, installator]
+arch_install_command = CLI::Commands::Install[ArchMain, installator]
 osx_install_command = CLI::Commands::Install[OSXMain, installator]
 
 CLI::Commands.register 'manjaro', manjaro_install_command, aliases: ['manjaro']
+CLI::Commands.register 'arch', arch_install_command, aliases: ['arch']
 CLI::Commands.register 'osx', osx_install_command, aliases: ['osx']
 
 Dry::CLI.new(CLI::Commands).call

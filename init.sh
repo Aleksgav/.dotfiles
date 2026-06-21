@@ -20,6 +20,7 @@ function linux_distibution_detect {
 
   case "$ID" in
   manjaro*) distro="MANJARO" ;;
+  arch*) distro="ARCH" ;;
   *) distro="UNKNOWN" ;;
   esac
 }
@@ -34,6 +35,19 @@ function linux_manjaro_install {
   cd ~/.dotfiles
 
   . init_linux_manjaro.sh
+}
+
+function linux_arch_install {
+  # git is required just to clone the dotfiles; the install itself adds no packages.
+  sudo pacman -Syu --noconfirm
+  sudo pacman -S --noconfirm --needed git
+
+  echo "Clonning .dotfiles..."
+  git clone https://github.com/Aleksgav/.dotfiles.git
+
+  cd ~/.dotfiles
+
+  . init_linux_arch.sh
 }
 
 function osx_install {
@@ -72,6 +86,7 @@ if [[ "$os" == "LINUX" ]]; then
 
   case "$ID" in
   manjaro*) linux_manjaro_install ;;
+  arch*) linux_arch_install ;;
   *) echo "Unknown distro. Exit..." ;;
   esac
 
