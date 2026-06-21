@@ -203,4 +203,10 @@ ArchMain = Packager::Installation.new do
   group('Vim') do
     package ArchPkg::Neovim
   end
+
+  group('Doom emacs') do
+    package ArchPkg::Emacs
+    package ArchPkg::DoomEmacs
+    package ArchPkg::EmacsDaemon
+  end
 end
