@@ -8,7 +8,11 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
-      post_install 'systemctl --user enable --now ssh-agent.service'
+      # Let the user systemd instance run without an active login (headless/remote boxes),
+      # then enable the socket-activated agent. Socket activation starts ssh-agent.service
+      # on first connection to $XDG_RUNTIME_DIR/ssh-agent.socket (see .zshrc SSH_AUTH_SOCK).
+      post_install 'loginctl enable-linger "$(id -un)"', sudo: true
+      post_install 'systemctl --user enable --now ssh-agent.socket'
     end
   end
 end

@@ -35,7 +35,7 @@ export ZSH="$HOME/.local/share/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
 #source ~/.rvm/scripts/rvm
 #source ~/.gvm/scripts/gvm
 
-export PATH="$HOME/emacs.d/bin:$PATH"
+export PATH="$HOME/.emacs.d/bin:$PATH"
 
 export STARSHIP_CONFIG=~/.config/starship.toml
 eval "$(starship init zsh)"
@@ -47,7 +47,9 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 # This should run only once for user session
 # Remove this to another place
-find ~/.ssh -name 'id_*' ! -name '*.pub' -exec ssh-add -q {} \;
+if [ -S "$SSH_AUTH_SOCK" ]; then
+  find ~/.ssh -name 'id_*' ! -name '*.pub' -exec ssh-add -q {} \;
+fi
 doom env -a '^SSH_' &> /dev/null
 
 # emacs vterm integgration
