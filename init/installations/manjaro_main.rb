@@ -181,7 +181,6 @@ ManjaroMain = Packager::Installation.new do
     package MnjPkg::Jq
     package MnjPkg::Ripgrep
     package MnjPkg::TimerRs
-    package MnjPkg::Tldr
     package MnjPkg::Tealdeer
     package MnjPkg::Tmux
     package MnjPkg::Tree
