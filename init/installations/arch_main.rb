@@ -122,6 +122,11 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Yay
   end
 
+  group('System') do
+    package ArchPkg::DbusBroker
+    package ArchPkg::Rtkit
+  end
+
   group('Audio') do
     package ArchPkg::AudioFirmware
     package ArchPkg::Alsa
