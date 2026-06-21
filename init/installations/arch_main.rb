@@ -54,6 +54,11 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::RubyRubocop
   end
 
+  group('Python') do
+    package ArchPkg::Python
+    package ArchPkg::PythonPygments
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
