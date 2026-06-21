@@ -130,6 +130,15 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Pavucontrol
   end
 
+  group('Shell') do
+    package ArchPkg::Zsh
+    package ArchPkg::Shellcheck
+    package ArchPkg::Nushell
+    package ArchPkg::ZshSyntaxHighliting
+    package ArchPkg::Sheldon
+    package ArchPkg::Starship
+  end
+
   group('CLI tools') do
     package ArchPkg::Bat
     package ArchPkg::Btop
@@ -152,6 +161,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Tldr
     package ArchPkg::Tealdeer
     package ArchPkg::Tmux
+    package ArchPkg::Tpm
     package ArchPkg::Tree
     package ArchPkg::Tokei
     package ArchPkg::Unzip
