@@ -17,6 +17,17 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Gdb
   end
 
+  group('Fonts') do
+    package ArchPkg::FontTtfFiraCode
+    package ArchPkg::FontTtfFiracodeNerd
+    package ArchPkg::FontTtfFiraSans
+    package ArchPkg::FontTtfHackNerd
+    package ArchPkg::FontOtfFiramonoNerd
+    package ArchPkg::FontTtfNotoNerd
+    package ArchPkg::FontNotoEmoji
+    package ArchPkg::FontTtfNerdSymbolsMono
+  end
+
   group('Golang & toolchain') do
     package ArchPkg::Golang
     package ArchPkg::Golangcilint
@@ -113,14 +124,61 @@ ArchMain = Packager::Installation.new do
   #   package ArchPkg::Yay
   # end
 
-  group('Fonts') do
-    package ArchPkg::FontTtfFiraCode
-    package ArchPkg::FontTtfFiracodeNerd
-    package ArchPkg::FontTtfFiraSans
-    package ArchPkg::FontTtfHackNerd
-    package ArchPkg::FontOtfFiramonoNerd
-    package ArchPkg::FontTtfNotoNerd
-    package ArchPkg::FontNotoEmoji
-    package ArchPkg::FontTtfNerdSymbolsMono
+  group('CLI tools') do
+    package ArchPkg::Bat
+    package ArchPkg::Btop
+    package ArchPkg::Bottom
+    package ArchPkg::Xclip
+    package ArchPkg::Cloc
+    package ArchPkg::Direnv
+    package ArchPkg::DiffSoFancy
+    package ArchPkg::Dysk
+    package ArchPkg::Htop
+    package ArchPkg::Httpie
+    package ArchPkg::Curlie
+    package ArchPkg::Fd
+    package ArchPkg::Fzf
+    package ArchPkg::Figlet
+    package ArchPkg::Mc
+    package ArchPkg::Jq
+    package ArchPkg::Ripgrep
+    package ArchPkg::TimerRs
+    package ArchPkg::Tldr
+    package ArchPkg::Tealdeer
+    package ArchPkg::Tmux
+    package ArchPkg::Tree
+    package ArchPkg::Tokei
+    package ArchPkg::Unzip
+    package ArchPkg::Wget
+    package ArchPkg::Xsel
+    package ArchPkg::Zellij
+    package ArchPkg::Zenith
+    package ArchPkg::Alacritty
+    package ArchPkg::K9s
+    package ArchPkg::Task
+    package ArchPkg::Timewarrior
+    package ArchPkg::TaskwarriorTui
+    package ArchPkg::Unrar
+    # gotop: AUR-only on Arch (Manjaro uses snap). Enable the Yay group first.
+    # package ArchPkg::Gotop
+    package ArchPkg::Kubectl
+    package ArchPkg::Aspell
+    package ArchPkg::Glow
+    package ArchPkg::Bandwhich
+    package ArchPkg::Kmon
+    package ArchPkg::Xplr
+    package ArchPkg::GpgTui
+    package ArchPkg::Isync
+    # mu (maildir-utils): AUR-only on Arch. Enable the Yay group first.
+    # package ArchPkg::Mu
+    package ArchPkg::Syncthing
+    package ArchPkg::Ffmpegthumbnailer
+    package ArchPkg::P7zip
+    package ArchPkg::Zoxide
+    package ArchPkg::Yazi
+    package ArchPkg::Cmus
+    package ArchPkg::Lazygit
+    package ArchPkg::Nnn
+    package ArchPkg::Superfile
   end
 end
