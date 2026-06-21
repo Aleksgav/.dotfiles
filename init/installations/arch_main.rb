@@ -181,4 +181,9 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Nnn
     package ArchPkg::Superfile
   end
+
+  group('Docker & tools') do
+    package ArchPkg::Docker
+    package ArchPkg::DockerCompose
+  end
 end
