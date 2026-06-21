@@ -48,6 +48,12 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::LuaRocks
   end
 
+  group('Ruby toolchain') do
+    package ArchPkg::RubyGems
+    package ArchPkg::RubySolargraph
+    package ArchPkg::RubyRubocop
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
