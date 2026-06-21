@@ -67,7 +67,6 @@ ArchMain = Packager::Installation.new do
 
   group('Python') do
     package ArchPkg::Python
-    package ArchPkg::PythonPygments
   end
 
   group('Node & toolchain') do
@@ -229,5 +228,13 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Mplayer
     package ArchPkg::Mpv
     package ArchPkg::Throne
+  end
+
+  group('Other') do
+    package ArchPkg::PythonPygments
+    package ArchPkg::Gobang
+
+    package ArchPkg::Conky
+    # chromedriver
   end
 end
