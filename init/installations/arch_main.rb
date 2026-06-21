@@ -59,6 +59,13 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::PythonPygments
   end
 
+  group('Node & toolchain') do
+    package ArchPkg::Nodejs
+    package ArchPkg::Yarn
+    package ArchPkg::Stylelint
+    package ArchPkg::JsBeautify
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
