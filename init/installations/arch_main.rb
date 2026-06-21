@@ -186,4 +186,13 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Docker
     package ArchPkg::DockerCompose
   end
+
+  group('Editors tools') do
+    package ArchPkg::EditorconfigChecker
+    package ArchPkg::TreeSitter
+    package ArchPkg::YamlLanguageServer
+    package ArchPkg::BashLanguageServer
+
+    # editorconfig
+  end
 end
