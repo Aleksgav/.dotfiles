@@ -42,6 +42,12 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::CargoWatch
   end
 
+  group('Lua & tools') do
+    package ArchPkg::Lua
+    package ArchPkg::LuaJit
+    package ArchPkg::LuaRocks
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
