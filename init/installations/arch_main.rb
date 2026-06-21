@@ -209,4 +209,25 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::DoomEmacs
     package ArchPkg::EmacsDaemon
   end
+
+  group('GUI apps') do
+    package ArchPkg::GoogleChrome
+    package ArchPkg::Opera
+    # package ArchPkg::Notion
+    package ArchPkg::TelegramDesktop
+    package ArchPkg::Vlc
+    # package ArchPkg::HomeAssistant
+    # package ArchPkg::Discord
+    package ArchPkg::Ghidra
+    package ArchPkg::Flameshot
+    # package ArchPkg::Zeplin
+    package ArchPkg::Zoom
+    package ArchPkg::SonicPi
+    package ArchPkg::Redisinsight
+    package ArchPkg::Postman
+    # package ArchPkg::MattermostDesktop
+    package ArchPkg::Mplayer
+    package ArchPkg::Mpv
+    package ArchPkg::Throne
+  end
 end
