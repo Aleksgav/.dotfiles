@@ -8,6 +8,7 @@ module Linux
         gem install erb
         gem install gettext
         gem install multi_json
+        gem install wavefile
       CMD
 
       title 'Ruby systemwide gems'
