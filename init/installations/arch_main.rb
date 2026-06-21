@@ -14,9 +14,21 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::BaseDevel
   end
 
-  group('AUR helper') do
-    package ArchPkg::Yay
-  end
+  # TODO: Postpone
+  # group('AUR helper') do
+  #   package ArchPkg::Yay
+  # end
 
   package ArchPkg::LinkDotfiles
+
+  group('Fonts') do
+    package ArchPkg::FontTtfFiraCode
+    package ArchPkg::FontTtfFiracodeNerd
+    package ArchPkg::FontTtfFiraSans
+    package ArchPkg::FontTtfHackNerd
+    package ArchPkg::FontOtfFiramonoNerd
+    package ArchPkg::FontTtfNotoNerd
+    package ArchPkg::FontNotoEmoji
+    package ArchPkg::FontTtfNerdSymbolsMono
+  end
 end
