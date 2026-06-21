@@ -66,6 +66,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::JsBeautify
   end
 
+  group('CL') do
+    package ArchPkg::CommonLisp
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
