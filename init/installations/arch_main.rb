@@ -12,6 +12,7 @@ ArchMain = Packager::Installation.new do
   group('Build prerequisites') do
     package ArchPkg::Git
     package ArchPkg::BaseDevel
+    package ArchPkg::Gdb
   end
 
   # TODO: Postpone
