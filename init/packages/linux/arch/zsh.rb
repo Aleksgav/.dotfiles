@@ -9,7 +9,7 @@ module Linux
       distro TARGET_DISTRO
       sudo_require true
       post_install { Linker.link '.zshrc', '~/.zshrc' }
-      post_install 'chsh -s /usr/bin/zsh', sudo: true
+      post_install 'chsh -s /usr/bin/zsh "${SUDO_USER:-$USER}"', sudo: true
     end
   end
 end

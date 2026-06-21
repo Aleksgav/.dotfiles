@@ -4,7 +4,7 @@ module Linux
   module Manjaro
     ZshDefault = Packager::Package::Builder.build do
       title 'Set ZSH as default'
-      command 'chsh -s /usr/bin/zsh'
+      command 'chsh -s /usr/bin/zsh "${SUDO_USER:-$USER}"'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
