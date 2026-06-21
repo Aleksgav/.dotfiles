@@ -98,6 +98,16 @@ ArchMain = Packager::Installation.new do
     # terrafrom-ls
   end
 
+  group('Git & tools') do
+    # NOTE: Git itself (and its config linking) lives in 'Build prerequisites'.
+    package ArchPkg::GitDelta
+    package ArchPkg::GitUi
+    package ArchPkg::Tig
+    package ArchPkg::PreCommit
+
+    # git-cal
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay

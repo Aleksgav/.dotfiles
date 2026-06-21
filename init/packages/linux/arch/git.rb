@@ -8,6 +8,10 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
+      post_install do
+        Linker.link '.gitignore-system', '~/.gitignore-system'
+        Linker.link '.gitconfig', '~/.gitconfig'
+      end
     end
   end
 end
