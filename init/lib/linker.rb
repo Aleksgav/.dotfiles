@@ -19,12 +19,15 @@ module Linker
     FileUtils.ln_s(src, dst, force: true)
   end
 
-  # Move an existing path aside to <path>.bak. No-op when nothing is there.
+  # Move an existing path aside to <path>.bak, replacing any stale backup.
+  # No-op when nothing is there.
   def backup(path)
     path = File.expand_path(path)
     return unless File.symlink?(path) || File.exist?(path)
 
-    FileUtils.mv(path, "#{path}.bak", force: true)
+    bak = "#{path}.bak"
+    FileUtils.rm_rf(bak)
+    FileUtils.mv(path, bak)
   end
 
   def mkdir(dir)
