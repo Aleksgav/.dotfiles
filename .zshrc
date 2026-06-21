@@ -7,6 +7,9 @@ export GOPATH=$(go env GOPATH)
 
 export PATH="/usr/local/sbin:$GOPATH/bin:$PATH"
 
+# Haskell toolchain (ghcup-managed: ghc, cabal, hls; ghcup itself via mise)
+export PATH="$HOME/.ghcup/bin:$HOME/.cabal/bin:$PATH"
+
 # Explicitly set keyboard layouts
 setxkbmap us,ru
 setxkbmap -option grp:switch,grp:win_space_toggle

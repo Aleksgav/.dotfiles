@@ -70,6 +70,19 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::CommonLisp
   end
 
+  group('Haskell & toolchain') do
+    package ArchPkg::Ghcup
+    package ArchPkg::Ghc
+    package ArchPkg::CabalInstall
+    package ArchPkg::Stack
+    package ArchPkg::HaskellLanguageServer
+  end
+
+  group('Zig & toolchain') do
+    package ArchPkg::Zig
+    package ArchPkg::Zls
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
