@@ -199,4 +199,8 @@ ArchMain = Packager::Installation.new do
 
     # editorconfig
   end
+
+  group('Vim') do
+    package ArchPkg::Neovim
+  end
 end
