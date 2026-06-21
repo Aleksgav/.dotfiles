@@ -83,6 +83,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Zls
   end
 
+  group('JDK') do
+    package ArchPkg::OpenJdk
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
