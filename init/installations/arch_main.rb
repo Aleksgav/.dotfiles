@@ -23,6 +23,11 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Gopls
   end
 
+  group('Asm') do
+    package ArchPkg::Nasm
+    package ArchPkg::Fasm
+  end
+
   group('Rust & toolchain') do
     package ArchPkg::RustLangRustup
     package ArchPkg::RustupAddNightly
