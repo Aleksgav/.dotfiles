@@ -221,7 +221,7 @@ ArchMain = Packager::Installation.new do
   group('Doom emacs') do
     package ArchPkg::Emacs
     package ArchPkg::DoomEmacs
-    #   package ArchPkg::EmacsDaemon
+    package ArchPkg::EmacsDaemon
   end
 
   group('GUI apps') do
