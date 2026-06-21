@@ -87,6 +87,12 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::OpenJdk
   end
 
+  group('Ansible & tools') do
+    package ArchPkg::Ansible
+    package ArchPkg::AnsibleLanguageServer
+    package ArchPkg::AnsibleLint
+  end
+
   # TODO: Postpone
   # group('AUR helper') do
   #   package ArchPkg::Yay
