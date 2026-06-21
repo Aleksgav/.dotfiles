@@ -3,12 +3,12 @@
 module Linux
   module Arch
     DoomEmacs = Packager::Package::Builder.build do
-      cmd =<<-CMD
-              if [ -d #{CONFIG_DIR}/emacs ]; then
-                #{CONFIG_DIR}/emacs/bin/doom sync
+      cmd = <<-CMD
+              if [ -d ~/.emacs.d ]; then
+                ~/.emacs.d/bin/doom sync
               else
-                git clone --depth 1 https://github.com/doomemacs/doomemacs #{CONFIG_DIR}/emacs
-                #{CONFIG_DIR}/emacs/bin/doom install --env --fonts --force
+                git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+                ~/.emacs.d/bin/doom install
               fi
       CMD
 
@@ -17,6 +17,7 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false
+      post_install { Linker.link '.doom.d', "#{CONFIG_DIR}/doom" }
     end
   end
 end

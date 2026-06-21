@@ -35,7 +35,7 @@ export ZSH="$HOME/.local/share/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
 #source ~/.rvm/scripts/rvm
 #source ~/.gvm/scripts/gvm
 
-export PATH="$HOME/.config/emacs/bin:$PATH"
+export PATH="$HOME/.config/emacs.d/bin:$PATH"
 
 export STARSHIP_CONFIG=~/.config/starship.toml
 eval "$(starship init zsh)"

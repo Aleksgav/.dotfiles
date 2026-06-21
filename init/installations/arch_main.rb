@@ -218,11 +218,11 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Neovim
   end
 
-  # group('Doom emacs') do
-  #   package ArchPkg::Emacs
-  #   package ArchPkg::DoomEmacs
-  #   package ArchPkg::EmacsDaemon
-  # end
+  group('Doom emacs') do
+    package ArchPkg::Emacs
+    package ArchPkg::DoomEmacs
+    #   package ArchPkg::EmacsDaemon
+  end
 
   group('GUI apps') do
     package ArchPkg::GoogleChrome
@@ -236,7 +236,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Flameshot
     # package ArchPkg::Zeplin
     package ArchPkg::Zoom
-    package ArchPkg::SonicPi
+    # package ArchPkg::SonicPi
     package ArchPkg::Redisinsight
     package ArchPkg::Postman
     # package ArchPkg::MattermostDesktop

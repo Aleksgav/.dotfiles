@@ -8,7 +8,6 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
-      post_install { Linker.link '.doom.d', "#{CONFIG_DIR}/doom" }
     end
   end
 end
