@@ -28,6 +28,17 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::FontTtfNerdSymbolsMono
   end
 
+  group('Dev tools') do
+    package ArchPkg::Just
+    package ArchPkg::JustLsp
+    package ArchPkg::OpenApiTui
+  end
+
+  group('Libs') do
+    package ArchPkg::LibImagemagic
+    package ArchPkg::LibJemalloc
+  end
+
   group('Golang & toolchain') do
     package ArchPkg::Golang
     package ArchPkg::Golangcilint
