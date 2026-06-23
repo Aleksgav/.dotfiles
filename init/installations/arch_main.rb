@@ -108,6 +108,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::OpenJdk
   end
 
+  group('GRPC & tools') do
+    package ArchPkg::Buf
+  end
+
   group('Ansible & tools') do
     package ArchPkg::Ansible
     package ArchPkg::AnsibleLanguageServer
