@@ -149,6 +149,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Acpi
     package ArchPkg::Dialog
     package ArchPkg::Reflector
+    package ArchPkg::Fstrim
   end
 
   group('Network tools') do
