@@ -9,7 +9,7 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false
-      post_install 'systemctl enable fstrim.timer', sudo: true
+      post_install 'systemctl enable --now fstrim.timer', sudo: true
     end
   end
 end
