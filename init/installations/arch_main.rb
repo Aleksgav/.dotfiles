@@ -367,7 +367,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Redisinsight
     package ArchPkg::Postman
     # package ArchPkg::MattermostDesktop
-    package ArchPkg::Mplayer
     package ArchPkg::Mpv
     package ArchPkg::Imv
     package ArchPkg::Throne
