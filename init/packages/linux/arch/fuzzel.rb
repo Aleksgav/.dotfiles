@@ -8,6 +8,7 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
+      post_install { Linker.link 'fuzzel', "#{CONFIG_DIR}/fuzzel" }
     end
   end
 end
