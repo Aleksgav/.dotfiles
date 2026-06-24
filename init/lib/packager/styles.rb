@@ -15,6 +15,8 @@ module Packager
     PKG_TITLE_PREFIX = pastel.bold.green.detach
     PKG_TITLE = pastel.white.detach
 
+    TAG = pastel.cyan.bold.detach
+
     SKIP_PREFIX = pastel.dim.yellow.detach
     SKIP = pastel.dim.detach
   end

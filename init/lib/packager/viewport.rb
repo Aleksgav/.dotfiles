@@ -57,8 +57,7 @@ module Packager
       return if text.empty?
 
       @mutex.synchronize do
-        tagged = @tag ? "[#{@tag}] #{text}" : text
-        entry = { text: clip(tagged), err: err, tag: @tag, progress: progress }
+        entry = { text: text, err: err, tag: @tag, progress: progress }
         last = @buffer.last
 
         if last && last[:progress] && last[:err] == err && last[:tag] == @tag
@@ -87,17 +86,25 @@ module Packager
     private
 
     def redraw
+      width = TTY::Screen.width
       frame = +SAVE_CURSOR
       @height.times do |i|
-        entry = @buffer[i]
         frame << move(@divider_row + 1 + i, 1) << CLEAR_LINE
-        if entry
-          prefix = entry[:err] ? Styles::ERR_PREFIX['-> '] : Styles::OUT_PREFIX['-> ']
-          frame << prefix << entry[:text]
-        end
+        entry = @buffer[i]
+        frame << render(entry, width) if entry
       end
       frame << RESTORE_CURSOR
       write(frame)
+    end
+
+    # A colourised, width-clipped pane line: "-> [Package] message".
+    def render(entry, width)
+      label = entry[:tag] ? "[#{entry[:tag]}] " : ''
+      budget = [width - 3 - label.length, 1].max # 3 cols for the '-> ' arrow
+      body = entry[:text].length > budget ? entry[:text][0, budget] : entry[:text]
+
+      arrow = entry[:err] ? Styles::ERR_PREFIX['-> '] : Styles::OUT_PREFIX['-> ']
+      arrow + (label.empty? ? '' : Styles::TAG[label]) + body
     end
 
     def draw_divider
@@ -115,12 +122,6 @@ module Packager
     # pane layout stay stable; our own colour is applied via the line prefix.
     def sanitize(line)
       line.to_s.gsub(ANSI, '').tr("\r\b\a\f\v", '').rstrip
-    end
-
-    # Keep a line to a single screen row ('-> ' prefix occupies 3 columns).
-    def clip(text)
-      max = [TTY::Screen.width - 3, 1].max
-      text.length > max ? text[0, max] : text
     end
 
     def write(str)
