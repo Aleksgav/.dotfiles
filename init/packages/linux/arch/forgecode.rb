@@ -4,7 +4,8 @@ module Linux
   module Arch
     Forgecode = Packager::Package::Builder.build do
       title 'Forgecode'
-      command 'yay -S --needed --noconfirm forgecode'
+      # Forge's native installer
+      command 'curl -fsSL https://forgecode.dev/cli | sh'
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false

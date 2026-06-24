@@ -318,6 +318,7 @@ ArchMain = Packager::Installation.new do
   group('AI coding agents') do
     package ArchPkg::Crush
     package ArchPkg::Forgecode
+    package ArchPkg::ClaudeCode
   end
 
   group('Editors tools') do
