@@ -8,6 +8,7 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
+      post_install 'systemctl --user enable --now emacs'
     end
   end
 end
