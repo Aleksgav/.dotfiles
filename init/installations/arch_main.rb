@@ -169,6 +169,8 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Dialog
     package ArchPkg::Reflector
     package ArchPkg::Fstrim
+    package ArchPkg::Smartmontools
+    package ArchPkg::Gparted
   end
 
   group('Graphics') do
@@ -197,6 +199,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Bind
     package ArchPkg::NmConnectionEditor
     package ArchPkg::NetworkmanagerOpenvpn
+    package ArchPkg::WireguardTools
     package ArchPkg::Netbird
     package ArchPkg::NetbirdUi
     # NetBird self-hosted server: single binary providing management, signal & relay.
@@ -366,6 +369,12 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Nomachine
     package ArchPkg::Gitbutler
     package ArchPkg::Vial
+    package ArchPkg::Firefox
+    package ArchPkg::Anki
+    package ArchPkg::Audacious
+    package ArchPkg::Xournalpp
+    package ArchPkg::Evince
+    package ArchPkg::Viewnior
   end
 
   group('Other') do
