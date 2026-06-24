@@ -99,6 +99,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::HaskellLanguageServer
   end
 
+  group('R') do
+    package ArchPkg::R
+  end
+
   group('Zig & toolchain') do
     package ArchPkg::Zig
     package ArchPkg::Zls
@@ -123,12 +127,27 @@ ArchMain = Packager::Installation.new do
     # terrafrom-ls
   end
 
+  group('Cloud & infra') do
+    package ArchPkg::AwsCliV2
+    package ArchPkg::S3cmd
+    package ArchPkg::Minikube
+    package ArchPkg::Packer
+    package ArchPkg::Certbot
+  end
+
+  group('Secrets & security') do
+    package ArchPkg::Age
+    package ArchPkg::Pass
+    package ArchPkg::Gitleaks
+  end
+
   group('Git & tools') do
     # NOTE: Git itself (and its config linking) lives in 'Build prerequisites'.
     package ArchPkg::GitDelta
     package ArchPkg::GitUi
     package ArchPkg::Tig
     package ArchPkg::PreCommit
+    package ArchPkg::GithubCli
 
     # git-cal
   end
@@ -178,6 +197,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Bind
     package ArchPkg::NmConnectionEditor
     package ArchPkg::NetworkmanagerOpenvpn
+    package ArchPkg::Netbird
+    package ArchPkg::NetbirdUi
+    # NetBird self-hosted server: single binary providing management, signal & relay.
+    package ArchPkg::NetbirdServer
   end
 
   group('Audio') do
@@ -186,12 +209,14 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Pipewire
     package ArchPkg::Wireplumber
     package ArchPkg::Pavucontrol
+    package ArchPkg::Wiremix
   end
 
   group('Bluetooth') do
     package ArchPkg::Bluez
     package ArchPkg::BluezUtils
     package ArchPkg::Blueman
+    package ArchPkg::Bluetui
   end
 
   group('Printing') do
@@ -274,11 +299,25 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Nnn
     package ArchPkg::Superfile
     package ArchPkg::Chafa
+    package ArchPkg::Dust
+    package ArchPkg::DuaCli
+    package ArchPkg::Ncdu
+    package ArchPkg::Fastfetch
+    package ArchPkg::Neofetch
+    package ArchPkg::Systeroid
+    package ArchPkg::Testdisk
+    package ArchPkg::Himalaya
   end
 
   group('Docker & tools') do
     package ArchPkg::Docker
     package ArchPkg::DockerCompose
+    package ArchPkg::DockerBuildx
+  end
+
+  group('AI coding agents') do
+    package ArchPkg::Crush
+    package ArchPkg::Forgecode
   end
 
   group('Editors tools') do
@@ -297,6 +336,10 @@ ArchMain = Packager::Installation.new do
   group('Doom emacs') do
     package ArchPkg::Emacs
     package ArchPkg::DoomEmacs
+  end
+
+  group('App launchers') do
+    package ArchPkg::Appimagelauncher
   end
 
   group('GUI apps') do
@@ -318,6 +361,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Mplayer
     package ArchPkg::Mpv
     package ArchPkg::Throne
+    package ArchPkg::Sioyek
+    package ArchPkg::Nomachine
+    package ArchPkg::Gitbutler
+    package ArchPkg::Vial
   end
 
   group('Other') do
@@ -332,5 +379,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::VirtualboxHostModulesArch
     package ArchPkg::Virtualbox
     package ArchPkg::VirtualboxGuestUtils
+    package ArchPkg::Vagrant
   end
 end
