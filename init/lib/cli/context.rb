@@ -2,6 +2,6 @@
 
 module CLI
   class Context
-    attr_accessor :pass, :os, :distro
+    attr_accessor :pass, :os, :distro, :chassis
   end
 end

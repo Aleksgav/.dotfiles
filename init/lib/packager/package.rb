@@ -45,6 +45,20 @@ module Packager
         package.sudo_require = sudo_require
       end
 
+      # The package runs only when ALL conditions are met.
+      # `condition` takes an arbitrary predicate over the host facts object;
+      # `chassis` is sugar for the common machine-type case.
+      def condition(label = 'custom', &block)
+        package.conditions << Condition.new(label, block)
+      end
+
+      def chassis(*values)
+        package.conditions << Condition.new(
+          "chassis: #{values.join('/')}",
+          ->(host) { values.include?(host.chassis) }
+        )
+      end
+
       # Optional steps. Each call appends a step.
       # Pass a shell string (optionally `sudo: true`) or a Ruby block.
       def pre_install(command = nil, sudo: false, &block)
@@ -66,6 +80,8 @@ module Packager
       alias sudo sudo_require
     end
 
+    include Packager::Conditional
+
     attr_accessor :title,
                   :command,
                   :target_os,
@@ -77,6 +93,7 @@ module Packager
     def initialize
       @pre_install = []
       @post_install = []
+      @conditions = []
     end
 
     # Ordered executable steps: [pre] -> main -> [post].

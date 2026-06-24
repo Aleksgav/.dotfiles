@@ -22,6 +22,7 @@ module CLI
       def call(**options)
         context = Context.new
         context.pass = read_sudo_password
+        context.chassis = Host.chassis
 
         installer.run(installation, context, **options.slice(:dry_run))
       end

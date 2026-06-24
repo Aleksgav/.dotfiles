@@ -23,15 +23,26 @@ class Executor
   end
 
   def exec_group(group, **options)
+    return skip_notice(group.title, group.skip_reasons(Host)) unless group.runs_on?(Host)
+
     group.packages.each do |package|
       exec_command(package, **options)
     end
   end
 
   def exec_command(package, dry_run: false)
+    return skip_notice(package.title, package.skip_reasons(Host)) unless package.runs_on?(Host)
+
     package.steps.each do |step|
       run_step(package, step, dry_run: dry_run)
     end
+  end
+
+  def skip_notice(label, reasons)
+    needs = reasons.empty? ? 'condition' : reasons.join(', ')
+
+    puts Styles::SKIP_PREFIX['[ skip ] '] +
+         Styles::SKIP["#{label} — needs #{needs} (host chassis: #{Host.chassis})"]
   end
 
   def run_step(package, step, dry_run: false)

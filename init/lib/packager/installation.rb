@@ -16,8 +16,8 @@ module Packager
 
     private
 
-    def group(title, &block)
-      group = Group.new(title, &block)
+    def group(title, **opts, &block)
+      group = Group.new(title, **opts, &block)
 
       installation << group
     end

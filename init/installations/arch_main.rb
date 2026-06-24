@@ -180,6 +180,19 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Blueman
   end
 
+  group('Printing') do
+    package ArchPkg::Cups
+    package ArchPkg::CupsFilters
+    package ArchPkg::CupsPdf
+    package ArchPkg::SystemConfigPrinter
+  end
+
+  # Only for laptops
+  group('Laptop', chassis: :laptop) do
+    package ArchPkg::Tlp
+    package ArchPkg::Brightnessctl
+  end
+
   group('Shell') do
     package ArchPkg::Zsh
     package ArchPkg::BashCompletion
