@@ -190,6 +190,7 @@ ArchMain = Packager::Installation.new do
   # Only for laptops
   group('Laptop', chassis: :laptop) do
     package ArchPkg::Tlp
+    package ArchPkg::TlpRdw
     package ArchPkg::Brightnessctl
   end
 

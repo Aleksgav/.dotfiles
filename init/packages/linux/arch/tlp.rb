@@ -8,6 +8,7 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
+      post_install 'systemctl enable tlp', sudo: true
       # Only install on laptops
       chassis :laptop
     end
