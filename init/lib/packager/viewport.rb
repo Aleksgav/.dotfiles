@@ -4,7 +4,8 @@ require 'tty/screen'
 
 module Packager
   class Viewport
-    DEFAULT_HEIGHT = 15
+    HEIGHT_DIVISOR = 3 # live pane spans ~1/3 of the terminal height
+    MIN_HEIGHT = 5 # ...but stay readable on short terminals
     MIN_TOP_ROWS = 3 # keep at least this many scrolling rows above the pane
     REDRAW_INTERVAL = 0.05 # seconds; throttle fast progress redraws (~20fps)
 
@@ -18,8 +19,8 @@ module Packager
     # CSI sequences (colours/cursor) and OSC strings emitted by the command.
     ANSI = %r{\e\[[0-9;?]*[ -/]*[@-~]|\e\][^\a]*\a}.freeze
 
-    def initialize(height: DEFAULT_HEIGHT, output: $stdout)
-      @height = height
+    def initialize(height: nil, output: $stdout)
+      @height = height || [TTY::Screen.height / HEIGHT_DIVISOR, MIN_HEIGHT].max
       @output = output
       @buffer = []
       @tag = nil
