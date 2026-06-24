@@ -274,6 +274,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Zip
     package ArchPkg::Less
     package ArchPkg::Wget
+    package ArchPkg::Thunar
     package ArchPkg::Zellij
     package ArchPkg::Zenith
     package ArchPkg::Alacritty
