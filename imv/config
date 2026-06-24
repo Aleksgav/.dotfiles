@@ -2,5 +2,14 @@
 # Linked to ~/.config/imv by the arch package post_install.
 
 [options]
-# Nord "Polar Night" background to match the mango/leftwm desktop theme
-background = 2e3440
+# Start with a clean dark background (no ugly grid checks)
+background = 000000
+
+# Make the text overlay blend cleanly with your font configuration
+overlay_font = monospace:12
+
+# Automatically loop back to the first image when cycling folders
+loop_input = true
+
+# Fit the image to your MangoWM floating window proportions cleanly
+scaling_mode = full

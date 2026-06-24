@@ -310,6 +310,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Systeroid
     package ArchPkg::Testdisk
     package ArchPkg::Himalaya
+    package ArchPkg::YtDlp
   end
 
   group('Docker & tools') do
