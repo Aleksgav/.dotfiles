@@ -348,6 +348,7 @@ ArchMain = Packager::Installation.new do
 
   group('Wayland compositor') do
     package ArchPkg::Mangowm
+    package ArchPkg::Swaybg
   end
 
   group('GUI apps') do
