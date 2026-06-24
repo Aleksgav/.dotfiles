@@ -11,7 +11,7 @@ module Packager
       @label_suffix = label_suffix
     end
 
-    def execute(_context)
+    def execute(_context, &_on_line)
       @block.call
       Result.new(out: '', err: '', ok: true)
     rescue StandardError => e

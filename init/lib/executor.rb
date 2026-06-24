@@ -6,11 +6,20 @@ class Executor
   def run(installation, context, **options)
     @context = context
 
-    installation.installation.each do |value|
-      case value
-      in Packager::Package then exec(value, **options)
-      in Packager::Group then exec_group(value, **options)
+    @viewport = Packager::Viewport.new
+    @use_viewport = @viewport.enabled? && !options[:dry_run]
+    @viewport.setup if @use_viewport
+
+    begin
+      installation.installation.each do |value|
+        case value
+        in Packager::Package then exec(value, **options)
+        in Packager::Group then exec_group(value, **options)
+        end
       end
+    ensure
+      # Always restore the terminal (scroll region, cursor) on Ctrl-C / errors.
+      @viewport.teardown if @use_viewport
     end
   end
 
@@ -50,7 +59,11 @@ class Executor
 
     return if dry_run
 
-    result = step.execute(context)
+    @viewport.tag = package.title if @use_viewport
+
+    result = step.execute(context) do |line, err, progress|
+      @viewport.push(line, err: err, progress: progress) if @use_viewport
+    end
 
     # Success: stay quiet
     return if result.ok?
