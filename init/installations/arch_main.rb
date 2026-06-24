@@ -347,9 +347,11 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Appimagelauncher
   end
 
-  group('Wayland compositor') do
+  group('Wayland compositor & env') do
     package ArchPkg::Mangowm
     package ArchPkg::Swaybg
+    package ArchPkg::Fuzzel
+    package ArchPkg::Tofi
   end
 
   group('GUI apps') do
