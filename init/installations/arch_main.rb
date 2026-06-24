@@ -346,6 +346,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Appimagelauncher
   end
 
+  group('Wayland compositor') do
+    package ArchPkg::Mangowm
+  end
+
   group('GUI apps') do
     package ArchPkg::GoogleChrome
     package ArchPkg::Opera
