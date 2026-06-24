@@ -8,6 +8,7 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require false
+      post_install { Linker.link 'tofi', "#{CONFIG_DIR}/tofi" }
     end
   end
 end
