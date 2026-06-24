@@ -137,10 +137,33 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Yay
   end
 
-  group('System') do
+  group('System & hardware') do
     package ArchPkg::DbusBroker
-    package ArchPkg::Rtkit
     package ArchPkg::Openssh
+    package ArchPkg::Rtkit
+    package ArchPkg::IntelUcode
+    package ArchPkg::Fuse2
+    package ArchPkg::Lshw
+    package ArchPkg::Powertop
+    package ArchPkg::Inxi
+    package ArchPkg::Acpi
+    package ArchPkg::Dialog
+    package ArchPkg::Reflector
+  end
+
+  group('Network tools') do
+    package ArchPkg::Iw
+    package ArchPkg::WpaSupplicant
+    package ArchPkg::Tcpdump
+    package ArchPkg::Mtr
+    package ArchPkg::NetTools
+    package ArchPkg::ConntrackTools
+    package ArchPkg::Ethtool
+    package ArchPkg::Rsync
+    package ArchPkg::Socat
+    package ArchPkg::OpenbsdNetcat
+    package ArchPkg::Axel
+    package ArchPkg::Bind
   end
 
   group('Audio') do
@@ -153,6 +176,7 @@ ArchMain = Packager::Installation.new do
 
   group('Shell') do
     package ArchPkg::Zsh
+    package ArchPkg::BashCompletion
     package ArchPkg::Shellcheck
     package ArchPkg::Nushell
     package ArchPkg::ZshSyntaxHighliting
@@ -185,6 +209,8 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Tree
     package ArchPkg::Tokei
     package ArchPkg::Unzip
+    package ArchPkg::Zip
+    package ArchPkg::Less
     package ArchPkg::Wget
     package ArchPkg::Xsel
     package ArchPkg::Zellij
