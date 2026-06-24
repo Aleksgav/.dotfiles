@@ -273,6 +273,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Lazygit
     package ArchPkg::Nnn
     package ArchPkg::Superfile
+    package ArchPkg::Chafa
   end
 
   group('Docker & tools') do
