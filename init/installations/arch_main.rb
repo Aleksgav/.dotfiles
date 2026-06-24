@@ -165,6 +165,8 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::OpenbsdNetcat
     package ArchPkg::Axel
     package ArchPkg::Bind
+    package ArchPkg::NmConnectionEditor
+    package ArchPkg::NetworkmanagerOpenvpn
   end
 
   group('Audio') do
