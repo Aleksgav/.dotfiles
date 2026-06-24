@@ -369,6 +369,7 @@ ArchMain = Packager::Installation.new do
     # package ArchPkg::MattermostDesktop
     package ArchPkg::Mplayer
     package ArchPkg::Mpv
+    package ArchPkg::Imv
     package ArchPkg::Throne
     package ArchPkg::Sioyek
     package ArchPkg::Nomachine

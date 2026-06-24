@@ -1,0 +1,6 @@
+# imv image viewer config -- see `man 5 imv`
+# Linked to ~/.config/imv by the arch package post_install.
+
+[options]
+# Nord "Polar Night" background to match the mango/leftwm desktop theme
+background = 2e3440
