@@ -174,6 +174,12 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Pavucontrol
   end
 
+  group('Bluetooth') do
+    package ArchPkg::Bluez
+    package ArchPkg::BluezUtils
+    package ArchPkg::Blueman
+  end
+
   group('Shell') do
     package ArchPkg::Zsh
     package ArchPkg::BashCompletion
