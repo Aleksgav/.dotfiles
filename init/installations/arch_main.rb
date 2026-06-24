@@ -152,6 +152,17 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Fstrim
   end
 
+  group('Graphics') do
+    # lib32-* live in [multilib]; enable + refresh it before they install.
+    package ArchPkg::EnableMultilib
+    package ArchPkg::Mesa
+    package ArchPkg::VulkanIntel
+    package ArchPkg::Lib32Mesa
+    package ArchPkg::Lib32VulkanIntel
+    package ArchPkg::VulkanTools
+    package ArchPkg::MesaUtils
+  end
+
   group('Network tools') do
     package ArchPkg::Iw
     package ArchPkg::WpaSupplicant
