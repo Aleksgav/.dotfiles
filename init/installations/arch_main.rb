@@ -424,7 +424,6 @@ ArchMain = Packager::Installation.new do
 
   group('Virtualization') do
     package ArchPkg::VirtualboxHostModulesArch
-    package ArchPkg::VirtualboxHostDkms
     package ArchPkg::Virtualbox
     package ArchPkg::VirtualboxGuestUtils
     package ArchPkg::Vagrant
