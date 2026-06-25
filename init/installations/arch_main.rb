@@ -141,6 +141,11 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Gitleaks
   end
 
+  group('YubiKey') do
+    package ArchPkg::YubikeyManager
+    package ArchPkg::YubikeyPersonalizationGui
+  end
+
   group('Git & tools') do
     # NOTE: Git itself (and its config linking) lives in 'Build prerequisites'.
     package ArchPkg::GitDelta
