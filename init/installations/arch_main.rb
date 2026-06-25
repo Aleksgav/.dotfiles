@@ -383,9 +383,13 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Wdisplays
     package ArchPkg::WlrRandr
     package ArchPkg::WlClipboard
+    package ArchPkg::SwayNotificationCenter
     package ArchPkg::Hyprlock
     package ArchPkg::Hypridle
     package ArchPkg::Kanshi
+    package ArchPkg::Grim
+    package ArchPkg::Slurp
+    package ArchPkg::Satty
   end
 
   group('GUI apps') do
