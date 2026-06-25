@@ -85,46 +85,46 @@
 
     "disk": {
       "path": "/",
-      "format": "󰋊 {percentage_used}%",
+      "format": "<span color='#f0c674'>󰋊</span> {percentage_used}%",
       "interval": 25,
       "tooltip-format": "{used} / {total} on {path}"
     },
 
     "memory": {
-      "format": " {percentage}%",
+      "format": "<span color='#f0c674'></span> {percentage}%",
       "interval": 5
     },
 
     "cpu": {
-      "format": " {usage}%",
+      "format": "<span color='#f0c674'></span> {usage}%",
       "interval": 2
     },
 
     "network#wlan": {
       "interface": "wl*",
-      "format-wifi": " {ifname} {essid} {ipaddr}",
-      "format-disconnected": " {ifname} down",
+      "format-wifi": "<span color='#f0c674'> {ifname}</span> {essid} {ipaddr}",
+      "format-disconnected": "<span color='#f0c674'> {ifname}</span> <span color='#707880'>down</span>",
       "tooltip-format-wifi": "{essid} ({signalStrength}%)  {ipaddr}",
       "on-click": "alacritty --class scratch-nmtui -e nmtui"
     },
 
     "network#eth": {
       "interface": "en*",
-      "format-ethernet": " {ifname} {ipaddr}",
-      "format-disconnected": " {ifname} down",
+      "format-ethernet": "<span color='#f0c674'> {ifname}</span> {ipaddr}",
+      "format-disconnected": "<span color='#f0c674'> {ifname}</span> <span color='#707880'>down</span>",
       "tooltip-format": "{ifname}: {ipaddr}",
       "on-click": "alacritty --class scratch-nmtui -e nmtui"
     },
 
     "backlight": {
-      "format": "{icon} {percent}%",
+      "format": "<span color='#f0c674'>{icon}</span> {percent}%",
       "format-icons": ["", "", "", "", "", "", "", "", ""],
       "on-scroll-up": "brightnessctl set +5%",
       "on-scroll-down": "brightnessctl set 5%-"
     },
 
     "pulseaudio": {
-      "format": "{icon} {volume}%",
+      "format": "<span color='#f0c674'>{icon}</span> {volume}%",
       "format-muted": " muted",
       "format-icons": { "default": ["", "", ""] },
       "on-click": "pavucontrol",
@@ -144,7 +144,7 @@
       "calendar": {
         "mode": "month",
         "format": {
-          "today": "<span color='#a3be8c'><b>{}</b></span>"
+          "today": "<span color='#f0c674'><b>{}</b></span>"
         }
       }
     }

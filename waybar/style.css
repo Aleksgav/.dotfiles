@@ -1,5 +1,3 @@
-/* Waybar — Nord theme, to match the mango desktop (fuzzel/tofi/alacritty). */
-
 * {
   font-family: "FiraCode Nerd Font", "FiraCode Nerd Font Mono", monospace;
   font-size: 13px;
@@ -7,12 +5,9 @@
 }
 
 window#waybar {
-  background-color: #2e3440;          /* nord0 */
-  color: #d8dee9;                     /* nord4 */
+  background-color: rgba(40, 42, 46, 0.667);
+  color: #c5c8c6;
 }
-
-window#waybar.top    { border-bottom: 2px solid #3b4252; }  /* nord1 */
-window#waybar.bottom { border-top:    2px solid #3b4252; }  /* nord1 */
 
 #workspaces,
 #tags,
@@ -34,71 +29,95 @@ window#waybar.bottom { border-top:    2px solid #3b4252; }  /* nord1 */
   margin: 2px 2px;
 }
 
+/* ── ext/workspaces (bottom bar) ──────────────────────────────────────── */
 #workspaces button {
   padding: 0 8px;
-  color: #d8dee9;
+  color: #707880; /* disabled — empty / inactive */
   background: transparent;
   border-radius: 4px;
 }
 
 #workspaces button.active {
-  color: #2e3440;
-  background-color: #a3be8c;          /* nord14 — matches mango focuscolor */
+  color: #c5c8c6;
+  background-color: #373b41;
+  border-bottom: 2px solid #f0c674;
 }
 
 #workspaces button.urgent {
-  color: #2e3440;
-  background-color: #bf616a;          /* nord11 */
+  color: #c5c8c6;
+  background-color: #a54242;
 }
 
 #workspaces button:hover {
-  color: #eceff4;
-  background-color: #434c5e;          /* nord2 */
+  color: #c5c8c6;
+  background-color: #373b41;
 }
 
-/* dwl/tags (top bar) — always shows all 9 tags */
+/* ── dwl/tags (top bar) — always shows all 9 tags ─────────────────────── */
 #tags button {
   padding: 0 8px;
-  color: #4c566a;                     /* nord3  — empty / inactive tag */
+  color: #707880; /* disabled — empty / inactive tag */
   background: transparent;
   border-radius: 4px;
 }
 
 #tags button.occupied {
-  color: #d8dee9;                     /* nord4  — tag has windows */
+  color: #c5c8c6; /* foreground — tag has windows */
 }
 
 #tags button.focused {
-  color: #2e3440;
-  background-color: #a3be8c;          /* nord14 — active tag */
+  color: #c5c8c6;
+  background-color: #373b41; /* background-alt — active tag */
+  border-bottom: 2px solid #f0c674; /* primary underline */
 }
 
 #tags button.urgent {
-  color: #2e3440;
-  background-color: #bf616a;          /* nord11 */
+  color: #c5c8c6;
+  background-color: #a54242; /* alert */
 }
 
-#window  { color: #81a1c1; }          /* nord9 */
-#clock   { color: #88c0d0; }          /* nord8 */
+/* ── module accents (icons coloured yellow in config.jsonc via pango) ──── */
+#window {
+  color: #c5c8c6;
+} /* foreground */
+#clock {
+  color: #f0c674;
+}
+#custom-keyboard {
+  color: #f0c674;
+}
+#custom-launcher {
+  color: #00a000;
+}
+#custom-powermenu {
+  color: #cc0000;
+}
 
-#pulseaudio       { color: #8fbcbb; } /* nord7 */
-#backlight        { color: #ebcb8b; } /* nord13 */
-#network          { color: #81a1c1; } /* nord9 */
-#cpu              { color: #b48ead; } /* nord15 */
-#memory           { color: #d08770; } /* nord12 */
-#disk             { color: #ebcb8b; } /* nord13 — polybar filesystem was yellow */
-#custom-keyboard  { color: #ebcb8b; } /* nord13 — polybar xkeyboard was yellow */
-#custom-launcher  { color: #a3be8c; } /* nord14 — polybar launcher was green */
-#custom-powermenu { color: #bf616a; } /* nord11 — polybar powermenu was red  */
+#idle_inhibitor {
+  color: #c5c8c6;
+}
+#idle_inhibitor.activated {
+  color: #f0c674;
+}
 
-#idle_inhibitor           { color: #d8dee9; }
-#idle_inhibitor.activated { color: #ebcb8b; }
+#pulseaudio.muted {
+  color: #707880;
+}
 
-#battery.charging { color: #a3be8c; } /* nord14 */
-#battery.warning  { color: #ebcb8b; } /* nord13 */
-#battery.critical { color: #bf616a; } /* nord11 */
+#battery {
+  color: #c5c8c6;
+}
+#battery.charging {
+  color: #f0c674;
+} /* primary */
+#battery.warning {
+  color: #f0c674;
+} /* primary */
+#battery.critical {
+  color: #a54242;
+} /* alert   */
 
 #tray menu {
-  background-color: #2e3440;
-  color: #d8dee9;
+  background-color: #282a2e;
+  color: #c5c8c6;
 }
