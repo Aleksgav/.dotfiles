@@ -46,7 +46,8 @@ window#waybar {
   border-radius: 0; /* override GTK theme default → square active block */
   text-shadow: none; /* kill GTK theme's gold hover text-shadow */
   box-shadow: none;
-  border: none;
+  border: none; /* kill GTK theme's gold hover border */
+  outline: none; /* kill focus ring */
 }
 
 #workspaces button.active {
@@ -73,6 +74,8 @@ window#waybar {
   border-radius: 0; /* override GTK theme default → square active block */
   text-shadow: none; /* kill GTK theme's gold hover text-shadow */
   box-shadow: none;
+  border: none; /* kill GTK theme's gold hover border */
+  outline: none; /* kill focus ring */
 }
 
 #tags button.occupied {
