@@ -7,6 +7,7 @@
 window#waybar {
   background-color: rgba(40, 42, 46, 0.667);
   color: #c5c8c6;
+  border-radius: 6px;
 }
 
 #workspaces,
