@@ -15,6 +15,7 @@ window#waybar.top    { border-bottom: 2px solid #3b4252; }  /* nord1 */
 window#waybar.bottom { border-top:    2px solid #3b4252; }  /* nord1 */
 
 #workspaces,
+#tags,
 #window,
 #clock,
 #idle_inhibitor,
@@ -53,6 +54,28 @@ window#waybar.bottom { border-top:    2px solid #3b4252; }  /* nord1 */
 #workspaces button:hover {
   color: #eceff4;
   background-color: #434c5e;          /* nord2 */
+}
+
+/* dwl/tags (top bar) — always shows all 9 tags */
+#tags button {
+  padding: 0 8px;
+  color: #4c566a;                     /* nord3  — empty / inactive tag */
+  background: transparent;
+  border-radius: 4px;
+}
+
+#tags button.occupied {
+  color: #d8dee9;                     /* nord4  — tag has windows */
+}
+
+#tags button.focused {
+  color: #2e3440;
+  background-color: #a3be8c;          /* nord14 — active tag */
+}
+
+#tags button.urgent {
+  color: #2e3440;
+  background-color: #bf616a;          /* nord11 */
 }
 
 #window  { color: #81a1c1; }          /* nord9 */

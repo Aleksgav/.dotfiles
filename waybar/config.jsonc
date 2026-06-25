@@ -16,15 +16,12 @@
     "height": 30,
     "spacing": 6,
 
-    "modules-left": ["ext/workspaces", "dwl/window"],
+    "modules-left": ["dwl/tags", "dwl/window"],
     "modules-right": ["idle_inhibitor", "tray", "custom/launcher", "custom/powermenu"],
 
-    "ext/workspaces": {
-      "format": "{name}",
-      "ignore-hidden": true,
-      "on-click": "activate",
-      "on-click-right": "deactivate",
-      "sort-by-id": true
+    "dwl/tags": {
+      "num-tags": 9,
+      "tag-labels": ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     },
 
     "dwl/window": {
@@ -66,8 +63,16 @@
     "height": 30,
     "spacing": 6,
 
-    "modules-left": ["battery", "disk", "memory", "cpu", "network#wlan", "network#eth"],
+    "modules-left": ["ext/workspaces", "battery", "disk", "memory", "cpu", "network#wlan", "network#eth"],
     "modules-right": ["backlight", "pulseaudio", "custom/keyboard", "clock"],
+
+    "ext/workspaces": {
+      "format": "{name}",
+      "ignore-hidden": true,
+      "on-click": "activate",
+      "on-click-right": "deactivate",
+      "sort-by-id": true
+    },
 
     "battery": {
       "states": { "warning": 30, "critical": 15 },
