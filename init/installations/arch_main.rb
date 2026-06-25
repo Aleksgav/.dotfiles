@@ -162,6 +162,7 @@ ArchMain = Packager::Installation.new do
   end
 
   group('System & hardware') do
+    package ArchPkg::LinuxHeaders
     package ArchPkg::DbusBroker
     package ArchPkg::Openssh
     package ArchPkg::Rtkit
