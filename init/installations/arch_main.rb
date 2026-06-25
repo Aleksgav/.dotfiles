@@ -383,6 +383,8 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Wdisplays
     package ArchPkg::WlrRandr
     package ArchPkg::WlClipboard
+    package ArchPkg::Hyprlock
+    package ArchPkg::Hypridle
     package ArchPkg::Kanshi
   end
 
