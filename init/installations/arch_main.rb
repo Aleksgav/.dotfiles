@@ -207,6 +207,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Iw
     package ArchPkg::WpaSupplicant
     package ArchPkg::Tcpdump
+    package ArchPkg::WiresharkQt
     package ArchPkg::Mtr
     package ArchPkg::NetTools
     package ArchPkg::ConntrackTools
@@ -218,6 +219,8 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Axel
     package ArchPkg::Bind
     package ArchPkg::NmConnectionEditor
+    package ArchPkg::NetworkManagerApplet
+    package ArchPkg::Openvpn
     package ArchPkg::NetworkmanagerOpenvpn
     package ArchPkg::WireguardTools
     package ArchPkg::Netbird
