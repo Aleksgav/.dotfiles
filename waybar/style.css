@@ -16,6 +16,7 @@ window#waybar {
 #window,
 #clock,
 #idle_inhibitor,
+#custom-notification,
 #pulseaudio,
 #backlight,
 #network,
@@ -117,6 +118,17 @@ window#waybar {
   color: #c5c8c6;
 }
 #idle_inhibitor.activated {
+  color: #f0c674;
+}
+
+/* swaync bell — gold when notifications are waiting; DND shown via the glyph */
+#custom-notification {
+  color: #c5c8c6;
+}
+#custom-notification.notification,
+#custom-notification.dnd-notification,
+#custom-notification.inhibited-notification,
+#custom-notification.dnd-inhibited-notification {
   color: #f0c674;
 }
 

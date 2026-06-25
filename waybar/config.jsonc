@@ -1,7 +1,7 @@
 // Waybar config for the mango (mangowm) Wayland compositor.
 // Launched from mango via `exec-once=waybar` (see mango/config.conf).
 // Two bars (top + bottom) mirror the polybar/leftwm layout:
-//   top:    [tags, window]                    ...    [idle, tray, launcher, powermenu]
+//   top:    [tags, window]                    ...    [idle, notif, tray, launcher, powermenu]
 //   bottom: [workspaces, battery, disk, memory, cpu, network] ... [backlight, pulseaudio, keyboard, clock]
 // A single waybar process renders both bars from this top-level JSON array.
 // Like polybar, modules use TEXT labels (RAM/CPU/VOL/mountpoint/ifname); the only
@@ -18,7 +18,7 @@
     "margin": "5px 5px 5px 5px",
 
     "modules-left": ["dwl/tags", "custom/separator", "dwl/window"],
-    "modules-right": ["idle_inhibitor", "custom/separator", "tray", "custom/separator", "custom/launcher", "custom/separator", "custom/powermenu"],
+    "modules-right": ["idle_inhibitor", "custom/separator", "custom/notification", "custom/separator", "tray", "custom/separator", "custom/launcher", "custom/separator", "custom/powermenu"],
 
     "custom/separator": {
       "format": "|",
@@ -41,6 +41,27 @@
       "format-icons": { "activated": "AWAKE", "deactivated": "idle" },
       "tooltip-format-activated": "Idle inhibitor: on",
       "tooltip-format-deactivated": "Idle inhibitor: off"
+    },
+
+    "custom/notification": {
+      "format": "{icon}",
+      "format-icons": {
+        "notification": "󱅫",
+        "none": "󰂜",
+        "dnd-notification": "󰂠",
+        "dnd-none": "󰪓",
+        "inhibited-notification": "󰂛",
+        "inhibited-none": "󰪑",
+        "dnd-inhibited-notification": "󰂛",
+        "dnd-inhibited-none": "󰪑"
+      },
+      "return-type": "json",
+      "exec-if": "which swaync-client",
+      "exec": "swaync-client -swb",
+      "on-click": "swaync-client -t -sw",
+      "on-click-right": "swaync-client -d -sw",
+      "escape": true,
+      "tooltip": true
     },
 
     "tray": {
