@@ -131,6 +131,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::AwsCliV2
     package ArchPkg::S3cmd
     package ArchPkg::Minikube
+    package ArchPkg::Helm
     package ArchPkg::Packer
     package ArchPkg::Certbot
   end
