@@ -46,6 +46,7 @@ window#waybar {
   border-radius: 0; /* override GTK theme default → square active block */
   text-shadow: none; /* kill GTK theme's gold hover text-shadow */
   box-shadow: none;
+  border: none;
 }
 
 #workspaces button.active {
