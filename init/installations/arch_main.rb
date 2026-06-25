@@ -382,6 +382,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Tofi
     package ArchPkg::Wdisplays
     package ArchPkg::WlrRandr
+    package ArchPkg::WlClipboard
     package ArchPkg::Kanshi
   end
 
