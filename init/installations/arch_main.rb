@@ -273,7 +273,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Bat
     package ArchPkg::Btop
     package ArchPkg::Bottom
-    package ArchPkg::Xclip
     package ArchPkg::Cloc
     package ArchPkg::Direnv
     package ArchPkg::DiffSoFancy
@@ -392,7 +391,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Vlc
     # package ArchPkg::HomeAssistant
     # package ArchPkg::Discord
-    package ArchPkg::Flameshot
     # package ArchPkg::Zeplin
     package ArchPkg::Zoom
     # package ArchPkg::SonicPi
@@ -403,7 +401,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Imv
     package ArchPkg::Throne
     package ArchPkg::Sioyek
-    package ArchPkg::Nomachine
     package ArchPkg::Gitbutler
     package ArchPkg::Vial
     package ArchPkg::Firefox
@@ -418,7 +415,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::PythonPygments
     package ArchPkg::Gobang
 
-    package ArchPkg::Conky
     # chromedriver
   end
 
