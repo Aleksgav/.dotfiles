@@ -37,6 +37,7 @@ ArchMain = Packager::Installation.new do
   group('Libs') do
     package ArchPkg::LibImagemagic
     package ArchPkg::LibJemalloc
+    package ArchPkg::Sqlite
   end
 
   group('Golang & toolchain') do
@@ -151,6 +152,8 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Zaproxy
     package ArchPkg::Gobuster
     package ArchPkg::Hydra
+    package ArchPkg::Nmap
+    package ArchPkg::Masscan
     # Radare2 before Ghidra: Ghidra's post_install runs `r2pm` (ships with radare2).
     package ArchPkg::Radare2
     package ArchPkg::Ghidra
@@ -210,6 +213,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Ethtool
     package ArchPkg::Rsync
     package ArchPkg::Socat
+    package ArchPkg::Websocat
     package ArchPkg::OpenbsdNetcat
     package ArchPkg::Axel
     package ArchPkg::Bind
@@ -273,12 +277,14 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Dysk
     package ArchPkg::Htop
     package ArchPkg::Httpie
+    package ArchPkg::Pgcli
     package ArchPkg::Curlie
     package ArchPkg::Fd
     package ArchPkg::Fzf
     package ArchPkg::Figlet
     package ArchPkg::Mc
     package ArchPkg::Jq
+    package ArchPkg::Yq
     package ArchPkg::Ripgrep
     package ArchPkg::TimerRs
     package ArchPkg::Tealdeer
