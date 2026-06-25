@@ -17,8 +17,13 @@
     "spacing": 6,
     "margin": "5px 5px 5px 5px",
 
-    "modules-left": ["dwl/tags", "dwl/window"],
-    "modules-right": ["idle_inhibitor", "tray", "custom/launcher", "custom/powermenu"],
+    "modules-left": ["dwl/tags", "custom/separator", "dwl/window"],
+    "modules-right": ["idle_inhibitor", "custom/separator", "tray", "custom/separator", "custom/launcher", "custom/separator", "custom/powermenu"],
+
+    "custom/separator": {
+      "format": "|",
+      "tooltip": false
+    },
 
     "dwl/tags": {
       "num-tags": 9,
@@ -65,8 +70,13 @@
     "spacing": 6,
     "margin": "5px 5px 5px 5px",
 
-    "modules-left": ["ext/workspaces", "battery", "disk", "memory", "cpu", "network#wlan", "network#eth"],
-    "modules-right": ["backlight", "pulseaudio", "custom/keyboard", "clock"],
+    "modules-left": ["ext/workspaces", "custom/separator", "battery", "custom/separator", "disk", "custom/separator", "memory", "custom/separator", "cpu", "custom/separator", "network#wlan", "custom/separator", "network#eth"],
+    "modules-right": ["backlight", "custom/separator", "pulseaudio", "custom/separator", "custom/keyboard", "custom/separator", "clock"],
+
+    "custom/separator": {
+      "format": "|",
+      "tooltip": false
+    },
 
     "ext/workspaces": {
       "format": "{icon}",

@@ -93,6 +93,9 @@ window#waybar {
 #custom-powermenu {
   color: #cc0000;
 }
+#custom-separator {
+  color: #707880;
+}
 
 #idle_inhibitor {
   color: #c5c8c6;
