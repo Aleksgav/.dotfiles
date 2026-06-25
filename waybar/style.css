@@ -1,6 +1,7 @@
 * {
-  font-family: "FiraCode Nerd Font", "FiraCode Nerd Font Mono", monospace;
-  font-size: 13px;
+  font-family: "FiraCode Nerd Font", monospace;
+  font-size: 12pt;
+  font-weight: normal;
   min-height: 0;
 }
 
@@ -35,7 +36,6 @@ window#waybar {
   padding: 0 8px;
   color: #707880; /* disabled — empty / inactive */
   background: transparent;
-  border-radius: 4px;
 }
 
 #workspaces button.active {
@@ -59,7 +59,6 @@ window#waybar {
   padding: 0 8px;
   color: #707880; /* disabled — empty / inactive tag */
   background: transparent;
-  border-radius: 4px;
 }
 
 #tags button.occupied {
