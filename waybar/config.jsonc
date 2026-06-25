@@ -99,18 +99,18 @@
 
     "disk": {
       "path": "/",
-      "format": "<span color='#f0c674'>󰋊</span> {percentage_used}%",
+      "format": "<span color='#f0c674'>󰋊 {path}</span> {percentage_used}%",
       "interval": 25,
       "tooltip-format": "{used} / {total} on {path}"
     },
 
     "memory": {
-      "format": "<span color='#f0c674'></span> {percentage}%",
+      "format": "<span color='#f0c674'> RAM</span> {percentage}%",
       "interval": 5
     },
 
     "cpu": {
-      "format": "<span color='#f0c674'></span> {usage}%",
+      "format": "<span color='#f0c674'> CPU</span> {usage}%",
       "interval": 2
     },
 
@@ -138,7 +138,7 @@
     },
 
     "pulseaudio": {
-      "format": "<span color='#f0c674'>{icon}</span> {volume}%",
+      "format": "<span color='#f0c674'>{icon} VOL</span> {volume}%",
       "format-muted": " muted",
       "format-icons": { "default": ["", "", ""] },
       "on-click": "pavucontrol",
