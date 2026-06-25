@@ -375,6 +375,9 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Swaybg
     package ArchPkg::Fuzzel
     package ArchPkg::Tofi
+    package ArchPkg::Wdisplays
+    package ArchPkg::WlrRandr
+    package ArchPkg::Kanshi
   end
 
   group('GUI apps') do
