@@ -374,6 +374,9 @@ ArchMain = Packager::Installation.new do
   end
 
   group('Wayland compositor & env') do
+    package ArchPkg::XdgDesktopPortal
+    package ArchPkg::XdgDesktopPortalWlr
+    package ArchPkg::XdgDesktopPortalGtk
     package ArchPkg::Mangowm
     package ArchPkg::Swaybg
     package ArchPkg::Waybar
