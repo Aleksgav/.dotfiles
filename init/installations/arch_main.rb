@@ -146,6 +146,15 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::YubikeyPersonalizationGui
   end
 
+  group('Security & pentesting') do
+    package ArchPkg::Zaproxy
+    package ArchPkg::Gobuster
+    package ArchPkg::Hydra
+    # Radare2 before Ghidra: Ghidra's post_install runs `r2pm` (ships with radare2).
+    package ArchPkg::Radare2
+    package ArchPkg::Ghidra
+  end
+
   group('Git & tools') do
     # NOTE: Git itself (and its config linking) lives in 'Build prerequisites'.
     package ArchPkg::GitDelta
@@ -368,7 +377,6 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Vlc
     # package ArchPkg::HomeAssistant
     # package ArchPkg::Discord
-    package ArchPkg::Ghidra
     package ArchPkg::Flameshot
     # package ArchPkg::Zeplin
     package ArchPkg::Zoom
