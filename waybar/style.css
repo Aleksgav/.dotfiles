@@ -1,0 +1,71 @@
+/* Waybar — Nord theme, to match the mango desktop (fuzzel/tofi/alacritty). */
+
+* {
+  font-family: "FiraCode Nerd Font", "FiraCode Nerd Font Mono", monospace;
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: #2e3440;          /* nord0 */
+  color: #d8dee9;                     /* nord4 */
+  border-bottom: 2px solid #3b4252;   /* nord1 */
+}
+
+#workspaces,
+#window,
+#clock,
+#idle_inhibitor,
+#pulseaudio,
+#backlight,
+#network,
+#cpu,
+#memory,
+#battery,
+#tray {
+  padding: 0 10px;
+  margin: 2px 2px;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  color: #d8dee9;
+  background: transparent;
+  border-radius: 4px;
+}
+
+#workspaces button.active {
+  color: #2e3440;
+  background-color: #a3be8c;          /* nord14 — matches mango focuscolor */
+}
+
+#workspaces button.urgent {
+  color: #2e3440;
+  background-color: #bf616a;          /* nord11 */
+}
+
+#workspaces button:hover {
+  color: #eceff4;
+  background-color: #434c5e;          /* nord2 */
+}
+
+#window  { color: #81a1c1; }          /* nord9 */
+#clock   { color: #88c0d0; }          /* nord8 */
+
+#pulseaudio { color: #8fbcbb; }       /* nord7 */
+#backlight  { color: #ebcb8b; }       /* nord13 */
+#network    { color: #81a1c1; }       /* nord9 */
+#cpu        { color: #b48ead; }       /* nord15 */
+#memory     { color: #d08770; }       /* nord12 */
+
+#idle_inhibitor           { color: #d8dee9; }
+#idle_inhibitor.activated { color: #ebcb8b; }
+
+#battery.charging { color: #a3be8c; } /* nord14 */
+#battery.warning  { color: #ebcb8b; } /* nord13 */
+#battery.critical { color: #bf616a; } /* nord11 */
+
+#tray menu {
+  background-color: #2e3440;
+  color: #d8dee9;
+}

@@ -376,6 +376,7 @@ ArchMain = Packager::Installation.new do
   group('Wayland compositor & env') do
     package ArchPkg::Mangowm
     package ArchPkg::Swaybg
+    package ArchPkg::Waybar
     package ArchPkg::Fuzzel
     package ArchPkg::Tofi
     package ArchPkg::Wdisplays

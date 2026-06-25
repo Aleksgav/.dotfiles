@@ -1,0 +1,95 @@
+// Waybar config for the mango (mangowm) Wayland compositor.
+// Launched from mango via `exec-once=waybar` (see mango/config.conf).
+// Workspaces use the ext-workspace protocol (recommended by the mango wiki);
+// dwl/window shows the active layout + window title via mango's dwl IPC.
+// Theme: Nord, to match fuzzel/tofi/alacritty.
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "spacing": 6,
+
+  "modules-left": ["ext/workspaces", "dwl/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["idle_inhibitor", "pulseaudio", "backlight", "network", "cpu", "memory", "battery", "tray"],
+
+  "ext/workspaces": {
+    "format": "{name}",
+    "ignore-hidden": true,
+    "on-click": "activate",
+    "on-click-right": "deactivate",
+    "sort-by-id": true
+  },
+
+  "dwl/window": {
+    "format": "[{layout}] {title}",
+    "max-length": 60,
+    "tooltip": false
+  },
+
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "format": {
+        "today": "<span color='#a3be8c'><b>{}</b></span>"
+      }
+    }
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": { "activated": "", "deactivated": "" },
+    "tooltip-format-activated": "Idle inhibitor: on",
+    "tooltip-format-deactivated": "Idle inhibitor: off"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": " muted",
+    "format-icons": { "default": ["", "", ""] },
+    "on-click": "pavucontrol",
+    "scroll-step": 5
+  },
+
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "on-scroll-up": "brightnessctl set +5%",
+    "on-scroll-down": "brightnessctl set 5%-"
+  },
+
+  "network": {
+    "format-wifi": " {signalStrength}%",
+    "format-ethernet": " {ifname}",
+    "format-disconnected": " off",
+    "tooltip-format": "{ifname}: {ipaddr}",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)  {ipaddr}",
+    "on-click": "alacritty --class scratch-nmtui -e nmtui"
+  },
+
+  "cpu": {
+    "format": " {usage}%",
+    "interval": 2
+  },
+
+  "memory": {
+    "format": " {percentage}%",
+    "interval": 5
+  },
+
+  "battery": {
+    "states": { "warning": 30, "critical": 15 },
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip-format": "{timeTo} ({power}W)"
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  }
+}
