@@ -344,6 +344,7 @@ ArchMain = Packager::Installation.new do
   group('Editors tools') do
     package ArchPkg::EditorconfigChecker
     package ArchPkg::TreeSitter
+    package ArchPkg::TreeSitterCli
     package ArchPkg::YamlLanguageServer
     package ArchPkg::BashLanguageServer
 
