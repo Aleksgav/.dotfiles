@@ -1,0 +1,9 @@
+# xdg-desktop-portal-wlr screencast settings.
+#
+# `chooser_type=simple` runs `chooser_cmd` once and expects it to print the
+# name of the output to capture. `slurp -f %o -or` (slurp is installed) lets you
+# click the monitor to share — handy on this multi-output setup (kanshi/wlr-randr).
+[screencast]
+chooser_type=simple
+chooser_cmd=slurp -f %o -or
+max_fps=60

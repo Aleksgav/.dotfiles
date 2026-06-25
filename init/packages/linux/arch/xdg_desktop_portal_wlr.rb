@@ -8,6 +8,7 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
+      post_install { Linker.link 'xdg-desktop-portal-wlr', "#{CONFIG_DIR}/xdg-desktop-portal-wlr" }
     end
   end
 end
