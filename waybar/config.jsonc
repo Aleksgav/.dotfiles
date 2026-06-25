@@ -1,12 +1,12 @@
 // Waybar config for the mango (mangowm) Wayland compositor.
 // Launched from mango via `exec-once=waybar` (see mango/config.conf).
 // Two bars (top + bottom) mirror the polybar/leftwm layout:
-//   top:    [workspaces, window]            ...    [tray, launcher, powermenu]
-//   bottom: [battery, disk, memory, cpu, network] ... [pulseaudio, keyboard, clock]
+//   top:    [tags, window]                    ...    [idle, tray, launcher, powermenu]
+//   bottom: [workspaces, battery, disk, memory, cpu, network] ... [backlight, pulseaudio, keyboard, clock]
 // A single waybar process renders both bars from this top-level JSON array.
-// Workspaces use the ext-workspace protocol (recommended by the mango wiki);
-// dwl/window shows the active layout + window title via mango's dwl IPC.
-// Theme: Nord, to match fuzzel/tofi/alacritty.
+// Like polybar, modules use TEXT labels (RAM/CPU/VOL/mountpoint/ifname); the only
+// icons are battery + launcher + the tags, all at Nerd Fonts v3 codepoints.
+// Theme: polybar palette (Tomorrow-Night), see style.css.
 [
   // ── TOP BAR ──────────────────────────────────────────────────────────────
   {
@@ -27,7 +27,7 @@
 
     "dwl/tags": {
       "num-tags": 9,
-      "tag-labels": [" home", " mess", "󰙀 proj", " learn", " read", "󰸼 cross", " hearth", "󰒓 conf", " other"]
+      "tag-labels": ["󰋜 home", "󰍡 mess", "󰙀 proj", "󰂻 learn", "󰂺 read", "󰸼 cross", "󰋑 hearth", "󰒓 conf", "󰇘 other"]
     },
 
     "dwl/window": {
@@ -38,7 +38,7 @@
 
     "idle_inhibitor": {
       "format": "{icon}",
-      "format-icons": { "activated": "", "deactivated": "" },
+      "format-icons": { "activated": "AWAKE", "deactivated": "idle" },
       "tooltip-format-activated": "Idle inhibitor: on",
       "tooltip-format-deactivated": "Idle inhibitor: off"
     },
@@ -49,7 +49,7 @@
     },
 
     "custom/launcher": {
-      "format": "",
+      "format": "󰀻",
       "on-click": "tofi-drun --drun-launch=true",
       "tooltip": false
     },
@@ -81,15 +81,15 @@
     "ext/workspaces": {
       "format": "{icon}",
       "format-icons": {
-        "1": " home",
-        "2": " mess",
+        "1": "󰋜 home",
+        "2": "󰍡 mess",
         "3": "󰙀 proj",
-        "4": " learn",
-        "5": " read",
+        "4": "󰂻 learn",
+        "5": "󰂺 read",
         "6": "󰸼 cross",
-        "7": " hearth",
+        "7": "󰋑 hearth",
         "8": "󰒓 conf",
-        "9": " other",
+        "9": "󰇘 other",
         "default": "{name}"
       },
       "ignore-hidden": true,
@@ -101,62 +101,60 @@
     "battery": {
       "states": { "warning": 30, "critical": 15 },
       "format": "{icon} {capacity}%",
-      "format-charging": " {capacity}%",
-      "format-plugged": " {capacity}%",
-      "format-icons": ["", "", "", "", ""],
+      "format-charging": "󰂄 {capacity}%",
+      "format-plugged": "󰂄 {capacity}%",
+      "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
       "tooltip-format": "{timeTo} ({power}W)"
     },
 
     "disk": {
       "path": "/",
-      "format": "<span color='#f0c674'>󰋊 {path}</span> {percentage_used}%",
+      "format": "<span color='#f0c674'>{path}</span> {percentage_used}%",
       "interval": 25,
       "tooltip-format": "{used} / {total} on {path}"
     },
 
     "memory": {
-      "format": "<span color='#f0c674'> RAM</span> {percentage}%",
+      "format": "<span color='#f0c674'>RAM</span> {percentage}%",
       "interval": 5
     },
 
     "cpu": {
-      "format": "<span color='#f0c674'> CPU</span> {usage}%",
+      "format": "<span color='#f0c674'>CPU</span> {usage}%",
       "interval": 2
     },
 
     "network#wlan": {
       "interface": "wl*",
-      "format-wifi": "<span color='#f0c674'> {ifname}</span> {essid} {ipaddr}",
-      "format-disconnected": "<span color='#f0c674'> {ifname}</span> <span color='#707880'>down</span>",
+      "format-wifi": "<span color='#f0c674'>{ifname}</span> {essid} {ipaddr}",
+      "format-disconnected": "<span color='#f0c674'>{ifname}</span> <span color='#707880'>disconnected</span>",
       "tooltip-format-wifi": "{essid} ({signalStrength}%)  {ipaddr}",
       "on-click": "alacritty --class scratch-nmtui -e nmtui"
     },
 
     "network#eth": {
       "interface": "en*",
-      "format-ethernet": "<span color='#f0c674'> {ifname}</span> {ipaddr}",
-      "format-disconnected": "<span color='#f0c674'> {ifname}</span> <span color='#707880'>down</span>",
+      "format-ethernet": "<span color='#f0c674'>{ifname}</span> {ipaddr}",
+      "format-disconnected": "<span color='#f0c674'>{ifname}</span> <span color='#707880'>disconnected</span>",
       "tooltip-format": "{ifname}: {ipaddr}",
       "on-click": "alacritty --class scratch-nmtui -e nmtui"
     },
 
     "backlight": {
-      "format": "<span color='#f0c674'>{icon}</span> {percent}%",
-      "format-icons": ["", "", "", "", "", "", "", "", ""],
+      "format": "<span color='#f0c674'>BRI</span> {percent}%",
       "on-scroll-up": "brightnessctl set +5%",
       "on-scroll-down": "brightnessctl set 5%-"
     },
 
     "pulseaudio": {
-      "format": "<span color='#f0c674'>{icon} VOL</span> {volume}%",
-      "format-muted": " muted",
-      "format-icons": { "default": ["", "", ""] },
+      "format": "<span color='#f0c674'>VOL</span> {volume}%",
+      "format-muted": "muted",
       "on-click": "pavucontrol",
       "scroll-step": 5
     },
 
     "custom/keyboard": {
-      "format": " us",
+      "format": "us",
       "tooltip": false
     },
 
