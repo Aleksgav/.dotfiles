@@ -31,6 +31,13 @@ window#waybar {
   margin: 2px 2px;
 }
 
+/* tag / workspace containers fill the full bar height (no vertical margin),
+   so the active highlight block isn't shorter than the panel */
+#workspaces,
+#tags {
+  margin: 0 2px;
+}
+
 /* ── ext/workspaces (bottom bar) ──────────────────────────────────────── */
 #workspaces button {
   padding: 0 8px;
