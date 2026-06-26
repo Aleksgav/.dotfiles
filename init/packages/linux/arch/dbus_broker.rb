@@ -9,6 +9,7 @@ module Linux
       distro TARGET_DISTRO
       sudo_require true
       post_install 'systemctl enable --now dbus-broker.service', sudo: true
+      post_install 'systemctl --user enable dbus-broker.service'
     end
   end
 end
