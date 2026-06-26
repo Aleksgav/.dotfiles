@@ -4,3 +4,4 @@ Comment=mango Wayland compositor
 Exec=mango
 Type=Application
 DesktopNames=mango
+NoDisplay=true
