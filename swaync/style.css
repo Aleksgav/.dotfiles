@@ -1,0 +1,220 @@
+/*
+ * swaync — Tomorrow Night theme
+ * Palette matches waybar/style.css and hypr/hyprlock.conf; accents are black
+ * (decorative) / dark gray (functional) — gold removed. Critical stays red.
+ *
+ * GTK4 CSS. config.json sets "ignore-gtk-theme": true and "cssPriority": "user",
+ * so this file overrides swaync's bundled default style.
+ * Reload after editing (on the target machine):  swaync-client -rs
+ */
+
+/* ── palette (Tomorrow Night / Hybrid) ──────────────────────────────────── */
+@define-color bg        rgba(40, 42, 46, 0.92); /* #282a2e — card / panel  */
+@define-color bg-solid  #282a2e;                /* opaque variant          */
+@define-color bg-alt    #373b41;                /* hover / selection / border */
+@define-color bg-darker #1d1f21;                /* troughs, insets         */
+@define-color fg        #c5c8c6;                /* foreground text         */
+@define-color fg-muted  #707880;                /* time, app-name, disabled */
+@define-color accent    #707880;                /* muted gray — highlight (gold removed) */
+@define-color alert     #a54242;                /* red — critical urgency  */
+@define-color ok        #8abeb7;                /* cyan — checked states   */
+
+* {
+  font-family: "FiraCode Nerd Font", monospace;
+  font-size: 13px;
+}
+
+/* ── notification card (shared by popups and control center) ────────────── */
+.notification {
+  border-radius: 8px;
+  border: 1px solid @bg-alt;
+  border-left: 3px solid #000000; /* black accent — echoes waybar's active-tag underline */
+  background: @bg;
+}
+
+.notification.critical {
+  border-left-color: @alert;
+}
+
+.notification.low {
+  opacity: 0.85;
+}
+
+.notification-content {
+  padding: 8px;
+  background: transparent;
+}
+
+/* main clickable surface + hover */
+.notification-default-action {
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+}
+.notification-default-action:hover {
+  background: @bg-alt;
+}
+
+/* per-notification action buttons (row at the bottom) */
+.notification-action {
+  background: @bg-solid;
+  color: @fg;
+  border: 1px solid @bg-alt;
+  border-radius: 6px;
+  margin: 4px;
+}
+.notification-action:hover {
+  background: @bg-alt;
+  border-color: @accent;
+}
+
+/* text */
+.summary  { color: @fg;       font-size: 14px; font-weight: bold; }
+.body     { color: @fg;       font-size: 13px; }
+.time     { color: @fg-muted; font-size: 11px; }
+.app-name { color: @fg-muted; font-size: 11px; }
+
+/* body image rounding */
+.body-image {
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+/* close button */
+.close-button {
+  background: @bg-alt;
+  color: @fg;
+  border: none;
+  border-radius: 6px;
+  margin: 6px;
+  padding: 2px;
+}
+.close-button:hover {
+  background: @alert;
+  color: @fg;
+}
+
+/* progress bar (e.g. file-copy notifications) */
+progressbar trough {
+  background: @bg-darker;
+  border-radius: 6px;
+  border: none;
+}
+progressbar progress {
+  background: @accent;
+  border-radius: 6px;
+}
+
+/* ── floating popups (the toast) ────────────────────────────────────────── */
+.floating-notifications.background .notification-row .notification {
+  margin: 6px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* ── control center panel ───────────────────────────────────────────────── */
+.control-center {
+  background: @bg;
+  color: @fg;
+  border: 1px solid @bg-alt;
+  border-radius: 10px;
+  padding: 10px;
+}
+.control-center-list {
+  background: transparent;
+}
+.control-center .notification-row .notification {
+  margin: 6px 0;
+  box-shadow: none;
+}
+
+/* placeholder background ("No Notifications") */
+.blank-window {
+  background: transparent;
+}
+
+/* ── widgets ────────────────────────────────────────────────────────────── */
+/* title bar ("Notifications" / "Inhibitors" + Clear All) */
+.widget-title,
+.widget-inhibitors {
+  color: @fg;
+  margin: 6px 4px;
+}
+.widget-title > label {
+  font-size: 15px;
+  font-weight: bold;
+  color: @fg;
+}
+.widget-title > button,
+.widget-inhibitors > button {
+  background: @bg-solid;
+  color: @fg;
+  border: 1px solid @bg-alt;
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+.widget-title > button:hover,
+.widget-inhibitors > button:hover {
+  background: @bg-alt;
+  border-color: @accent;
+}
+
+/* DND toggle */
+.widget-dnd {
+  color: @fg;
+  margin: 6px 4px;
+}
+.widget-dnd > switch {
+  background: @bg-darker;
+  border: 1px solid @bg-alt;
+  border-radius: 12px;
+}
+.widget-dnd > switch:checked {
+  background: @accent;
+  border-color: @accent;
+}
+.widget-dnd > switch slider {
+  background: @fg;
+  border-radius: 50%;
+}
+
+/* mpris media player */
+.widget-mpris {
+  margin: 6px 4px;
+}
+.widget-mpris-player {
+  background: @bg-solid;
+  border: 1px solid @bg-alt;
+  border-radius: 8px;
+  padding: 8px;
+}
+.widget-mpris-title    { color: @fg;       font-weight: bold; }
+.widget-mpris-subtitle { color: @fg-muted; }
+.widget-mpris button         { color: @fg; background: transparent; border: none; }
+.widget-mpris button:hover   { color: @accent; }
+
+/* buttons grid (wifi toggle etc.) */
+.widget-buttons-grid {
+  background: transparent;
+  margin: 6px 4px;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button {
+  background: @bg-solid;
+  color: @fg;
+  border: 1px solid @bg-alt;
+  border-radius: 8px;
+  padding: 8px;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+  background: @bg-alt;
+  border-color: @accent;
+}
+.widget-buttons-grid > flowbox > flowboxchild > button.toggle:checked {
+  background: @accent;
+  color: @bg-solid;
+  border-color: @accent;
+}
+
+/* generic label widget */
+.widget-label > label {
+  color: @fg;
+}

@@ -130,45 +130,45 @@
 
     "disk": {
       "path": "/",
-      "format": "<span color='#f0c674'>{path}</span> {percentage_used}%",
+      "format": "<span color='#707880'>{path}</span> {percentage_used}%",
       "interval": 25,
       "tooltip-format": "{used} / {total} on {path}"
     },
 
     "memory": {
-      "format": "<span color='#f0c674'>RAM</span> {percentage}%",
+      "format": "<span color='#707880'>RAM</span> {percentage}%",
       "interval": 5
     },
 
     "cpu": {
-      "format": "<span color='#f0c674'>CPU</span> {usage}%",
+      "format": "<span color='#707880'>CPU</span> {usage}%",
       "interval": 2
     },
 
     "network#wlan": {
       "interface": "wl*",
-      "format-wifi": "<span color='#f0c674'>{ifname}</span> {essid} {ipaddr}",
-      "format-disconnected": "<span color='#f0c674'>{ifname}</span> <span color='#707880'>disconnected</span>",
+      "format-wifi": "<span color='#707880'>{ifname}</span> {essid} {ipaddr}",
+      "format-disconnected": "<span color='#707880'>{ifname}</span> <span color='#707880'>disconnected</span>",
       "tooltip-format-wifi": "{essid} ({signalStrength}%)  {ipaddr}",
       "on-click": "alacritty --class scratch-nmtui -e nmtui"
     },
 
     "network#eth": {
       "interface": "en*",
-      "format-ethernet": "<span color='#f0c674'>{ifname}</span> {ipaddr}",
-      "format-disconnected": "<span color='#f0c674'>{ifname}</span> <span color='#707880'>disconnected</span>",
+      "format-ethernet": "<span color='#707880'>{ifname}</span> {ipaddr}",
+      "format-disconnected": "<span color='#707880'>{ifname}</span> <span color='#707880'>disconnected</span>",
       "tooltip-format": "{ifname}: {ipaddr}",
       "on-click": "alacritty --class scratch-nmtui -e nmtui"
     },
 
     "backlight": {
-      "format": "<span color='#f0c674'>BRI</span> {percent}%",
+      "format": "<span color='#707880'>BRI</span> {percent}%",
       "on-scroll-up": "brightnessctl set +5%",
       "on-scroll-down": "brightnessctl set 5%-"
     },
 
     "pulseaudio": {
-      "format": "<span color='#f0c674'>VOL</span> {volume}%",
+      "format": "<span color='#707880'>VOL</span> {volume}%",
       "format-muted": "muted",
       "on-click": "pavucontrol",
       "scroll-step": 5
@@ -187,7 +187,7 @@
       "calendar": {
         "mode": "month",
         "format": {
-          "today": "<span color='#f0c674'><b>{}</b></span>"
+          "today": "<span color='#707880'><b>{}</b></span>"
         }
       }
     }

@@ -54,7 +54,7 @@ window#waybar {
 #workspaces button.active {
   color: #c5c8c6;
   background-color: #373b41;
-  border-bottom: 2px solid #f0c674;
+  border-bottom: 2px solid #000000;
 }
 
 #workspaces button.urgent {
@@ -86,7 +86,7 @@ window#waybar {
 #tags button.focused {
   color: #c5c8c6;
   background-color: #373b41; /* background-alt — active tag */
-  border-bottom: 2px solid #f0c674; /* primary underline */
+  border-bottom: 2px solid #000000; /* black underline — active tag */
 }
 
 #tags button.urgent {
@@ -94,15 +94,15 @@ window#waybar {
   background-color: #a54242; /* alert */
 }
 
-/* ── module accents (icons coloured yellow in config.jsonc via pango) ──── */
+/* ── module accents (icons coloured gray in config.jsonc via pango) ──── */
 #window {
   color: #c5c8c6;
 } /* foreground */
 #clock {
-  color: #f0c674;
+  color: #707880;
 }
 #custom-keyboard {
-  color: #f0c674;
+  color: #707880;
 }
 #custom-launcher {
   color: #00a000;
@@ -118,10 +118,10 @@ window#waybar {
   color: #c5c8c6;
 }
 #idle_inhibitor.activated {
-  color: #f0c674;
+  color: #707880;
 }
 
-/* swaync bell — gold when notifications are waiting; DND shown via the glyph */
+/* swaync bell — gray when notifications are waiting; DND shown via the glyph */
 #custom-notification {
   color: #c5c8c6;
 }
@@ -129,7 +129,7 @@ window#waybar {
 #custom-notification.dnd-notification,
 #custom-notification.inhibited-notification,
 #custom-notification.dnd-inhibited-notification {
-  color: #f0c674;
+  color: #707880;
 }
 
 #pulseaudio.muted {
@@ -140,10 +140,10 @@ window#waybar {
   color: #c5c8c6;
 }
 #battery.charging {
-  color: #f0c674;
+  color: #707880;
 } /* primary */
 #battery.warning {
-  color: #f0c674;
+  color: #707880;
 } /* primary */
 #battery.critical {
   color: #a54242;
