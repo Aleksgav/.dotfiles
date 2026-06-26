@@ -1,8 +1,10 @@
 /*
  * swaync — popup-only theme (Tomorrow Night)
  *
- * This file styles ONLY the floating notification popups (the toasts). The
- * control center and its widgets are left to swaync's ORIGINAL default look.
+ * This file styles the floating notification popups (the toasts). The control
+ * center and its widgets are left to swaync's ORIGINAL default look, with one
+ * exception at the bottom: a transparency fix that removes Adwaita's white
+ * background from the notification list (see that rule for details).
  *
  * swaync always loads its packaged default stylesheet (/etc/xdg/swaync/style.css)
  * as a base provider, then this file on top at the same priority (see
@@ -26,7 +28,6 @@
 @define-color fg-muted  #707880;                /* time, app-name, disabled */
 @define-color accent    #707880;                /* muted gray — highlight (gold removed) */
 @define-color alert     #a54242;                /* red — critical urgency  */
-@define-color ok        #8abeb7;                /* cyan — checked states   */
 
 /* font applies only to the popups; the control center keeps the default */
 .floating-notifications {
@@ -115,4 +116,18 @@
 .floating-notifications progressbar progress {
   background: @accent;
   border-radius: 6px;
+}
+
+/* ── control center: remove white squares ────────────────────────────────────
+ * swaync leaves the notification list's GTK containers (ScrolledWindow >
+ * Viewport > ListBox > rows) unstyled, so with "ignore-gtk-theme": true they
+ * fall back to Adwaita's light background — white boxes behind each
+ * notification. Make only those containers transparent so the default dark
+ * panel shows through. This is the single control-center rule; everything else
+ * there stays swaync default. */
+.control-center scrolledwindow,
+.control-center viewport,
+.control-center list,
+.control-center list > row {
+  background: transparent;
 }
