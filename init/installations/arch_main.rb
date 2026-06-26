@@ -191,6 +191,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Fstrim
     package ArchPkg::Smartmontools
     package ArchPkg::Gparted
+    package ArchPkg::AppleMagicTrackpad
   end
 
   group('Graphics') do
