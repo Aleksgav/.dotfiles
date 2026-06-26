@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=MangoWM (UWSM)
+Comment=mango Wayland compositor, started via uwsm (systemd session)
+Exec=uwsm start mango.desktop
+Type=Application

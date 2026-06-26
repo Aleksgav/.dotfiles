@@ -396,6 +396,14 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Satty
   end
 
+  group('Login & session manager') do
+    # uwsm before greetd: greetd's config launches the session via `uwsm start`.
+    package ArchPkg::Uwsm
+    # greetd before tuigreet: greetd creates the `greeter` user that tuigreet's cache-dir step (and the greeter UI) run as.
+    package ArchPkg::Greetd
+    package ArchPkg::Tuigreet
+  end
+
   group('GUI apps') do
     package ArchPkg::GoogleChrome
     package ArchPkg::Opera

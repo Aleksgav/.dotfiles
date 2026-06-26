@@ -1,0 +1,22 @@
+# greetd — minimal login/session daemon.
+
+[terminal]
+vt = 1
+
+[default_session]
+# tuigreet flags:
+#   --time              show a clock
+#   --remember          remember the last logged-in username
+#   --remember-session  remember the last chosen session
+#   --asterisks         mask the password with asterisks
+#
+# No --cmd: tuigreet shows its session menu, listing entries from
+# /usr/share/wayland-sessions. Pick "MangoWM" (mango-uwsm.desktop) — it launches
+# mango through uwsm. Do NOT pick the package's native "Mango" (mango.desktop),
+# whose Exec=mango starts the compositor WITHOUT uwsm (no systemd session, and the
+# swaync freeze returns). --remember-session makes your choice sticky after the
+# first login.
+command = "tuigreet --time --remember --asterisks --remember-session --sessions /usr/share/wayland-sessions "
+
+# Unprivileged user the greeter UI runs as (created by the greetd package).
+user = "greeter"

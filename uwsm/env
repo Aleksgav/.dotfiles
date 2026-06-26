@@ -1,0 +1,14 @@
+# uwsm environment — POSIX sh, sourced by uwsm into the systemd user manager and
+# the D-Bus activation environment BEFORE the compositor starts. Applies to the
+# whole graphical session; apps launched via `uwsm app` inherit it too.
+#
+# Compositor-specific overrides can live in a sibling file: env-mango
+# Docs: https://github.com/Vladimir-csp/uwsm
+
+# Prefer Wayland backends where toolkits support it.
+export MOZ_ENABLE_WAYLAND=1
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export SDL_VIDEODRIVER=wayland
+export CLUTTER_BACKEND=wayland
+export _JAVA_AWT_WM_NONREPARENTING=1

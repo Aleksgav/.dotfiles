@@ -9,6 +9,7 @@ module Linux
       distro TARGET_DISTRO
       sudo_require true
       post_install { Linker.link 'swaync', "#{CONFIG_DIR}/swaync" }
+      post_install 'systemctl --user enable swaync.service'
     end
   end
 end
