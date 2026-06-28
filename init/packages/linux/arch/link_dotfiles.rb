@@ -13,9 +13,8 @@ module Linux
       post_install do
         # Home dotfiles
         Linker.link '.vimrc', '~/.vimrc'
-        Linker.mkdir '~/.ssh'
+        # TODO: postinstall
         Linker.link 'mise', "#{CONFIG_DIR}/mise"
-        Linker.link '.Xresources', '~/.Xresources'
       end
     end
   end
