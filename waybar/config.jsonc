@@ -175,7 +175,13 @@
     },
 
     "custom/keyboard": {
-      "format": "us",
+      // `mmsg watch keyboardlayout` streams a JSON line ({"layout":"..."}) on every switch; 
+      // jq maps the full xkb name to a short code and reshapes it into waybar's {"text":...} form. 
+      // The `// .layout` fallback shows the raw name for any layout not in the map. 
+      // return-type:json + jq --unbuffered keep it a live EN/RU.
+      "exec": "mmsg watch keyboardlayout | jq --unbuffered --compact-output '{text: ({\"English (US)\":\"EN\",\"Russian\":\"RU\"}[.layout] // .layout)}'",
+      "return-type": "json",
+      "format": "{}",
       "tooltip": false
     },
 
