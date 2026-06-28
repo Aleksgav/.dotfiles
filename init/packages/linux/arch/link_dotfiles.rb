@@ -13,7 +13,6 @@ module Linux
       post_install do
         # Home dotfiles
         Linker.link '.vimrc', '~/.vimrc'
-        # TODO: postinstall
         Linker.link 'mise', "#{CONFIG_DIR}/mise"
       end
     end
