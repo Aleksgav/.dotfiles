@@ -158,7 +158,7 @@
     },
 
     "pulseaudio": {
-      "format": "<span color='#707880'>VOL</span> {volume}% |",
+      "format": "<span color='#707880'>VOL</span> {volume}%",
       "format-muted": "muted",
       "on-click": "pavucontrol",
       "scroll-step": 5
