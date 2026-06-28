@@ -17,13 +17,8 @@
     "spacing": 6,
     "margin": "5px 5px 5px 5px",
 
-    "modules-left": ["dwl/tags", "custom/separator", "dwl/window"],
-    "modules-right": ["idle_inhibitor", "custom/separator", "custom/notification", "custom/separator", "tray", "custom/separator", "custom/launcher", "custom/separator", "custom/powermenu"],
-
-    "custom/separator": {
-      "format": "|",
-      "tooltip": false
-    },
+    "modules-left": ["dwl/tags", "dwl/window"],
+    "modules-right": ["idle_inhibitor", "custom/notification", "tray", "custom/launcher", "custom/powermenu"],
 
     "dwl/tags": {
       "num-tags": 9,
@@ -91,13 +86,8 @@
     "spacing": 6,
     "margin": "5px 5px 5px 5px",
 
-    "modules-left": ["ext/workspaces", "custom/separator", "battery", "custom/separator", "disk", "custom/separator", "memory", "custom/separator", "cpu", "custom/separator", "network#wlan", "custom/separator", "network#eth"],
-    "modules-right": ["backlight", "custom/separator", "pulseaudio", "custom/separator", "custom/keyboard", "custom/separator", "clock", "keyboard-state"],
-
-    "custom/separator": {
-      "format": "|",
-      "tooltip": false
-    },
+    "modules-left": ["ext/workspaces", "battery", "disk", "memory", "cpu", "network#wlan", "network#eth"],
+    "modules-right": ["backlight", "pulseaudio", "custom/keyboard", "clock", "keyboard-state"],
 
     "ext/workspaces": {
       "format": "{icon}",
@@ -162,13 +152,13 @@
     },
 
     "backlight": {
-      "format": "<span color='#707880'>BRI</span> {percent}%",
+      "format": "<span color='#707880'>BRI</span> {percent}% |",
       "on-scroll-up": "brightnessctl set +5%",
       "on-scroll-down": "brightnessctl set 5%-"
     },
 
     "pulseaudio": {
-      "format": "<span color='#707880'>VOL</span> {volume}%",
+      "format": "<span color='#707880'>VOL</span> {volume}% |",
       "format-muted": "muted",
       "on-click": "pavucontrol",
       "scroll-step": 5
