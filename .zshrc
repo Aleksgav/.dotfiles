@@ -14,8 +14,8 @@ export PATH="/usr/local/sbin:$GOPATH/bin:$PATH"
 export PATH="$HOME/.ghcup/bin:$HOME/.cabal/bin:$PATH"
 
 # Explicitly set keyboard layouts
-setxkbmap us,ru
-setxkbmap -option grp:switch,grp:win_space_toggle
+# setxkbmap us,ru
+# setxkbmap -option grp:switch,grp:win_space_toggle
 
 # Explicitly set language
 export LC_CTYPE=en_US.UTF-8
