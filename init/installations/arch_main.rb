@@ -431,6 +431,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Xournalpp
     package ArchPkg::Evince
     package ArchPkg::Viewnior
+    package ArchPkg::LibreOffice
   end
 
   group('Other') do
