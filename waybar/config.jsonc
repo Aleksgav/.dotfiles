@@ -92,7 +92,7 @@
     "margin": "5px 5px 5px 5px",
 
     "modules-left": ["ext/workspaces", "custom/separator", "battery", "custom/separator", "disk", "custom/separator", "memory", "custom/separator", "cpu", "custom/separator", "network#wlan", "custom/separator", "network#eth"],
-    "modules-right": ["backlight", "custom/separator", "pulseaudio", "custom/separator", "custom/keyboard", "custom/separator", "clock"],
+    "modules-right": ["backlight", "custom/separator", "pulseaudio", "custom/separator", "custom/keyboard", "custom/separator", "clock", "keyboard-state"],
 
     "custom/separator": {
       "format": "|",
@@ -172,6 +172,19 @@
       "format-muted": "muted",
       "on-click": "pavucontrol",
       "scroll-step": 5
+    },
+
+    "keyboard-state": {
+      // Caps-lock indicator (polybar xkeyboard <label-indicator> analog), but EVENT-DRIVEN: 
+      // reads the keyboard via libevdev and updates instantly on a wlroots event loop -- no polling latency. 
+      // mango's IPC exposes no lock state, so this can't go through `mmsg watch` like custom/keyboard does.
+      // Requires the waybar process to be in the `input` group (reads /dev/input).
+      "capslock": true,
+      "format": "{icon}",
+      "format-icons": {
+        "locked": "CAPS",
+        "unlocked": ""
+      }
     },
 
     "custom/keyboard": {

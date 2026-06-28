@@ -114,6 +114,14 @@ window#waybar {
   color: #707880;
 }
 
+#keyboard-state label.locked {
+  background-color: #8abeb7;
+  color: #282a2e;
+  padding: 0 4px;
+  margin: 2px 2px;
+  border-radius: 2px;
+}
+
 #idle_inhibitor {
   color: #c5c8c6;
 }

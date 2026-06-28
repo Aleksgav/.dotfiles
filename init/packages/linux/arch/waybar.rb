@@ -14,6 +14,10 @@ module Linux
       # Restart=on-failure, so uwsm starts it with the session, restarts it if it
       # crashes, and stops it on logout.
       post_install 'systemctl --user enable waybar.service'
+      # The keyboard-state module (caps-lock indicator) reads /dev/input via libevdev,
+      # which is restricted to the `input` group -- add the user so it works after relogin
+      # (same pattern as docker/virtualbox group setup).
+      post_install 'usermod -aG input "$USER"', sudo: true
     end
   end
 end
