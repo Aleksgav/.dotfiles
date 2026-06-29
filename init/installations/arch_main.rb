@@ -39,6 +39,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::LibImagemagic
     package ArchPkg::LibJemalloc
     package ArchPkg::LibVips
+    package ArchPkg::Openslide
     package ArchPkg::Sqlite
   end
 
