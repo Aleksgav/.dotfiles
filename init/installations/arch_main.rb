@@ -38,6 +38,7 @@ ArchMain = Packager::Installation.new do
   group('Libs') do
     package ArchPkg::LibImagemagic
     package ArchPkg::LibJemalloc
+    package ArchPkg::LibVips
     package ArchPkg::Sqlite
   end
 
