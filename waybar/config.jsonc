@@ -107,7 +107,18 @@
     "margin": "5px 5px 5px 5px",
 
     "modules-left": ["ext/workspaces", "battery", "disk", "memory", "cpu", "network#wlan", "network#eth"],
+    "modules-center": ["mpris"],
     "modules-right": ["backlight", "pulseaudio", "custom/keyboard", "clock", "keyboard-state"],
+
+    "mpris": {
+      "player": "cmus",
+      "format": "<span color='#707880'>{status_icon}</span> {dynamic}",
+      "format-paused": "<span color='#707880'>{status_icon} {dynamic}</span>",
+      "status-icons": { "playing": "󰐊", "paused": "󰏤", "stopped": "󰓛" },
+      "dynamic-len": 50,
+      "max-length": 60,
+      "tooltip-format": "{title}\n{artist}\n{album}"
+    },
 
     "ext/workspaces": {
       "format": "{icon}",

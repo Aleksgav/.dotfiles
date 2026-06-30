@@ -29,7 +29,8 @@ window#waybar {
 #tray,
 #custom-launcher,
 #custom-powermenu,
-#custom-keyboard {
+#custom-keyboard,
+#mpris {
   padding: 0 4px;
   margin: 2px 2px;
 }
