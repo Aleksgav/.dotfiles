@@ -35,7 +35,7 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 20 :weight 'semi-light)
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16 :weight 'semi-light)
     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 15)
     doom-unicode-font (font-spec :family "FiraCode Nerd Font" :size 20 :weight 'semi-light))
 
