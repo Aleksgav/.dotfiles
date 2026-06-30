@@ -8,7 +8,7 @@
 window#waybar {
   background-color: rgba(40, 42, 46, 0.667);
   color: #c5c8c6;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 
 #workspaces,
@@ -17,6 +17,8 @@ window#waybar {
 #clock,
 #idle_inhibitor,
 #custom-notification,
+#custom-updates-pacman,
+#custom-updates-aur,
 #pulseaudio,
 #backlight,
 #network,
@@ -120,9 +122,13 @@ window#waybar {
 
 #idle_inhibitor {
   color: #c5c8c6;
+  padding: 0 8px;
+  margin: 0 2px;
 }
 #idle_inhibitor.activated {
-  color: #707880;
+  color: #c5c8c6;
+  background-color: #0d0e10;
+  border-radius: 2px;
 }
 
 /* swaync bell — gray when notifications are waiting; DND shown via the glyph */
@@ -134,6 +140,15 @@ window#waybar {
 #custom-notification.inhibited-notification,
 #custom-notification.dnd-inhibited-notification {
   color: #707880;
+}
+
+#custom-updates-pacman,
+#custom-updates-aur {
+  color: #c5c8c6;
+}
+#custom-updates-pacman.has-updates,
+#custom-updates-aur.has-updates {
+  color: #f0c674;
 }
 
 #pulseaudio.muted {

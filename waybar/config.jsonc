@@ -18,7 +18,7 @@
     "margin": "5px 5px 5px 5px",
 
     "modules-left": ["dwl/tags", "dwl/window"],
-    "modules-right": ["idle_inhibitor", "custom/notification", "tray", "custom/launcher", "custom/powermenu"],
+    "modules-right": ["idle_inhibitor", "custom/updates-pacman", "custom/updates-aur", "custom/notification", "tray", "custom/launcher", "custom/powermenu"],
 
     "dwl/tags": {
       "num-tags": 9,
@@ -36,6 +36,33 @@
       "format-icons": { "activated": "AWAKE", "deactivated": "idle" },
       "tooltip-format-activated": "Idle inhibitor: on",
       "tooltip-format-deactivated": "Idle inhibitor: off"
+    },
+
+    "custom/updates-pacman": {
+      // Pending OFFICIAL-REPO updates. 
+      // `checkupdates` (pacman-contrib) counts them against a throwaway sync DB -- no root, never touches the real pacman DB. 
+      // `text` is empty when up to date, so the module collapses (hidden). 
+      // Polled every 30 min; click runs the repo upgrade (`sudo pacman -Syu`) in a terminal.
+      "format": "{}",
+      "return-type": "json",
+      "interval": 1800,
+      "exec-if": "which checkupdates",
+      "exec": "n=$(checkupdates 2>/dev/null | wc -l); if [ \"$n\" -gt 0 ]; then printf '{\"text\":\"󰣇 %s\",\"tooltip\":\"%s official-repo updates pending\",\"class\":\"has-updates\"}' \"$n\" \"$n\"; else printf '{\"text\":\"\",\"tooltip\":\"\"}'; fi",
+      "on-click": "alacritty -e bash -c 'sudo pacman -Syu; read -n1 -s -p \"Done -- press any key to close\"'",
+      "tooltip": true
+    },
+
+    "custom/updates-aur": {
+      // Pending AUR updates via `yay -Qua` (AUR-only, so it never overlaps the pacman count).
+      // `text` is empty when up to date, so the module collapses (hidden). 
+      // Polled every 30 min; click runs the AUR-only upgrade (`yay -Sua`) in a terminal.
+      "format": "{}",
+      "return-type": "json",
+      "interval": 1800,
+      "exec-if": "which yay",
+      "exec": "n=$(yay -Qua 2>/dev/null | wc -l); if [ \"$n\" -gt 0 ]; then printf '{\"text\":\"󰏔 %s\",\"tooltip\":\"%s AUR updates pending\",\"class\":\"has-updates\"}' \"$n\" \"$n\"; else printf '{\"text\":\"\",\"tooltip\":\"\"}'; fi",
+      "on-click": "alacritty -e bash -c 'yay -Sua; read -n1 -s -p \"Done -- press any key to close\"'",
+      "tooltip": true
     },
 
     "custom/notification": {
