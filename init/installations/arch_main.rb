@@ -191,6 +191,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Acpi
     package ArchPkg::Dialog
     package ArchPkg::Reflector
+    package ArchPkg::PacmanContrib
     package ArchPkg::Fstrim
     package ArchPkg::Smartmontools
     package ArchPkg::Gparted
