@@ -39,22 +39,26 @@
     },
 
     "custom/updates-pacman": {
-      // Polled every 30 min; display-only (icon + count), no click action.
+      // Polled every 30 min; click to refresh now (on-click sends SIGRTMIN+8)
       "format": "{}",
       "return-type": "json",
       "interval": 1800,
+      "signal": 8,
       "exec-if": "which checkupdates",
       "exec": "n=$(checkupdates 2>/dev/null | wc -l); if [ \"$n\" -gt 0 ]; then printf '{\"text\":\"󰣇 %s\",\"tooltip\":\"%s official-repo updates pending\",\"class\":\"has-updates\"}' \"$n\" \"$n\"; else printf '{\"text\":\"\",\"tooltip\":\"\"}'; fi",
+      "on-click": "pkill -RTMIN+8 waybar",
       "tooltip": true
     },
 
     "custom/updates-aur": {
-      // Polled every 30 min; display-only (icon + count), no click action.
+      // Polled every 30 min; click to refresh now (on-click sends SIGRTMIN+9)
       "format": "{}",
       "return-type": "json",
       "interval": 1800,
+      "signal": 9,
       "exec-if": "which yay",
       "exec": "n=$(yay -Qua 2>/dev/null | wc -l); if [ \"$n\" -gt 0 ]; then printf '{\"text\":\"󰏔 %s\",\"tooltip\":\"%s AUR updates pending\",\"class\":\"has-updates\"}' \"$n\" \"$n\"; else printf '{\"text\":\"\",\"tooltip\":\"\"}'; fi",
+      "on-click": "pkill -RTMIN+9 waybar",
       "tooltip": true
     },
 
