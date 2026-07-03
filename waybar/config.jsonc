@@ -17,7 +17,8 @@
     "spacing": 6,
     "margin": "5px 5px 5px 5px",
 
-    "modules-left": ["dwl/tags", "dwl/window"],
+    "modules-left": ["dwl/tags"],
+    "modules-center": ["dwl/window"],
     "modules-right": ["idle_inhibitor", "custom/updates-pacman", "custom/updates-aur", "custom/notification", "tray", "custom/launcher", "custom/powermenu"],
 
     "dwl/tags": {
@@ -28,7 +29,12 @@
     "dwl/window": {
       "format": "[{layout}] {title}",
       "max-length": 60,
-      "tooltip": false
+      "tooltip": false,
+      // With no focused window {title} is empty, leaving a trailing space ("[tile] ") that shows as a gap on the right of the center island.
+      // Strip any trailing whitespace; a real "[tile] Firefox" has none so it's left unchanged (rewrite rules must match the whole output to fire).
+      "rewrite": {
+        "(.*?)\\s+$": "$1"
+      }
     },
 
     "idle_inhibitor": {
@@ -173,7 +179,7 @@
     "network#wlan": {
       "interface": "wl*",
       "format-wifi": "<span color='#707880'>{ifname}</span> {essid} {ipaddr}",
-      "format-disconnected": "<span color='#707880'>{ifname}</span> <span color='#707880'>disconnected</span>",
+      "format-disconnected": "", // empty format → module is hidden while disconnected
       "tooltip-format-wifi": "{essid} ({signalStrength}%)  {ipaddr}",
       "on-click": "alacritty --class scratch-nmtui -e nmtui"
     },
@@ -181,7 +187,7 @@
     "network#eth": {
       "interface": "en*",
       "format-ethernet": "<span color='#707880'>{ifname}</span> {ipaddr}",
-      "format-disconnected": "<span color='#707880'>{ifname}</span> <span color='#707880'>disconnected</span>",
+      "format-disconnected": "", // empty format → module is hidden while disconnected
       "tooltip-format": "{ifname}: {ipaddr}",
       "on-click": "alacritty --class scratch-nmtui -e nmtui"
     },

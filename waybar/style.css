@@ -6,8 +6,15 @@
 }
 
 window#waybar {
-  background-color: rgba(40, 42, 46, 0.667);
+  background-color: transparent;
   color: #c5c8c6;
+  border-radius: 2px;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  background-color: rgba(40, 42, 46, 0.667);
   border-radius: 2px;
 }
 
@@ -45,7 +52,7 @@ window#waybar {
 
 /* ── ext/workspaces (bottom bar) ──────────────────────────────────────── */
 #workspaces button {
-  padding: 0 8px;
+  padding: 0 10px;
   color: #707880; /* disabled — empty / inactive */
   background: transparent;
   border-radius: 2px; /* rounded active block — matches keyboard-state pill */
@@ -72,7 +79,7 @@ window#waybar {
 
 /* ── dwl/tags (top bar) — always shows all 9 tags ─────────────────────── */
 #tags button {
-  padding: 0 8px;
+  padding: 0 10px;
   color: #707880; /* disabled — empty / inactive tag */
   background: transparent;
   border-radius: 2px; /* rounded active block — matches keyboard-state pill */
@@ -99,6 +106,8 @@ window#waybar {
 /* ── module accents (icons coloured gray in config.jsonc via pango) ──── */
 #window {
   color: #c5c8c6;
+  padding: 0 10px; /* window-name island: 10px left/right inner gap (overrides the generic 0 4px) */
+  margin: 0;
 } /* foreground */
 #clock {
   color: #707880;
@@ -116,20 +125,67 @@ window#waybar {
 #keyboard-state label.locked {
   background-color: #8abeb7;
   color: #282a2e;
-  padding: 0 4px;
-  margin: 2px 2px;
+  padding: 0 10px;
   border-radius: 2px;
 }
 
 #idle_inhibitor {
   color: #c5c8c6;
-  padding: 0 8px;
-  margin: 0 2px;
+  padding: 0 10px;
+  margin: 0; /* zero it explicitly: overrides the generic 2px 2px so the
+                .activated block fills the full bar height (like tags/workspaces) */
 }
 #idle_inhibitor.activated {
   color: #c5c8c6;
   background-color: #0d0e10;
   border-radius: 2px;
+}
+
+/* rest of the top-right island: same box model as #idle_inhibitor above
+   (padding 0 10px, margin 0) → every cell is full bar height and flush, no 2px
+   inset. Colors left per-module on purpose (launcher green, powermenu red,
+   updates yellow-when-pending, notification gray). */
+#custom-updates-pacman,
+#custom-updates-aur,
+#custom-notification,
+#tray,
+#custom-launcher,
+#custom-powermenu {
+  padding: 0 10px;
+  margin: 0;
+}
+
+/* bottom-right island: same box model as the top-right cells (padding 0 10px,
+   margin 0) → full bar height, flush, gaps from the bar's spacing:6. Colors
+   left per-module (clock/keyboard gray, backlight/pulseaudio as-is).
+   keyboard-state is handled on its label.locked pill above, not here. */
+#backlight,
+#pulseaudio,
+#custom-keyboard,
+#clock {
+  padding: 0 10px;
+  margin: 0;
+}
+
+/* bottom-left simple cells (battery/disk/memory/cpu/network): same box model
+   (padding 0 10px, margin 0). workspaces is a button group handled on
+   #workspaces button below. Colors stay per-module (pango). */
+#battery,
+#disk,
+#memory,
+#cpu,
+#network {
+  padding: 0 10px;
+  margin: 0;
+}
+
+/* bottom-center (mpris): same box model as the top-center window island
+   (padding 0 10px, margin 0). This restores the symmetric 10px, so the
+   {dynamic} live-timer trailing space will read slightly right-heavy again —
+   that's the trade for matching top-center exactly. */
+#mpris {
+  padding: 0 10px;
+  margin: 0;
 }
 
 /* swaync bell — gray when notifications are waiting; DND shown via the glyph */
