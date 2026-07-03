@@ -186,31 +186,30 @@ keybinds {
     }
 
     ///////////// Plugins /////////////
-    ///////////// Monocle /////////////
-    shared_except "locked" {
-        // bind F1 to open monocle in a new floating pane and open any results in a new tiled/floating pane
-        bind "F1" {
-            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/monocle.wasm" {
-                floating true
-            };
-            SwitchToMode "Normal"
-        }
-        // bind "Alt m" to open monocle on top of the current pane and open any results on top of itself
-        bind "Alt m" {
-            LaunchPlugin "file:~/.config/zellij/plugins/monocle.wasm" {
-                in_place true
-                kiosk true
-            };
-            SwitchToMode "Normal"
-        }
-    }
-
     ///////////// Harpoon /////////////
     shared_except "locked" {
         bind "Ctrl y" {
             LaunchOrFocusPlugin "file:~/.config/zellij/plugins/harpoon.wasm" {
                 floating true; move_to_focused_tab true;
             }
+        }
+    }
+
+    ///////////// fzf popup /////////////
+    shared_except "locked" {
+        // Alt m: fzf popup in the current dir; Enter opens the selected file in
+        // $EDITOR in a new pane that closes when the editor exits.
+        bind "Alt m" {
+            Run "sh" "-c" "f=$(fzf) && [ -n \"$f\" ] && zellij run -c --cwd \"$PWD\" -- ${EDITOR:-nvim} \"$f\"" {
+                floating true
+                name "fzf"
+                x "10%"
+                y "10%"
+                width "80%"
+                height "80%"
+                close_on_exit true
+            }
+            SwitchToMode "Normal"
         }
     }
 }
