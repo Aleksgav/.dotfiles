@@ -340,6 +340,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Systeroid
     package ArchPkg::Testdisk
     package ArchPkg::Himalaya
+    package ArchPkg::MatchaClient
     package ArchPkg::YtDlp
   end
 
