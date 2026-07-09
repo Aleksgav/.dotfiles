@@ -408,6 +408,12 @@
 ;; (menu-bar-mode t)
 
 ;; SSH-AGENT INTEGRATION
+(setenv "SSH_AUTH_SOCK"
+        (expand-file-name
+         "ssh-agent.socket"
+         (or (getenv "XDG_RUNTIME_DIR")
+             (format "/run/user/%d" (user-real-uid)))))
+
 (after! doom-cli-env
   (add-to-list 'doom-env-allow "^SSH_"))
 

@@ -50,7 +50,6 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 if [ -S "$SSH_AUTH_SOCK" ]; then
   find ~/.ssh -name 'id_*' ! -name '*.pub' -exec ssh-add -q {} \;
 fi
-doom env -a '^SSH_' &> /dev/null
 
 # emacs vterm integgration
 vterm_printf() {
