@@ -198,6 +198,10 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Udisks2
     package ArchPkg::Udiskie
     package ArchPkg::Gvfs
+    package ArchPkg::Dosfstools
+    package ArchPkg::Exfatprogs
+    package ArchPkg::Ntfs3g
+    package ArchPkg::Usbutils
     package ArchPkg::AppleMagicTrackpad
   end
 
