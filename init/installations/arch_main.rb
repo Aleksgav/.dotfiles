@@ -195,6 +195,9 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Fstrim
     package ArchPkg::Smartmontools
     package ArchPkg::Gparted
+    package ArchPkg::Udisks2
+    package ArchPkg::Udiskie
+    package ArchPkg::Gvfs
     package ArchPkg::AppleMagicTrackpad
   end
 
@@ -395,6 +398,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::SwayNotificationCenter
     package ArchPkg::Hyprlock
     package ArchPkg::Hypridle
+    package ArchPkg::Hyprpolkitagent
     package ArchPkg::Kanshi
     package ArchPkg::Grim
     package ArchPkg::Slurp
