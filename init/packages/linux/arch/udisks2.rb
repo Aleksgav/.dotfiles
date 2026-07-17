@@ -8,8 +8,6 @@ module Linux
       os TARGET_OS
       distro TARGET_DISTRO
       sudo_require true
-      # udisks2.service is D-Bus-activated (started on demand by udiskie/gvfs),
-      # so no `systemctl enable` step is needed.
     end
   end
 end
