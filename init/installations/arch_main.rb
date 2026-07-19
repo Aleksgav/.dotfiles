@@ -222,6 +222,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Tcpdump
     package ArchPkg::WiresharkQt
     package ArchPkg::Mtr
+    package ArchPkg::Traceroute
     package ArchPkg::NetTools
     package ArchPkg::ConntrackTools
     package ArchPkg::Ethtool
@@ -231,6 +232,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::OpenbsdNetcat
     package ArchPkg::Axel
     package ArchPkg::Bind
+    package ArchPkg::Whois
     package ArchPkg::NmConnectionEditor
     package ArchPkg::NetworkManagerApplet
     package ArchPkg::Openvpn
