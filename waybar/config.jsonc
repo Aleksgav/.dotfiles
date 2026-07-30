@@ -1,5 +1,5 @@
 // Waybar config for the mango (mangowm) Wayland compositor.
-// Launched from mango via `exec-once=waybar` (see mango/config.conf).
+// Launched by the waybar.service systemd user unit (see mango/config.conf).
 // Two bars (top + bottom) mirror the polybar/leftwm layout:
 //   top:    [tags, window]                    ...    [idle, notif, tray, launcher, powermenu]
 //   bottom: [workspaces, battery, disk, memory, cpu, network] ... [backlight, pulseaudio, keyboard, clock]
@@ -17,24 +17,45 @@
     "spacing": 6,
     "margin": "5px 5px 5px 5px",
 
-    "modules-left": ["dwl/tags"],
-    "modules-center": ["dwl/window"],
+    "modules-left": ["ext/workspaces"],
+    "modules-center": ["custom/window"],
     "modules-right": ["idle_inhibitor", "custom/updates-pacman", "custom/updates-aur", "custom/notification", "tray", "custom/launcher", "custom/powermenu"],
 
-    "dwl/tags": {
-      "num-tags": 9,
-      "tag-labels": ["󰋜 home", "󰍡 mess", "󰙀 proj", "󰂻 learn", "󰂺 read", "󰸼 cross", "󰋑 hearth", "󰒓 conf", "󰇘 other"]
+    // Same module as the bottom bar, different settings: ignore-hidden:false keeps
+    // all 9 tags on screen (mango marks an empty, unfocused tag hidden), so this
+    // reproduces the old dwl/tags row. Styled via `window.top #workspaces` in style.css.
+    "ext/workspaces": {
+      "format": "{icon}",
+      "format-icons": {
+        "1": "󰋜 home",
+        "2": "󰍡 mess",
+        "3": "󰙀 proj",
+        "4": "󰂻 learn",
+        "5": "󰂺 read",
+        "6": "󰸼 cross",
+        "7": "󰋑 hearth",
+        "8": "󰒓 conf",
+        "9": "󰇘 other",
+        "default": "{name}"
+      },
+      "ignore-hidden": false,
+      "on-click": "activate",
+      "sort-by-id": true
     },
 
-    "dwl/window": {
-      "format": "[{layout}] {title}",
+    // Replaces dwl/window: mango has no dwl-ipc, so the title + layout symbol come
+    // from its own IPC. `mmsg watch all-monitors` streams one JSON line per change
+    // (focus, title, layout switch); jq reshapes it into waybar's {"text":...} form.
+    // Multi-monitor note: mango's IPC marks no monitor as the focused one, so the
+    // first monitor holding a window wins (correct on a single-head setup).
+    // The sub() strips the trailing space left when no window is focused ("[T] ").
+    "custom/window": {
+      "exec": "mmsg watch all-monitors | jq --unbuffered --compact-output '.monitors as $ms | (($ms | map(select(.active_client.id != null)) | .[0]) // $ms[0]) as $m | {text: ((\"[\" + $m.layout_symbol + \"] \" + ($m.active_client.title // \"\")) | sub(\"\\\\s+$\"; \"\"))}'",
+      "return-type": "json",
+      "format": "{}",
+      "escape": true,
       "max-length": 60,
-      "tooltip": false,
-      // With no focused window {title} is empty, leaving a trailing space ("[tile] ") that shows as a gap on the right of the center island.
-      // Strip any trailing whitespace; a real "[tile] Firefox" has none so it's left unchanged (rewrite rules must match the whole output to fire).
-      "rewrite": {
-        "(.*?)\\s+$": "$1"
-      }
+      "tooltip": false
     },
 
     "idle_inhibitor": {

@@ -19,8 +19,7 @@ window#waybar {
 }
 
 #workspaces,
-#tags,
-#window,
+#custom-window,
 #clock,
 #idle_inhibitor,
 #custom-notification,
@@ -44,13 +43,14 @@ window#waybar {
 
 /* tag / workspace containers fill the full bar height (no vertical margin) so
    the active block is as tall as the panel, like the keyboard-state pill */
-#workspaces,
-#tags {
+#workspaces {
   padding: 0; /* kill the shared 0 4px container padding → no gap before first button */
   margin: 0;
 }
 
-/* ── ext/workspaces (bottom bar) ──────────────────────────────────────── */
+/* ── ext/workspaces ───────────────────────────────────────────────────────
+   Both bars run the same module (waybar names its box #workspaces either way);
+   they're told apart by the bar's `name`, which waybar adds as a window class. */
 #workspaces button {
   padding: 0 10px;
   color: #707880; /* disabled — empty / inactive */
@@ -77,34 +77,20 @@ window#waybar {
   background-color: #373b41;
 }
 
-/* ── dwl/tags (top bar) — always shows all 9 tags ─────────────────────── */
-#tags button {
-  padding: 0 10px;
-  color: #707880; /* disabled — empty / inactive tag */
-  background: transparent;
-  border-radius: 2px; /* rounded active block — matches keyboard-state pill */
-  text-shadow: none; /* kill GTK theme's gold hover text-shadow */
-  box-shadow: none;
-  border: none; /* kill GTK theme's gold hover border */
-  outline: none; /* kill focus ring */
-}
-
-#tags button.occupied {
+/* ── top bar (ignore-hidden:false) — always shows all 9 tags ──────────────
+   mango hides a tag only when it is empty AND unfocused, so waybar's .hidden
+   class is exactly the old dwl/tags "no windows here" state: dim it, and let
+   the base rule above carry the lit colour for tags that do hold windows. */
+window.top #workspaces button {
   color: #c5c8c6; /* foreground — tag has windows */
 }
 
-#tags button.focused {
-  color: #c5c8c6; /* light foreground — like other modules */
-  background-color: #0d0e10; /* waybar bg (#282a2e), much darker */
-}
-
-#tags button.urgent {
-  color: #c5c8c6;
-  background-color: #a54242; /* alert */
+window.top #workspaces button.hidden {
+  color: #707880; /* disabled — empty, unfocused tag */
 }
 
 /* ── module accents (icons coloured gray in config.jsonc via pango) ──── */
-#window {
+#custom-window {
   color: #c5c8c6;
   padding: 0 10px; /* window-name island: 10px left/right inner gap (overrides the generic 0 4px) */
   margin: 0;
