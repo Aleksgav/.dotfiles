@@ -1,0 +1,24 @@
+# Template for per-machine monitor layout.
+# Copy to monitors.local.conf in this directory (that name is gitignored),
+# then edit for the machine. config.conf sources it with source-optional,
+# so installs without the file just fall back to the generic rule.
+#
+# Discover names, modes and scale with:  wlr-randr
+#
+# Gotchas:
+#  - x/y are LOGICAL coords = physical size / scale. 3840 @ scale 1.5 = 2560,
+#    so the second monitor starts at x:2560, not x:3840. Too large leaves a gap
+#    the mouse cannot cross; too small overlaps the screens.
+#  - repeat scale on every rule -- it is applied unconditionally and defaults
+#    to 1.0, so omitting it snaps the panel back to unscaled.
+#  - omit width/height/refresh to keep each panel's preferred mode. Identical
+#    models can still differ here (e.g. 60.000 vs 59.997 Hz).
+#  - give every connected output a rule; an unmatched monitor keeps its old
+#    position.
+#  - anchor names with ^...$ -- name is a regex, so DP-1 would also match DP-10.
+#  - use positive coordinates only; negative ones break XWayland click handling.
+#  - comments must start in column 0 -- the parser tests line[0] == '#'.
+#
+# Example: two 4K panels side by side, DisplayPort on the left.
+monitorrule=name:^DP-1$,x:0,y:0,scale:1.50
+monitorrule=name:^HDMI-A-1$,x:2560,y:0,scale:1.50
