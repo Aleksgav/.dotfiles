@@ -260,6 +260,7 @@
                          "~/notes/old/"
                          "~/notes/good/"
                          "~/notes/work/"
+                         "~/notes/learn/"
                          "~/org/journal/"
                          "~/roam/"
                         ))
