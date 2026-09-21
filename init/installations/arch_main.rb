@@ -397,6 +397,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Mangowm
     package ArchPkg::Swaybg
     package ArchPkg::Waybar
+    package ArchPkg::Quickshell
     package ArchPkg::Wlogout
     package ArchPkg::Fuzzel
     package ArchPkg::Tofi
