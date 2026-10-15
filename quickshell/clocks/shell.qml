@@ -1,4 +1,5 @@
-// World clocks — a decorationless panel pinned to the wallpaper, below windows.
+// World clocks — a drawer on the right screen edge, fully hidden until the
+// pointer touches that edge, then sliding out to the full card.
 //
 // Run with:  qs -c clocks
 //
@@ -9,6 +10,7 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import QtQuick.Shapes
 
 ShellRoot {
     id: root
@@ -20,10 +22,14 @@ ShellRoot {
     // Palette and font lifted from waybar/style.css so the widget reads as part
     // of the same desktop rather than a stranger on it.
     readonly property color colFg: "#c5c8c6"
-    readonly property color colDim: "#707880"
+    // colDim and colBg depart from waybar: at waybar's ~0.667 alpha, a light
+    // window behind the card blended it to ~#707174, the same grey as waybar's
+    // #707880 dim text, which made that text vanish.
+    readonly property color colDim: "#969896"
     readonly property color colAccent: "#8abeb7"
-    readonly property color colBg: "#aa282a2e"       // #282a2e at ~0.667 alpha
+    readonly property color colBg: "#ee282a2e"       // #282a2e at ~0.933 alpha
     readonly property color colHeaderBg: "#cc0d0e10" // waybar's "much darker" tone
+    readonly property color colRowHover: "#660d0e10" // header tone at ~0.4 alpha: darker than the card, lighter than the header
     readonly property string uiFont: "FiraCode Nerd Font"
     readonly property int uiSize: 13
 
@@ -37,12 +43,23 @@ ShellRoot {
     readonly property int cellSpacing: 10
     readonly property int padding: 12
     readonly property int rowWidth: wLabel + wTime + wDay + wAbbr + wDelta + cellSpacing * 4
+    // Invisible strip along the screen edge that still takes hover while the
+    // drawer is closed, so pushing the pointer against the edge opens it.
+    readonly property int edgeWidth: 2
+    // Radius of the card's rounded outer corners, and of the inverted corners
+    // that join it to the screen edge.
+    readonly property int cornerRadius: 8
 
     component Cell: Text {
         color: root.colFg
         font.family: root.uiFont
         font.pixelSize: root.uiSize
         verticalAlignment: Text.AlignVCenter
+    }
+
+    component Corner: PathArc {
+        radiusX: root.cornerRadius
+        radiusY: root.cornerRadius
     }
 
     SystemClock {
@@ -105,120 +122,207 @@ ShellRoot {
                 // flashes on startup.
                 visible: root.zones.length > 0
 
+                // Anchored to the right edge only, so the layer-shell protocol
+                // centers it vertically on that edge.
                 anchors {
-                    top: true
                     right: true
                 }
 
-                margins {
-                    top: 12
-                    right: 12
-                }
+                // aboveWindows is left at its default (true): on the bottom layer, a
+                // window covering the right edge would hide the tab from the pointer.
 
-                // Sit on the wallpaper, below normal windows.
-                aboveWindows: false
-
-                // exclusionMode is deliberately left at its ExclusionMode.Auto
-                // default: Auto only reserves space when exactly 3 anchors are
-                // connected, and this panel has 2, so it reserves nothing while
-                // still respecting waybar's exclusion zone -- which is what keeps
-                // it clear of the top bar.
+                // An explicit zone of 0 reserves no space, so windows are never
+                // pushed aside, while still keeping clear of waybar's exclusive zone.
+                exclusiveZone: 0
 
                 color: "transparent"
 
+                // The surface is always sized for the expanded card and never moves
+                // or resizes; the card slides inside it instead, so hovering costs
+                // no compositor round-trip per animation frame. The extra height is
+                // room for the inverted corners above and below the card.
                 implicitWidth: card.width
-                implicitHeight: card.height
+                implicitHeight: card.height + root.cornerRadius * 2
 
-                Rectangle {
-                    id: card
+                readonly property bool expanded: hover.containsMouse
 
-                    width: root.rowWidth + root.padding * 2
-                    height: content.implicitHeight
-                    radius: 2
-                    color: root.colBg
+                // Only the visible part takes input; clicks on the transparent rest
+                // fall through to the windows underneath. Bound to the target state
+                // rather than to the animating card, so the hit area does not shrink
+                // mid-slide.
+                mask: Region {
+                    x: panel.expanded ? 0 : panel.width - root.edgeWidth
+                    width: panel.expanded ? panel.width : root.edgeWidth
+                    height: panel.height
+                }
 
-                    Column {
-                        id: content
+                MouseArea {
+                    id: hover
 
-                        width: parent.width
-                        spacing: 0
+                    anchors.fill: parent
+                    hoverEnabled: true
 
-                        // Header strip: spans the full card width so the darker
-                        // fill reads as a title bar rather than a floating patch.
-                        Rectangle {
-                            id: header
+                    Item {
+                        id: card
 
-                            width: parent.width
-                            height: headerText.implicitHeight + 10
-                            radius: 2
-                            color: root.colHeaderBg
+                        // Closed, the whole card is past the right edge of the
+                        // surface and clipped away; only the mask's edge strip
+                        // remains, invisible but hoverable.
+                        x: panel.expanded ? 0 : panel.width
+                        y: root.cornerRadius
+                        width: root.rowWidth + root.padding * 2
+                        height: content.implicitHeight
 
-                            Cell {
-                                id: headerText
+                        Behavior on x {
+                            NumberAnimation {
+                                duration: 180
+                                easing.type: Easing.OutCubic
+                            }
+                        }
 
-                                anchors.right: parent.right
-                                anchors.rightMargin: root.padding
-                                anchors.verticalCenter: parent.verticalCenter
+                        // The card's fill: rounded outer corners, and at the screen
+                        // edge inverted corners that flare out to meet it. Drawn as
+                        // one path, not a Rectangle plus corner pieces: translucent
+                        // pieces abutting at a fractional device pixel (the screen is
+                        // at 1.5x) would leave a visible seam between them.
+                        Shape {
+                            anchors.fill: parent
+                            preferredRendererType: Shape.CurveRenderer // antialiased arcs
 
-                                text: "WORLD CLOCKS"
-                                color: root.colDim
-                                font.pixelSize: root.uiSize - 2
+                            ShapePath {
+                                fillColor: root.colBg
+                                strokeWidth: -1
+
+                                startX: card.width
+                                startY: -root.cornerRadius
+
+                                Corner { x: card.width - root.cornerRadius; y: 0 }
+                                PathLine { x: root.cornerRadius; y: 0 }
+                                Corner { x: 0; y: root.cornerRadius; direction: PathArc.Counterclockwise }
+                                PathLine { x: 0; y: card.height - root.cornerRadius }
+                                Corner { x: root.cornerRadius; y: card.height; direction: PathArc.Counterclockwise }
+                                PathLine { x: card.width - root.cornerRadius; y: card.height }
+                                Corner { x: card.width; y: card.height + root.cornerRadius }
+                            }
+
+                            // The top inverted corner sits beside the header, so it
+                            // also takes the header's darker fill on top.
+                            ShapePath {
+                                fillColor: root.colHeaderBg
+                                strokeWidth: -1
+
+                                startX: card.width
+                                startY: -root.cornerRadius
+
+                                Corner { x: card.width - root.cornerRadius; y: 0 }
+                                PathLine { x: card.width; y: 0 }
                             }
                         }
 
                         Column {
-                            id: rows
+                            id: content
 
                             width: parent.width
-                            spacing: 4
-                            topPadding: 10
-                            bottomPadding: 10
-                            leftPadding: root.padding
-                            rightPadding: root.padding
+                            spacing: 0
 
-                            Repeater {
-                                model: root.zones
+                            // Header strip: spans the full card width so the darker
+                            // fill reads as a title bar rather than a floating patch.
+                            Rectangle {
+                                id: header
 
-                                Row {
-                                    id: clockRow
+                                width: parent.width
+                                height: headerText.implicitHeight + 10
+                                // Square except the corner it shares with the
+                                // card, which would otherwise poke past the card's.
+                                topLeftRadius: root.cornerRadius
+                                color: root.colHeaderBg
 
-                                    required property var modelData
+                                Cell {
+                                    id: headerText
 
-                                    spacing: root.cellSpacing
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: root.padding
+                                    anchors.verticalCenter: parent.verticalCenter
 
-                                    Cell {
-                                        // Widest current label ("Vladivostok")
-                                        // measures 88px in FiraCode Nerd Font 13px;
-                                        // the slack keeps ElideRight from biting if
-                                        // a longer city is added.
-                                        width: root.wLabel
-                                        text: clockRow.modelData.label
-                                        elide: Text.ElideRight
-                                    }
+                                    text: "WORLD CLOCKS"
+                                    color: root.colDim
+                                    font.pixelSize: root.uiSize - 2
+                                    font.bold: true
+                                    // FiraCode ships no italic, so Qt slants it.
+                                    font.italic: true
+                                }
+                            }
 
-                                    Cell {
-                                        width: root.wTime
-                                        text: clockRow.modelData.time
-                                        color: root.colAccent
-                                    }
+                            // Rows sit edge to edge, each 8px taller than its text, so
+                            // a hovered row's darker fill has no gaps around it.
+                            Column {
+                                id: rows
 
-                                    Cell {
-                                        width: root.wDay
-                                        text: clockRow.modelData.day
-                                        color: root.colDim
-                                    }
+                                width: parent.width
 
-                                    Cell {
-                                        width: root.wAbbr
-                                        text: clockRow.modelData.abbr
-                                        color: root.colDim
-                                    }
+                                Repeater {
+                                    model: root.zones
 
-                                    Cell {
-                                        width: root.wDelta
-                                        text: clockRow.modelData.delta
-                                        color: root.colDim
-                                        horizontalAlignment: Text.AlignRight
+                                    Rectangle {
+                                        id: clockRow
+
+                                        required property var modelData
+                                        required property int index
+
+                                        width: rows.width
+                                        height: cells.implicitHeight + 8
+                                        // Square, except the last row's corner it
+                                        // shares with the card, which would otherwise
+                                        // poke past the card's.
+                                        bottomLeftRadius: clockRow.index === root.zones.length - 1 ? root.cornerRadius : 0
+                                        color: rowHover.hovered ? root.colRowHover : "transparent"
+
+                                        HoverHandler {
+                                            id: rowHover
+                                        }
+
+                                        Row {
+                                            id: cells
+
+                                            x: root.padding
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            spacing: root.cellSpacing
+
+                                            Cell {
+                                                // Widest current label ("Vladivostok")
+                                                // measures 88px in FiraCode Nerd Font 13px;
+                                                // the slack keeps ElideRight from biting if
+                                                // a longer city is added.
+                                                width: root.wLabel
+                                                text: clockRow.modelData.label
+                                                elide: Text.ElideRight
+                                            }
+
+                                            Cell {
+                                                width: root.wTime
+                                                text: clockRow.modelData.time
+                                                color: root.colAccent
+                                            }
+
+                                            Cell {
+                                                width: root.wDay
+                                                text: clockRow.modelData.day
+                                                color: root.colDim
+                                            }
+
+                                            Cell {
+                                                width: root.wAbbr
+                                                text: clockRow.modelData.abbr
+                                                color: root.colDim
+                                            }
+
+                                            Cell {
+                                                width: root.wDelta
+                                                text: clockRow.modelData.delta
+                                                color: root.colDim
+                                                horizontalAlignment: Text.AlignRight
+                                            }
+                                        }
                                     }
                                 }
                             }
