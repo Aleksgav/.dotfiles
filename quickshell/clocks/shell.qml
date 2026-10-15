@@ -10,6 +10,7 @@
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Shapes
 
 ShellRoot {
@@ -49,6 +50,12 @@ ShellRoot {
     // Radius of the card's rounded outer corners, and of the inverted corners
     // that join it to the screen edge.
     readonly property int cornerRadius: 8
+    // The wide, soft shadow that makes the card look lifted off the screen:
+    // how far it blurs out, and how far it falls below the card.
+    readonly property int shadowBlur: 40
+    readonly property int shadowDrop: 12
+    // Room left around the card for that shadow to blur into.
+    readonly property int shadowSize: shadowBlur + shadowDrop
 
     component Cell: Text {
         color: root.colFg
@@ -60,6 +67,29 @@ ShellRoot {
     component Corner: PathArc {
         radiusX: root.cornerRadius
         radiusY: root.cornerRadius
+    }
+
+    // The card's silhouette, w x h: rounded outer corners, and at the screen
+    // edge (the right) inverted corners that flare out to meet it, reaching
+    // cornerRadius above and below. Shared by the card's fill and by the mask
+    // that keeps the shadow out from under the card.
+    component CardOutline: ShapePath {
+        id: outline
+
+        property real w
+        property real h
+
+        strokeWidth: -1
+        startX: outline.w
+        startY: -root.cornerRadius
+
+        Corner { x: outline.w - root.cornerRadius; y: 0 }
+        PathLine { x: root.cornerRadius; y: 0 }
+        Corner { x: 0; y: root.cornerRadius; direction: PathArc.Counterclockwise }
+        PathLine { x: 0; y: outline.h - root.cornerRadius }
+        Corner { x: root.cornerRadius; y: outline.h; direction: PathArc.Counterclockwise }
+        PathLine { x: outline.w - root.cornerRadius; y: outline.h }
+        Corner { x: outline.w; y: outline.h + root.cornerRadius }
     }
 
     SystemClock {
@@ -139,10 +169,11 @@ ShellRoot {
 
                 // The surface is always sized for the expanded card and never moves
                 // or resizes; the card slides inside it instead, so hovering costs
-                // no compositor round-trip per animation frame. The extra height is
-                // room for the inverted corners above and below the card.
-                implicitWidth: card.width
-                implicitHeight: card.height + root.cornerRadius * 2
+                // no compositor round-trip per animation frame. The extra size is
+                // room for the inverted corners above and below the card, and for
+                // its shadow on every side but the screen edge.
+                implicitWidth: card.width + root.shadowSize
+                implicitHeight: card.height + (root.cornerRadius + root.shadowSize) * 2
 
                 readonly property bool expanded: hover.containsMouse
 
@@ -150,10 +181,12 @@ ShellRoot {
                 // fall through to the windows underneath. Bound to the target state
                 // rather than to the animating card, so the hit area does not shrink
                 // mid-slide.
+                // The shadow margin is left out too, so the shadow takes no clicks.
                 mask: Region {
-                    x: panel.expanded ? 0 : panel.width - root.edgeWidth
-                    width: panel.expanded ? panel.width : root.edgeWidth
-                    height: panel.height
+                    x: panel.expanded ? root.shadowSize : panel.width - root.edgeWidth
+                    y: root.shadowSize
+                    width: panel.expanded ? card.width : root.edgeWidth
+                    height: panel.height - root.shadowSize * 2
                 }
 
                 MouseArea {
@@ -166,10 +199,11 @@ ShellRoot {
                         id: card
 
                         // Closed, the whole card is past the right edge of the
-                        // surface and clipped away; only the mask's edge strip
-                        // remains, invisible but hoverable.
-                        x: panel.expanded ? 0 : panel.width
-                        y: root.cornerRadius
+                        // surface and clipped away -- far enough that its shadow's
+                        // blur goes too; only the mask's edge strip remains,
+                        // invisible but hoverable.
+                        x: panel.expanded ? root.shadowSize : panel.width + root.shadowBlur
+                        y: root.shadowSize + root.cornerRadius
                         width: root.rowWidth + root.padding * 2
                         height: content.implicitHeight
 
@@ -180,29 +214,103 @@ ShellRoot {
                             }
                         }
 
-                        // The card's fill: rounded outer corners, and at the screen
-                        // edge inverted corners that flare out to meet it. Drawn as
-                        // one path, not a Rectangle plus corner pieces: translucent
-                        // pieces abutting at a fractional device pixel (the screen is
-                        // at 1.5x) would leave a visible seam between them.
+                        // Drop shadows that float the card above the screen: a wide
+                        // soft one falling below it, and a tight one hugging its edge.
+                        // Shadow-only items rather than a MultiEffect shadow on the
+                        // fill, which lightened the translucent fill itself. They
+                        // follow the plain card; the inverted corners fall inside
+                        // their blur. This item spans their whole reach (the panel's
+                        // shadow margin), so its layer holds all of them.
+                        Item {
+                            x: -root.shadowSize
+                            y: -root.cornerRadius - root.shadowSize
+                            width: card.width + root.shadowSize
+                            height: card.height + (root.cornerRadius + root.shadowSize) * 2
+
+                            // The card's shape is cut out of the shadows: drawn under
+                            // the translucent card, they would darken what shows
+                            // through it until the card looked opaque.
+                            layer.enabled: true
+                            layer.effect: MultiEffect {
+                                maskEnabled: true
+                                maskInverted: true
+                                maskSource: shadowCutout
+                                // Cut only where the card covers a pixel fully. Its
+                                // antialiased edge pixels keep the shadow under them;
+                                // cutting those too lets the screen behind leak
+                                // through as a light line along the curved corners.
+                                maskThresholdMin: 0.99
+                                // Unpadded, so the output stays the mask's size and
+                                // the two line up.
+                                autoPaddingEnabled: false
+                            }
+
+                            RectangularShadow {
+                                x: root.shadowSize
+                                y: root.shadowSize + root.cornerRadius
+                                width: card.width
+                                height: card.height
+                                radius: root.cornerRadius
+                                topRightRadius: 0
+                                bottomRightRadius: 0
+                                blur: root.shadowBlur
+                                offset.y: root.shadowDrop
+                                color: "#e6000000" // black at 0.9 alpha
+                            }
+
+                            RectangularShadow {
+                                x: root.shadowSize
+                                y: root.shadowSize + root.cornerRadius
+                                width: card.width
+                                height: card.height
+                                radius: root.cornerRadius
+                                topRightRadius: 0
+                                bottomRightRadius: 0
+                                blur: 8
+                                offset.y: 3
+                                color: "#80000000" // black at 0.5 alpha
+                            }
+                        }
+
+                        // The mask for that cutout: the card's shape, opaque, over the
+                        // same area as the shadows. Rendered only into its layer.
+                        Item {
+                            id: shadowCutout
+
+                            x: -root.shadowSize
+                            y: -root.cornerRadius - root.shadowSize
+                            width: card.width + root.shadowSize
+                            height: card.height + (root.cornerRadius + root.shadowSize) * 2
+                            visible: false
+                            layer.enabled: true
+
+                            Shape {
+                                x: root.shadowSize
+                                y: root.shadowSize + root.cornerRadius
+                                width: card.width
+                                height: card.height
+                                preferredRendererType: Shape.CurveRenderer
+
+                                CardOutline {
+                                    w: card.width
+                                    h: card.height
+                                    fillColor: "black"
+                                }
+                            }
+                        }
+
+                        // The card's fill. Drawn as one path, not a Rectangle plus
+                        // corner pieces: translucent pieces abutting at a fractional
+                        // device pixel (the screen is at 1.5x) would leave a visible
+                        // seam between them.
                         Shape {
                             anchors.fill: parent
                             preferredRendererType: Shape.CurveRenderer // antialiased arcs
 
-                            ShapePath {
+                            CardOutline {
+                                w: card.width
+                                h: card.height
                                 fillColor: root.colBg
-                                strokeWidth: -1
-
-                                startX: card.width
-                                startY: -root.cornerRadius
-
-                                Corner { x: card.width - root.cornerRadius; y: 0 }
-                                PathLine { x: root.cornerRadius; y: 0 }
-                                Corner { x: 0; y: root.cornerRadius; direction: PathArc.Counterclockwise }
-                                PathLine { x: 0; y: card.height - root.cornerRadius }
-                                Corner { x: root.cornerRadius; y: card.height; direction: PathArc.Counterclockwise }
-                                PathLine { x: card.width - root.cornerRadius; y: card.height }
-                                Corner { x: card.width; y: card.height + root.cornerRadius }
                             }
 
                             // The top inverted corner sits beside the header, so it
