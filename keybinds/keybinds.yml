@@ -1043,6 +1043,8 @@
       key: "Ctrl + w, {Left, Right}"
     - name: "Window taller / shorter"
       key: "Ctrl + w, {Up, Down}"
+    - name: "Markdown: toggle PDF auto-preview (sioyek)"
+      key: "Space c P"
 
 # ---------------------------------------------------------------- nvim (LazyVim)
 # Effective LazyVim maps: dumped from a headless nvim with this config (global maps
@@ -1120,6 +1122,8 @@
       key: "Space c m"
     - name: "Organize Imports"
       key: "Space c o"
+    - name: "Markdown Preview (browser)"
+      key: "Space c p"
     - name: "Rename File"
       key: "Space c R"
     - name: "Rename"
@@ -1676,6 +1680,8 @@
       key: "Space u L"
     - name: "Toggle Line Numbers"
       key: "Space u l"
+    - name: "Toggle Render Markdown"
+      key: "Space u m"
     - name: "Dismiss All Notifications"
       key: "Space u n"
     - name: "Toggle Mini Pairs"
