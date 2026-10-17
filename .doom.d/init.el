@@ -151,9 +151,13 @@
        ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
        (javascript +lsp
                    +tree-sitter)        ; all(hope(abandon(ye(who(enter(here))))))
-       ;;julia             ; a better, faster MATLAB
+       (julia +lsp             ; a better, faster MATLAB
+              +tree-sitter
+              +snail)
        ;;kotlin            ; a better, slicker Java(Script)
-       ;;latex             ; writing papers in Emacs has never been so fun
+       (latex +cdlatex             ; writing papers in Emacs has never been so fun
+              +fold
+              +lsp)
        ;;lean              ; for folks with too much to prove
        ;;ledger            ; be audit you can be
        (lua +lsp
