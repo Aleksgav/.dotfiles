@@ -454,6 +454,14 @@ ArchMain = Packager::Installation.new do
 
   group('Other') do
     package ArchPkg::PythonPygments
+    package ArchPkg::TexliveBin
+    package ArchPkg::TexliveBasic
+    package ArchPkg::TexliveLatexrecommended
+    package ArchPkg::TexliveLatexextra
+    package ArchPkg::TexlivePlaingeneric
+    package ArchPkg::PythonPylatexenc
+    package ArchPkg::Pandoc
+    package ArchPkg::Typst
     package ArchPkg::Gobang
 
     # chromedriver
