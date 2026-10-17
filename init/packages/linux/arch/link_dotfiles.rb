@@ -14,6 +14,7 @@ module Linux
         # Home dotfiles
         Linker.link '.vimrc', '~/.vimrc'
         Linker.link 'mise', "#{CONFIG_DIR}/mise"
+        Linker.link 'keybinds', "#{CONFIG_DIR}/keybinds"
       end
     end
   end

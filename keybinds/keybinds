@@ -1,0 +1,25 @@
+#!/bin/sh
+
+#
+# Keybindings cheatsheet: one line per binding from keybinds.yml, browsed in fzf.
+# Space-separated words must all match, in any order: `zellij new`, `nvim git blame`,
+# `mango !tag`. Esc closes; Enter does nothing (it's a cheatsheet).
+# Colours: glow's dracula style (glamour v2.0.1 styles/dracula.json).
+#
+
+dir=$(dirname "$(readlink -f "$0")")
+
+# yq (mikefarah v4, pkg go-yq): one "section<TAB>action<TAB>key" line per binding.
+# join("\t") instead of @tsv: @tsv CSV-quotes fields that contain '"'.
+yq -r '.[] | .name as $s | .prefix as $p | .keybinds[] |
+  [$s, .name, (if $p then $p + " ; " + .key else .key end)] | join("\t")' "$dir/keybinds.yml" |
+  # align columns; section: heading purple, key: link cyan
+  awk -F'\t' '
+    { s[NR] = $1; n[NR] = $2; k[NR] = $3
+      if (length($1) > sw) sw = length($1)
+      if (length($2) > nw) nw = length($2) }
+    END { for (i = 1; i <= NR; i++)
+      printf "\033[38;2;189;147;249m%-*s\033[0m  %-*s  \033[38;2;139;233;253m%s\033[0m\n", sw, s[i], nw, n[i], k[i] }' |
+  fzf --ansi --layout=reverse --tiebreak=index \
+    --prompt='keys > ' --bind='enter:ignore' \
+    --color='fg+:#f8f8f2,bg+:#6272A4,hl:#50fa7b,hl+:#50fa7b,prompt:#ff79c6,pointer:#ff79c6,info:#6272A4'
