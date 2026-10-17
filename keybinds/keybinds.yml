@@ -1045,6 +1045,10 @@
       key: "Ctrl + w, {Up, Down}"
     - name: "Markdown: toggle PDF auto-preview (sioyek)"
       key: "Space c P"
+    - name: "Markdown: toggle HTML auto-preview (browser)"
+      key: "Space c H"
+    - name: "AI: insert at cursor (claude -p)"
+      key: "Space a i"
 
 # ---------------------------------------------------------------- nvim (LazyVim)
 # Effective LazyVim maps: dumped from a headless nvim with this config (global maps

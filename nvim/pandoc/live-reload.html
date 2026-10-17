@@ -1,0 +1,15 @@
+<script>
+// Live reload for :MdHtmlToggle: poll our own URL and reload when the file changes.
+// No-op when the page is opened from disk (file://).
+if (location.protocol.startsWith("http")) {
+  let last;
+  setInterval(async () => {
+    try {
+      const r = await fetch(location.href, { method: "HEAD", cache: "no-store" });
+      const stamp = r.headers.get("Last-Modified") + r.headers.get("Content-Length");
+      if (last && stamp !== last) location.reload();
+      last = stamp;
+    } catch {}
+  }, 500);
+}
+</script>
