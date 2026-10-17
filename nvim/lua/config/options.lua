@@ -16,6 +16,8 @@ vim.filetype.add({
 })
 vim.treesitter.language.register("ruby", "thor")
 
+vim.opt.conceallevel = 2
+
 -- Undercurl
 -- if not working see:
 -- https://dev.to/anurag_pramanik/how-to-enable-undercurl-in-neovim-terminal-and-tmux-setup-guide-2ld7
