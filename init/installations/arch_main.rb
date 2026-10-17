@@ -323,6 +323,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Task
     package ArchPkg::Timewarrior
     package ArchPkg::TaskwarriorTui
+    package ArchPkg::Tuxedo
     package ArchPkg::Unrar
     package ArchPkg::Kubectl
     package ArchPkg::Aspell

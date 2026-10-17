@@ -47,6 +47,8 @@
       key: "Super + Alt + x"
     - name: "Toggle keybindings cheatsheet (fzf)"
       key: "Super + Alt + k"
+    - name: "Toggle todo.txt (tuxedo)"
+      key: "Super + Alt + t"
 
 - name: "mango: system"
   keybinds:
