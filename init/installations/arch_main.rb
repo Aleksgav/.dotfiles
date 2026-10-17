@@ -26,6 +26,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::FontTtfNotoNerd
     package ArchPkg::FontNotoEmoji
     package ArchPkg::FontTtfNerdSymbolsMono
+    package ArchPkg::FontOtfLatinmodernMath
     package ArchPkg::RebuildFontCache
   end
 
