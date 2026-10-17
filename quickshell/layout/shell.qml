@@ -1,6 +1,7 @@
 // Window-layout minimap — a drawer on the left screen edge, fully hidden until
 // the pointer touches that edge, then sliding out to a scaled-down map of the
-// windows on the monitor's current tag.
+// windows on the monitor's current tag. A footer of dots, one per tag, previews
+// a tag's windows in the map on hover and switches to that tag on click.
 //
 // Run with:  qs -c layout
 //
@@ -47,11 +48,18 @@ ShellRoot {
     readonly property color colHeaderBg: "#cc0d0e10" // waybar's "much darker" tone
     readonly property color colWin: "#373b41"
     readonly property color colWinFocused: "#448abeb7" // colAccent at ~0.267 alpha
+    readonly property color colUrgent: "#a54242"     // waybar's urgent-tag red
+    readonly property color colEmpty: "#59969896"    // colDim at ~0.35 alpha
     readonly property string uiFont: "FiraCode Nerd Font"
     readonly property int uiSize: 13
 
     readonly property int mapWidth: 280
     readonly property int padding: 12
+    // Footer dots, one per tag: their diameter, the active tag's stretched
+    // width, and the gap between them.
+    readonly property int dotSize: 8
+    readonly property int dotActiveWidth: 24
+    readonly property int dotGap: 8
     // Invisible strip along the screen edge that still takes hover while the
     // drawer is closed, so pushing the pointer against the edge opens it.
     readonly property int edgeWidth: 2
@@ -211,11 +219,28 @@ ShellRoot {
                 readonly property int monX: panel.mon ? panel.mon.x : 0
                 readonly property int monY: panel.mon ? panel.mon.y : 0
 
-                // Windows shown on this monitor right now; floating ones last so
-                // they draw on top of the tiled ones, as on screen.
+                // Tag of the footer dot under the pointer, or 0. Read off the
+                // drawer's own MouseArea rather than a MouseArea per dot, so the
+                // hover that keeps the drawer open is never handed to a child.
+                readonly property int hoveredTag: {
+                    if (!hover.containsMouse)
+                        return 0;
+                    const p = dots.mapFromItem(hover, hover.mouseX, hover.mouseY);
+                    const dot = dots.childAt(p.x, p.y);
+                    return dot && dot.tag ? dot.tag : 0;
+                }
+                // A dot of a tag not on screen is hovered: the map and header show
+                // that tag instead. Windows on hidden tags keep their last geometry.
+                readonly property bool previewing: panel.hoveredTag > 0 && panel.mon !== null
+                    && !panel.mon.active_tags.includes(panel.hoveredTag)
+
+                // Windows shown on this monitor right now, or on the previewed tag;
+                // floating ones last so they draw on top of the tiled ones, as on
+                // screen. Hidden scratchpads have no tags, so a preview skips them.
                 readonly property var windows: panel.mon
                     ? root.clients
-                        .filter(c => c.monitor === panel.mon.name && c.is_visible && !c.is_minimized)
+                        .filter(c => c.monitor === panel.mon.name && !c.is_minimized
+                            && (panel.previewing ? c.tags.includes(panel.hoveredTag) : c.is_visible))
                         .sort((a, b) => a.is_floating - b.is_floating)
                     : []
 
@@ -263,6 +288,14 @@ ShellRoot {
 
                     anchors.fill: parent
                     hoverEnabled: true
+
+                    // A click on a footer dot views that tag -- but not the tag
+                    // already shown: with view_current_to_back set, mango takes
+                    // that as a jump back to the previous tag.
+                    onClicked: {
+                        if (panel.previewing)
+                            Quickshell.execDetached(["mmsg", "dispatch", "view," + panel.hoveredTag + ",0"]);
+                    }
 
                     Item {
                         id: card
@@ -418,7 +451,9 @@ ShellRoot {
                                     text: {
                                         if (!panel.mon)
                                             return "";
-                                        const name = root.layoutNames[panel.mon.layout_symbol] || panel.mon.layout_symbol;
+                                        const tag = panel.previewing ? panel.mon.tags.find(t => t.index === panel.hoveredTag) : null;
+                                        const symbol = tag ? tag.layout : panel.mon.layout_symbol;
+                                        const name = root.layoutNames[symbol] || symbol;
                                         return "[" + name.charAt(0).toUpperCase() + name.slice(1) + "]";
                                     }
                                     color: root.colAccent
@@ -433,7 +468,10 @@ ShellRoot {
                                     anchors.rightMargin: root.padding
                                     anchors.verticalCenter: parent.verticalCenter
 
-                                    text: panel.mon ? panel.mon.active_tags.map(t => root.tagNames[t] || t).join("  ") : ""
+                                    text: panel.mon
+                                        ? (panel.previewing ? [panel.hoveredTag] : panel.mon.active_tags)
+                                            .map(t => root.tagNames[t] || t).join("  ")
+                                        : ""
                                     color: root.colDim
                                     font.pixelSize: root.uiSize - 2
                                 }
@@ -491,6 +529,76 @@ ShellRoot {
                                         text: "empty"
                                         color: root.colDim
                                         font.pixelSize: root.uiSize - 2
+                                    }
+                                }
+                            }
+
+                            // Footer: a dot per tag -- the active one stretched and
+                            // accent-coloured, occupied ones bright, empty ones faint.
+                            Item {
+                                width: parent.width
+                                height: root.dotSize + root.padding
+
+                                Row {
+                                    id: dots
+
+                                    anchors.horizontalCenter: parent.horizontalCenter
+                                    height: parent.height
+
+                                    // Modelled on the tag count, not the tags array:
+                                    // that is a new array on every monitor event, which
+                                    // would rebuild the dots and cut their animations.
+                                    Repeater {
+                                        model: panel.mon ? panel.mon.tag_num : 0
+
+                                        // Wider and taller than the dot it holds, so
+                                        // it is easier to hit; hoveredTag finds it by
+                                        // position and reads its tag.
+                                        Item {
+                                            id: dot
+
+                                            required property int index
+                                            readonly property int tag: dot.index + 1
+                                            readonly property var info: (panel.mon ? panel.mon.tags.find(t => t.index === dot.tag) : null) || {}
+                                            readonly property bool hovered: panel.hoveredTag === dot.tag
+
+                                            width: pill.width + root.dotGap
+                                            height: dots.height
+
+                                            Rectangle {
+                                                id: pill
+
+                                                anchors.horizontalCenter: parent.horizontalCenter
+                                                width: dot.info.is_active ? root.dotActiveWidth : root.dotSize
+                                                height: root.dotSize
+                                                radius: height / 2
+                                                scale: dot.hovered && !dot.info.is_active ? 1.3 : 1
+                                                color: dot.info.is_urgent ? root.colUrgent
+                                                    : dot.info.is_active ? root.colAccent
+                                                    : dot.info.client_count > 0 || dot.hovered ? root.colFg
+                                                    : root.colEmpty
+
+                                                Behavior on width {
+                                                    NumberAnimation {
+                                                        duration: 180
+                                                        easing.type: Easing.OutCubic
+                                                    }
+                                                }
+
+                                                Behavior on scale {
+                                                    NumberAnimation {
+                                                        duration: 120
+                                                        easing.type: Easing.OutCubic
+                                                    }
+                                                }
+
+                                                Behavior on color {
+                                                    ColorAnimation {
+                                                        duration: 180
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }

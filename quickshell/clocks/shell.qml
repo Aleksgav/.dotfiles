@@ -175,7 +175,10 @@ ShellRoot {
                 implicitWidth: card.width + root.shadowSize
                 implicitHeight: card.height + (root.cornerRadius + root.shadowSize) * 2
 
-                readonly property bool expanded: hover.containsMouse
+                // Toggled by the header's pin: a pinned drawer stays out after
+                // the pointer leaves. Per panel, so each screen pins on its own.
+                property bool pinned: false
+                readonly property bool expanded: hover.containsMouse || panel.pinned
 
                 // Only the visible part takes input; clicks on the transparent rest
                 // fall through to the windows underneath. Bound to the target state
@@ -344,6 +347,37 @@ ShellRoot {
                                 // card, which would otherwise poke past the card's.
                                 topLeftRadius: root.cornerRadius
                                 color: root.colHeaderBg
+
+                                // Pin toggle: outline while unpinned, filled in
+                                // the accent colour while pinned. Padded rather
+                                // than offset, so the glyph lines up with the
+                                // labels below while the whole padded box, at
+                                // the full header height, takes the click.
+                                Cell {
+                                    id: pinIcon
+
+                                    anchors.left: parent.left
+                                    height: parent.height
+                                    leftPadding: root.padding
+                                    rightPadding: root.padding
+
+                                    text: panel.pinned ? "󰐃" : "󰤱"
+                                    color: panel.pinned || pinHover.hovered ? root.colAccent : root.colDim
+
+                                    HoverHandler {
+                                        id: pinHover
+                                        cursorShape: Qt.PointingHandCursor
+                                    }
+
+                                    // Left at the default DragThreshold policy: its
+                                    // passive grab still sees the release after the
+                                    // card's hover MouseArea takes the press. The
+                                    // exclusive-grab policies lose that press to the
+                                    // MouseArea and the tap never fires.
+                                    TapHandler {
+                                        onTapped: panel.pinned = !panel.pinned
+                                    }
+                                }
 
                                 Cell {
                                     id: headerText
