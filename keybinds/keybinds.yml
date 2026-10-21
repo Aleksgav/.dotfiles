@@ -41,7 +41,7 @@
       key: "Super + Alt + s"
     - name: "Toggle nmtui (network)"
       key: "Super + Alt + n"
-    - name: "Toggle alsamixer (volume)"
+    - name: "Toggle wiremix (volume)"
       key: "Super + Alt + v"
     - name: "Toggle cmus (music)"
       key: "Super + Alt + x"
