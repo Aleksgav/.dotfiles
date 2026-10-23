@@ -66,7 +66,7 @@
   "nvim-lint": { "branch": "master", "commit": "f6230a5c06ba59e6059c14637f1dbe29a7978b9b" },
   "nvim-lspconfig": { "branch": "master", "commit": "45a3a444b710511c39abca3b60bb6e23a21e3de5" },
   "nvim-nio": { "branch": "master", "commit": "edcc181a875301dd21840189aa2f2f9ad69fc172" },
-  "nvim-treesitter": { "branch": "main", "commit": "d4a9b23a383266bdb0bfb42d565f31e83f27be5e" },
+  "nvim-treesitter": { "branch": "main", "commit": "d3e4a28b63961ba972b0945d66c73b6eec969953" },
   "nvim-treesitter-textobjects": { "branch": "main", "commit": "5c7b0263797dfd1bd6202f2b219f3b53a80b2187" },
   "nvim-ts-autotag": { "branch": "main", "commit": "d7220b55e16ed3c04e88086256def5d282429493" },
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "6141a40173c6efa98242dc951ed4b6f892c97027" },
@@ -96,7 +96,7 @@
   "vim-dadbod-completion": { "branch": "master", "commit": "a8dac0b3cf6132c80dc9b18bef36d4cf7a9e1fe6" },
   "vim-dadbod-ui": { "branch": "master", "commit": "afd07819d8efcefc3317205b855ad4e3513b0011" },
   "vim-illuminate": { "branch": "master", "commit": "1cc33d347c574c3bd21a4852fc9ffed677c1c58c" },
-  "vimtex": { "branch": "master", "commit": "bd0788f13c23337dae815e21f1f283cb79753ac7" },
+  "vimtex": { "branch": "master", "commit": "79a5fb444147f94a5284b6800030e17eecd18a06" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" },
   "yanky.nvim": { "branch": "main", "commit": "adcabd8512bead30184916fa9277e73c021ef099" }
 }

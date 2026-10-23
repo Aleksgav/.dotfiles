@@ -7,7 +7,7 @@
 // ships no Intl implementation and exposes no QTimeZone binding, so
 // Qt.formatDateTime() can only render local time. This file just renders rows.
 //
-// The card is matte glass: a thin tint over a blur of whatever is behind it.
+// The card is clear glass: a light blur of whatever is behind it, barely tinted.
 // The blur is mango's, not ours -- a client cannot see past its own surface --
 // and mango/config.conf enables it for this widget's layer namespace only.
 
@@ -25,37 +25,47 @@ ShellRoot {
     // script's ZONES list -- nothing in this file needs to change.
     property var zones: []
 
-    // Palette and font lifted from waybar/style.css so the widget reads as part
-    // of the same desktop rather than a stranger on it.
-    readonly property color colFg: "#c5c8c6"
-    // colDim and colBg depart from waybar: at waybar's ~0.667 alpha, a light
-    // window behind the card blended it to ~#707174, the same grey as waybar's
-    // #707880 dim text, which made that text vanish.
-    readonly property color colDim: "#969896"
-    readonly property color colAccent: "#8abeb7"
-    // Glass tones. colBg is thinner than before so the blur shows through, but
-    // only so far: a blurred white window is still white, and below ~0.7 alpha
-    // the tint over one washes colDim text out again.
-    readonly property color colBg: "#b3282a2e"         // #282a2e at ~0.7 alpha
-    readonly property color colHeaderBg: "#590d0e10"   // waybar's "much darker" tone at ~0.35 alpha
-    readonly property color colRowHover: "#14ffffff"   // white at ~0.08 alpha: a lit pane of glass
-    readonly property color colEdge: "#2effffff"       // white at ~0.18 alpha: the glass's cut edge
-    readonly property color colDivider: "#1affffff"    // white at ~0.1 alpha: header/rows seam
-    readonly property color colSheenTop: "#14ffffff"   // white at ~0.08 alpha
+    // Light text on clear glass. The glass is too clear to promise any one
+    // backdrop, so what keeps text readable is the shadow every glyph casts
+    // (colTextShadow), not the glass.
+    // colAccent is waybar's #8abeb7 lightened a little, for the pin and the
+    // local zone's time.
+    readonly property color colFg: "#f4f5f5"
+    readonly property color colDim: "#dfe1e3"
+    readonly property color colAccent: "#a3e0d6"
+    // A hard black copy of every glyph, a pixel right and a pixel down,
+    // unblurred. Over a dark window it vanishes into the dark; over a white
+    // one it is the edge the light text reads by.
+    readonly property color colTextShadow: "#000000"
+    // Glass tones. colBg smokes the glass with the desktop's #1d1f21, over
+    // mango's plain blur (mango/config.conf: light, no darkening, no grain):
+    // a white window behind turns dark grey, which also helps the light text.
+    readonly property color colBg: "#b31d1f21"         // #1d1f21 at 0.7 alpha
+    // A little more of it, under the card: the shadow surface fills the gap
+    // it leaves for the card with it (see there). The card's blur takes it in.
+    readonly property color colUnderTint: "#661d1f21"  // #1d1f21 at 0.4 alpha
+    readonly property color colHeaderBg: "#0affffff"   // white at ~0.04 alpha: a lighter title strip
+    readonly property color colRowHover: "#1fffffff"   // white at ~0.12 alpha: a lit pane of glass
+    readonly property color colEdge: "#5a5d61"         // solid dark grey: the card's border
+    readonly property color colDivider: "#33ffffff"    // white at 0.2 alpha: header/rows seam
+    readonly property color colSeparator: "#1fffffff"  // white at ~0.12 alpha: between rows
+    readonly property color colSheenTop: "#1affffff"   // white at 0.1 alpha
     readonly property color colSheenBottom: "#00ffffff"
-    readonly property string uiFont: "FiraCode Nerd Font"
+    // Fira Sans for text, the sans sibling of the FiraCode used across the
+    // desktop; the Nerd Font only for the pin glyphs, which Fira Sans lacks.
+    readonly property string uiFont: "Fira Sans"
+    readonly property string iconFont: "FiraCode Nerd Font"
     readonly property int uiSize: 13
+    readonly property int timeSize: 26
 
-    // Column widths are named so the header can span a full row without binding
-    // to the Column that contains it, which would be circular.
-    readonly property int wLabel: 104
-    readonly property int wTime: 46
-    readonly property int wDay: 32
-    readonly property int wAbbr: 48
-    readonly property int wDelta: 62
-    readonly property int cellSpacing: 10
-    readonly property int padding: 12
-    readonly property int rowWidth: wLabel + wTime + wDay + wAbbr + wDelta + cellSpacing * 4
+    // The content width is fixed rather than measured, so the header can span
+    // a full row without binding to the Column that contains it, which would
+    // be circular. It fits "Vladivostok" beside a full-size time with room to
+    // spare; a longer city elides.
+    readonly property int padding: 16
+    readonly property int rowWidth: 232
+    // Room the city column leaves for the time on its right.
+    readonly property int wLabel: rowWidth - 84
     // Invisible strip along the screen edge that still takes hover while the
     // drawer is closed, so pushing the pointer against the edge opens it.
     readonly property int edgeWidth: 2
@@ -74,6 +84,19 @@ ShellRoot {
         font.family: root.uiFont
         font.pixelSize: root.uiSize
         verticalAlignment: Text.AlignVCenter
+
+        // The shadow. Text.Raised offers only a straight-down one, hence the
+        // effect. Its blurMax is no blur -- shadowBlur is 0 -- but the room
+        // the layer is padded by, which only has to fit the offset.
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: root.colTextShadow
+            shadowBlur: 0
+            blurMax: 2
+            shadowHorizontalOffset: 1
+            shadowVerticalOffset: 1
+        }
     }
 
     component Corner: PathArc {
@@ -152,7 +175,13 @@ ShellRoot {
         model: Quickshell.screens
 
         delegate: Component {
-            // Two surfaces per screen: the card, and its shadows under it.
+            // Three surfaces per screen: the card, its shadows, and an
+            // invisible one that takes the drawer's input. The card and its
+            // shadows must move in step, and a surface whose input region
+            // changes has its next frames reach the screen late (~100ms,
+            // measured here under mango) -- so neither of them takes input
+            // at all, and the region that has to change as the drawer opens
+            // and closes lives on a surface that draws nothing.
             Scope {
                 id: perScreen
 
@@ -164,8 +193,17 @@ ShellRoot {
                 // transparent, so in the card's surface the shadows would get a
                 // hard-edged blur out to where they fade. This surface keeps the
                 // default namespace, which mango does not blur. Sized and anchored
-                // like the card's surface, it lies exactly over it, and the
+                // like the card's surface, it lies exactly under it, and the
                 // shadows follow the card as it slides.
+                //
+                // Separate surfaces do not always reach the screen in the same
+                // frame, though: mid-slide, the shadows now and then land a
+                // frame ahead of the card or behind it. The card-shaped gap cut
+                // in them then misses the card, and through it the screen
+                // flashed beside the card, bright against the dark shadow. So
+                // the gap is never left empty: it holds colUnderTint, which the
+                // card covers when the two are in step and which, when they
+                // are not, shows as a strip of the glass's tint, not a hole.
                 PanelWindow {
                     screen: perScreen.modelData
                     visible: panel.visible
@@ -180,7 +218,7 @@ ShellRoot {
                     implicitHeight: panel.implicitHeight
 
                     // Empty, so it takes no input at all: hover and clicks reach
-                    // the card's surface or the windows underneath.
+                    // the hit surface or the windows underneath.
                     mask: Region {}
 
                     // Stands in for the card, so the shadow items keep their
@@ -232,7 +270,7 @@ ShellRoot {
                                 bottomRightRadius: 0
                                 blur: root.shadowBlur
                                 offset.y: root.shadowDrop
-                                color: "#e6000000" // black at 0.9 alpha
+                                color: "#73000000" // black at 0.45 alpha
                             }
 
                             RectangularShadow {
@@ -245,7 +283,7 @@ ShellRoot {
                                 bottomRightRadius: 0
                                 blur: 8
                                 offset.y: 3
-                                color: "#80000000" // black at 0.5 alpha
+                                color: "#40000000" // black at 0.25 alpha
                             }
                         }
 
@@ -273,6 +311,18 @@ ShellRoot {
                                     h: card.height
                                     fillColor: "black"
                                 }
+                            }
+                        }
+
+                        // The tint that fills that cutout.
+                        Shape {
+                            anchors.fill: parent
+                            preferredRendererType: Shape.CurveRenderer
+
+                            CardOutline {
+                                w: card.width
+                                h: card.height
+                                fillColor: root.colUnderTint
                             }
                         }
                     }
@@ -322,17 +372,268 @@ ShellRoot {
                     property bool pinned: false
                     readonly property bool expanded: hover.containsMouse || panel.pinned
 
-                    // Only the visible part takes input; clicks on the transparent rest
-                    // fall through to the windows underneath. Bound to the target state
-                    // rather than to the animating card, so the hit area does not shrink
-                    // mid-slide.
-                    // The shadow margin is left out too, so the shadow's footprint
-                    // takes no clicks.
+                    // The pointer, as the hit surface sees it, in card coordinates.
+                    // The surfaces lie exactly over each other, so its window
+                    // coordinates are this window's too.
+                    readonly property point pointer: Qt.point(hover.mouseX - card.x, hover.mouseY - card.y)
+                    readonly property bool pinHovered: hover.containsMouse
+                        && pinIcon.contains(pinIcon.mapFromItem(card, panel.pointer))
+
+                    // Empty: all input goes to the hit surface (see the Scope above).
+                    mask: Region {}
+
+                    Item {
+                        id: card
+
+                        // Closed, the whole card is past the right edge of the
+                        // surface and clipped away -- far enough that its shadow's
+                        // blur goes too; only the hit surface's edge strip
+                        // remains, invisible but hoverable.
+                        x: panel.expanded ? root.shadowSize : panel.width + root.shadowBlur
+                        y: root.shadowSize + root.cornerRadius
+                        width: root.rowWidth + root.padding * 2
+                        height: content.implicitHeight
+
+                        Behavior on x {
+                            NumberAnimation {
+                                duration: 180
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+
+                        // The card's fill. Drawn as one path, not a Rectangle plus
+                        // corner pieces: translucent pieces abutting at a fractional
+                        // device pixel (the screen is at 1.5x) would leave a visible
+                        // seam between them.
+                        Shape {
+                            anchors.fill: parent
+                            preferredRendererType: Shape.CurveRenderer // antialiased arcs
+
+                            CardOutline {
+                                w: card.width
+                                h: card.height
+                                fillColor: root.colBg
+                            }
+
+                            // A faint top-down sheen over the tint. It fades to
+                            // nothing rather than to a hard band, which is what
+                            // keeps the glass matte instead of glossy.
+                            CardOutline {
+                                w: card.width
+                                h: card.height
+                                fillGradient: LinearGradient {
+                                    x1: 0; y1: 0
+                                    x2: 0; y2: card.height
+                                    GradientStop { position: 0; color: root.colSheenTop }
+                                    GradientStop { position: 1; color: root.colSheenBottom }
+                                }
+                            }
+
+                            // The top inverted corner sits beside the header, so it
+                            // also takes the header's darker fill on top.
+                            ShapePath {
+                                fillColor: root.colHeaderBg
+                                strokeWidth: -1
+
+                                startX: card.width
+                                startY: -root.cornerRadius
+
+                                Corner { x: card.width - root.cornerRadius; y: 0 }
+                                PathLine { x: card.width; y: 0 }
+                            }
+                        }
+
+                        Column {
+                            id: content
+
+                            width: parent.width
+                            spacing: 0
+
+                            // Header strip: spans the full card width so the darker
+                            // fill reads as a title bar rather than a floating patch.
+                            Rectangle {
+                                id: header
+
+                                width: parent.width
+                                height: headerText.implicitHeight + 14
+                                // Square except the corner it shares with the
+                                // card, which would otherwise poke past the card's.
+                                topLeftRadius: root.cornerRadius
+                                color: root.colHeaderBg
+
+                                // Pin toggle: outline while unpinned, filled in
+                                // the accent colour while pinned. Padded rather
+                                // than offset, so the glyph lines up with the
+                                // labels below while the whole padded box, at
+                                // the full header height, takes the click (on
+                                // the hit surface, through panel.pinHovered).
+                                Cell {
+                                    id: pinIcon
+
+                                    anchors.left: parent.left
+                                    height: parent.height
+                                    leftPadding: root.padding
+                                    rightPadding: root.padding
+
+                                    text: panel.pinned ? "󰐃" : "󰤱"
+                                    font.family: root.iconFont
+                                    color: panel.pinned || panel.pinHovered ? root.colAccent : root.colDim
+                                }
+
+                                Cell {
+                                    id: headerText
+
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: root.padding
+                                    anchors.verticalCenter: parent.verticalCenter
+
+                                    text: "WORLD CLOCKS"
+                                    font.pixelSize: (root.uiSize - 3) * 1.5
+                                    font.weight: Font.Black
+                                    font.italic: true
+                                    font.letterSpacing: 1.5
+                                }
+
+                                // Hairline seam between the header and the rows.
+                                Rectangle {
+                                    anchors.bottom: parent.bottom
+                                    width: parent.width
+                                    height: 1
+                                    color: root.colDivider
+                                }
+                            }
+
+                            // Rows sit edge to edge, each 16px taller than its text,
+                            // so a hovered row's lit fill has no gaps around it.
+                            Column {
+                                id: rows
+
+                                width: parent.width
+
+                                Repeater {
+                                    model: root.zones
+
+                                    Rectangle {
+                                        id: clockRow
+
+                                        required property var modelData
+                                        required property int index
+
+                                        // The zone this machine is in: scripts/clocks.sh
+                                        // writes "same" for a zero offset from local time.
+                                        readonly property bool isLocal: clockRow.modelData.delta === "same"
+
+                                        width: rows.width
+                                        height: place.implicitHeight + 16
+                                        // Square, except the last row's corner it
+                                        // shares with the card, which would otherwise
+                                        // poke past the card's.
+                                        bottomLeftRadius: clockRow.index === root.zones.length - 1 ? root.cornerRadius : 0
+                                        color: hover.containsMouse && clockRow.contains(clockRow.mapFromItem(card, panel.pointer))
+                                            ? root.colRowHover : "transparent"
+
+                                        // Hairline between rows, inset to the text.
+                                        Rectangle {
+                                            visible: clockRow.index > 0
+                                            x: root.padding
+                                            width: parent.width - root.padding * 2
+                                            height: 1
+                                            color: root.colSeparator
+                                        }
+
+                                        // City over a quiet "day · zone · offset" line.
+                                        Column {
+                                            id: place
+
+                                            x: root.padding
+                                            anchors.verticalCenter: parent.verticalCenter
+                                            spacing: 1
+
+                                            Cell {
+                                                width: root.wLabel
+                                                text: clockRow.modelData.label
+                                                font.pixelSize: root.uiSize + 2
+                                                font.weight: Font.Medium
+                                                elide: Text.ElideRight
+                                            }
+
+                                            Cell {
+                                                width: root.wLabel
+                                                text: [clockRow.modelData.day, clockRow.modelData.abbr,
+                                                    clockRow.isLocal ? "local" : clockRow.modelData.delta].join("  ·  ")
+                                                color: root.colDim
+                                                font.pixelSize: root.uiSize - 2
+                                                elide: Text.ElideRight
+                                            }
+                                        }
+
+                                        Cell {
+                                            anchors.right: parent.right
+                                            anchors.rightMargin: root.padding
+                                            anchors.verticalCenter: parent.verticalCenter
+
+                                            text: clockRow.modelData.time
+                                            color: clockRow.isLocal ? root.colAccent : root.colFg
+                                            font.pixelSize: root.timeSize
+                                            font.weight: Font.Light
+                                            // Tabular digits, so the colons line up
+                                            // down the column.
+                                            font.features: { "tnum": 1 }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // The glass's cut edge: a hairline traced along the
+                        // card's outline, over the header and rows. The outline
+                        // is an open path, so no line is drawn down the screen
+                        // edge; it runs out along the inverted corners instead.
+                        Shape {
+                            anchors.fill: parent
+                            preferredRendererType: Shape.CurveRenderer
+
+                            CardOutline {
+                                w: card.width
+                                h: card.height
+                                fillColor: "transparent"
+                                strokeColor: root.colEdge
+                                strokeWidth: 1
+                            }
+                        }
+                    }
+                }
+
+                // The hit surface: takes every bit of the drawer's input for the
+                // card and shadow surfaces, which take none (see the Scope
+                // above). It draws nothing. Sized and anchored like them.
+                PanelWindow {
+                    id: hitSurface
+
+                    screen: perScreen.modelData
+                    visible: panel.visible
+
+                    anchors {
+                        right: true
+                    }
+
+                    exclusiveZone: 0
+                    color: "transparent"
+                    implicitWidth: panel.implicitWidth
+                    implicitHeight: panel.implicitHeight
+
+                    // Only the card's footprint takes input; clicks on the
+                    // transparent rest fall through to the windows underneath.
+                    // Closed, that is a thin strip along the screen edge, so
+                    // pushing the pointer against the edge opens the drawer.
+                    // Bound to the target state rather than to the animating
+                    // card, so the hit area does not shrink mid-slide. The
+                    // shadow margin is left out, so the shadow takes no clicks.
                     mask: Region {
-                        x: panel.expanded ? root.shadowSize : panel.width - root.edgeWidth
+                        x: panel.expanded ? root.shadowSize : hitSurface.width - root.edgeWidth
                         y: root.shadowSize
                         width: panel.expanded ? card.width : root.edgeWidth
-                        height: panel.height - root.shadowSize * 2
+                        height: hitSurface.height - root.shadowSize * 2
                     }
 
                     MouseArea {
@@ -340,232 +641,11 @@ ShellRoot {
 
                         anchors.fill: parent
                         hoverEnabled: true
+                        cursorShape: panel.pinHovered ? Qt.PointingHandCursor : Qt.ArrowCursor
 
-                        Item {
-                            id: card
-
-                            // Closed, the whole card is past the right edge of the
-                            // surface and clipped away -- far enough that its shadow's
-                            // blur goes too; only the mask's edge strip remains,
-                            // invisible but hoverable.
-                            x: panel.expanded ? root.shadowSize : panel.width + root.shadowBlur
-                            y: root.shadowSize + root.cornerRadius
-                            width: root.rowWidth + root.padding * 2
-                            height: content.implicitHeight
-
-                            Behavior on x {
-                                NumberAnimation {
-                                    duration: 180
-                                    easing.type: Easing.OutCubic
-                                }
-                            }
-
-                            // The card's fill. Drawn as one path, not a Rectangle plus
-                            // corner pieces: translucent pieces abutting at a fractional
-                            // device pixel (the screen is at 1.5x) would leave a visible
-                            // seam between them.
-                            Shape {
-                                anchors.fill: parent
-                                preferredRendererType: Shape.CurveRenderer // antialiased arcs
-
-                                CardOutline {
-                                    w: card.width
-                                    h: card.height
-                                    fillColor: root.colBg
-                                }
-
-                                // A faint top-down sheen over the tint. It fades to
-                                // nothing rather than to a hard band, which is what
-                                // keeps the glass matte instead of glossy.
-                                CardOutline {
-                                    w: card.width
-                                    h: card.height
-                                    fillGradient: LinearGradient {
-                                        x1: 0; y1: 0
-                                        x2: 0; y2: card.height
-                                        GradientStop { position: 0; color: root.colSheenTop }
-                                        GradientStop { position: 1; color: root.colSheenBottom }
-                                    }
-                                }
-
-                                // The top inverted corner sits beside the header, so it
-                                // also takes the header's darker fill on top.
-                                ShapePath {
-                                    fillColor: root.colHeaderBg
-                                    strokeWidth: -1
-
-                                    startX: card.width
-                                    startY: -root.cornerRadius
-
-                                    Corner { x: card.width - root.cornerRadius; y: 0 }
-                                    PathLine { x: card.width; y: 0 }
-                                }
-                            }
-
-                            Column {
-                                id: content
-
-                                width: parent.width
-                                spacing: 0
-
-                                // Header strip: spans the full card width so the darker
-                                // fill reads as a title bar rather than a floating patch.
-                                Rectangle {
-                                    id: header
-
-                                    width: parent.width
-                                    height: headerText.implicitHeight + 10
-                                    // Square except the corner it shares with the
-                                    // card, which would otherwise poke past the card's.
-                                    topLeftRadius: root.cornerRadius
-                                    color: root.colHeaderBg
-
-                                    // Pin toggle: outline while unpinned, filled in
-                                    // the accent colour while pinned. Padded rather
-                                    // than offset, so the glyph lines up with the
-                                    // labels below while the whole padded box, at
-                                    // the full header height, takes the click.
-                                    Cell {
-                                        id: pinIcon
-
-                                        anchors.left: parent.left
-                                        height: parent.height
-                                        leftPadding: root.padding
-                                        rightPadding: root.padding
-
-                                        text: panel.pinned ? "󰐃" : "󰤱"
-                                        color: panel.pinned || pinHover.hovered ? root.colAccent : root.colDim
-
-                                        HoverHandler {
-                                            id: pinHover
-                                            cursorShape: Qt.PointingHandCursor
-                                        }
-
-                                        // Left at the default DragThreshold policy: its
-                                        // passive grab still sees the release after the
-                                        // card's hover MouseArea takes the press. The
-                                        // exclusive-grab policies lose that press to the
-                                        // MouseArea and the tap never fires.
-                                        TapHandler {
-                                            onTapped: panel.pinned = !panel.pinned
-                                        }
-                                    }
-
-                                    Cell {
-                                        id: headerText
-
-                                        anchors.right: parent.right
-                                        anchors.rightMargin: root.padding
-                                        anchors.verticalCenter: parent.verticalCenter
-
-                                        text: "WORLD CLOCKS"
-                                        color: root.colDim
-                                        font.pixelSize: root.uiSize - 2
-                                        font.bold: true
-                                        // FiraCode ships no italic, so Qt slants it.
-                                        font.italic: true
-                                    }
-
-                                    // Hairline seam between the header and the rows.
-                                    Rectangle {
-                                        anchors.bottom: parent.bottom
-                                        width: parent.width
-                                        height: 1
-                                        color: root.colDivider
-                                    }
-                                }
-
-                                // Rows sit edge to edge, each 8px taller than its text, so
-                                // a hovered row's darker fill has no gaps around it.
-                                Column {
-                                    id: rows
-
-                                    width: parent.width
-
-                                    Repeater {
-                                        model: root.zones
-
-                                        Rectangle {
-                                            id: clockRow
-
-                                            required property var modelData
-                                            required property int index
-
-                                            width: rows.width
-                                            height: cells.implicitHeight + 8
-                                            // Square, except the last row's corner it
-                                            // shares with the card, which would otherwise
-                                            // poke past the card's.
-                                            bottomLeftRadius: clockRow.index === root.zones.length - 1 ? root.cornerRadius : 0
-                                            color: rowHover.hovered ? root.colRowHover : "transparent"
-
-                                            HoverHandler {
-                                                id: rowHover
-                                            }
-
-                                            Row {
-                                                id: cells
-
-                                                x: root.padding
-                                                anchors.verticalCenter: parent.verticalCenter
-                                                spacing: root.cellSpacing
-
-                                                Cell {
-                                                    // Widest current label ("Vladivostok")
-                                                    // measures 88px in FiraCode Nerd Font 13px;
-                                                    // the slack keeps ElideRight from biting if
-                                                    // a longer city is added.
-                                                    width: root.wLabel
-                                                    text: clockRow.modelData.label
-                                                    elide: Text.ElideRight
-                                                }
-
-                                                Cell {
-                                                    width: root.wTime
-                                                    text: clockRow.modelData.time
-                                                    color: root.colAccent
-                                                }
-
-                                                Cell {
-                                                    width: root.wDay
-                                                    text: clockRow.modelData.day
-                                                    color: root.colDim
-                                                }
-
-                                                Cell {
-                                                    width: root.wAbbr
-                                                    text: clockRow.modelData.abbr
-                                                    color: root.colDim
-                                                }
-
-                                                Cell {
-                                                    width: root.wDelta
-                                                    text: clockRow.modelData.delta
-                                                    color: root.colDim
-                                                    horizontalAlignment: Text.AlignRight
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            // The glass's cut edge: a hairline traced along the
-                            // card's outline, over the header and rows. The outline
-                            // is an open path, so no line is drawn down the screen
-                            // edge; it runs out along the inverted corners instead.
-                            Shape {
-                                anchors.fill: parent
-                                preferredRendererType: Shape.CurveRenderer
-
-                                CardOutline {
-                                    w: card.width
-                                    h: card.height
-                                    fillColor: "transparent"
-                                    strokeColor: root.colEdge
-                                    strokeWidth: 1
-                                }
-                            }
+                        onClicked: {
+                            if (panel.pinHovered)
+                                panel.pinned = !panel.pinned;
                         }
                     }
                 }
