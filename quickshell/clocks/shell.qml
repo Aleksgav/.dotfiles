@@ -1,5 +1,7 @@
 // World clocks — a drawer on the right screen edge, fully hidden until the
-// pointer touches that edge, then sliding out to the full card.
+// pointer touches that edge, then sliding out to the full card. The card has
+// two views, toggled from its header: a table, one line per zone in columns
+// (the default), or each zone on two lines.
 //
 // Run with:  qs -c clocks
 //
@@ -66,6 +68,16 @@ ShellRoot {
     readonly property int rowWidth: 232
     // Room the city column leaves for the time on its right.
     readonly property int wLabel: rowWidth - 84
+    // The table view's columns. Each fits the widest entry it can get
+    // ("Vladivostok", "local", a time) with room to spare, so the table is
+    // wider than the card view; a longer city elides.
+    readonly property int colCity: 84
+    readonly property int colDay: 30
+    readonly property int colZone: 36
+    readonly property int colOffset: 46
+    readonly property int colTime: 44
+    readonly property int colGap: 10
+    readonly property int tableRowWidth: colCity + colDay + colZone + colOffset + colTime + colGap * 4
     // Invisible strip along the screen edge that still takes hover while the
     // drawer is closed, so pushing the pointer against the edge opens it.
     readonly property int edgeWidth: 2
@@ -97,6 +109,14 @@ ShellRoot {
             shadowHorizontalOffset: 1
             shadowVerticalOffset: 1
         }
+    }
+
+    // A table column's title: small dim capitals, like the header's.
+    component ColumnTitle: Cell {
+        color: root.colDim
+        font.pixelSize: root.uiSize - 4
+        font.weight: Font.DemiBold
+        font.letterSpacing: 1
     }
 
     component Corner: PathArc {
@@ -358,14 +378,16 @@ ShellRoot {
 
                     color: "transparent"
 
-                    // The surface is always sized for the expanded card and never moves
-                    // or resizes; the card slides inside it instead, so hovering costs
+                    // The surface is always sized for the expanded card -- in the
+                    // larger of its two views, each way -- and never moves or
+                    // resizes; the card slides inside it instead, so hovering costs
                     // no compositor round-trip per animation frame. The extra size is
                     // room for the inverted corners above and below the card, and for
                     // its shadow on every side but the screen edge, which the shadow
                     // surface (declared before this one) draws into this footprint.
-                    implicitWidth: card.width + root.shadowSize
-                    implicitHeight: card.height + (root.cornerRadius + root.shadowSize) * 2
+                    implicitWidth: Math.max(root.rowWidth, root.tableRowWidth) + root.padding * 2 + root.shadowSize
+                    implicitHeight: header.height + Math.max(rows.implicitHeight, table.implicitHeight)
+                        + (root.cornerRadius + root.shadowSize) * 2
 
                     // Toggled by the header's pin: a pinned drawer stays out after
                     // the pointer leaves. Per panel, so each screen pins on its own.
@@ -379,22 +401,36 @@ ShellRoot {
                     readonly property bool pinHovered: hover.containsMouse
                         && pinIcon.contains(pinIcon.mapFromItem(card, panel.pointer))
 
+                    // Toggled by the header's view icon: the table view (the
+                    // default), or the card view. Per panel, like pinned.
+                    property bool tableView: true
+                    // True only while tableView flips. The card changes width
+                    // then, and its x with it, which must jump to place rather
+                    // than slide like the drawer.
+                    property bool switchingView: false
+                    readonly property bool viewHovered: hover.containsMouse
+                        && viewIcon.contains(viewIcon.mapFromItem(card, panel.pointer))
+
                     // Empty: all input goes to the hit surface (see the Scope above).
                     mask: Region {}
 
                     Item {
                         id: card
 
-                        // Closed, the whole card is past the right edge of the
-                        // surface and clipped away -- far enough that its shadow's
-                        // blur goes too; only the hit surface's edge strip
-                        // remains, invisible but hoverable.
-                        x: panel.expanded ? root.shadowSize : panel.width + root.shadowBlur
-                        y: root.shadowSize + root.cornerRadius
-                        width: root.rowWidth + root.padding * 2
+                        // Out, the card meets the right edge of the surface.
+                        // Closed, the whole card is past that edge and clipped
+                        // away -- far enough that its shadow's blur goes too;
+                        // only the hit surface's edge strip remains, invisible
+                        // but hoverable. Either view is centred on the screen
+                        // edge, like the surface.
+                        x: panel.expanded ? panel.width - card.width : panel.width + root.shadowBlur
+                        y: Math.round((panel.height - card.height) / 2)
+                        width: (panel.tableView ? root.tableRowWidth : root.rowWidth) + root.padding * 2
                         height: content.implicitHeight
 
                         Behavior on x {
+                            enabled: !panel.switchingView
+
                             NumberAnimation {
                                 duration: 180
                                 easing.type: Easing.OutCubic
@@ -467,17 +503,36 @@ ShellRoot {
                                 // labels below while the whole padded box, at
                                 // the full header height, takes the click (on
                                 // the hit surface, through panel.pinHovered).
+                                // The gap to the view icon is split between
+                                // the two boxes.
                                 Cell {
                                     id: pinIcon
 
                                     anchors.left: parent.left
                                     height: parent.height
                                     leftPadding: root.padding
-                                    rightPadding: root.padding
+                                    rightPadding: root.padding / 2
 
                                     text: panel.pinned ? "󰐃" : "󰤱"
                                     font.family: root.iconFont
                                     color: panel.pinned || panel.pinHovered ? root.colAccent : root.colDim
+                                }
+
+                                // View toggle: shows the view a click switches
+                                // to -- a table from the card view, a list
+                                // from the table. Padded like the pin, and
+                                // clicked the same way (panel.viewHovered).
+                                Cell {
+                                    id: viewIcon
+
+                                    anchors.left: pinIcon.right
+                                    height: parent.height
+                                    leftPadding: root.padding / 2
+                                    rightPadding: root.padding
+
+                                    text: panel.tableView ? "󰕲" : "󰓫"
+                                    font.family: root.iconFont
+                                    color: panel.viewHovered ? root.colAccent : root.colDim
                                 }
 
                                 Cell {
@@ -508,6 +563,7 @@ ShellRoot {
                             Column {
                                 id: rows
 
+                                visible: !panel.tableView
                                 width: parent.width
 
                                 Repeater {
@@ -583,6 +639,117 @@ ShellRoot {
                                     }
                                 }
                             }
+
+                            // The table view: column titles, then one line per
+                            // zone. Text columns are left-aligned, number
+                            // columns right-aligned.
+                            Column {
+                                id: table
+
+                                visible: panel.tableView
+                                width: parent.width
+
+                                Row {
+                                    x: root.padding
+                                    height: 24
+                                    spacing: root.colGap
+
+                                    ColumnTitle { width: root.colCity; height: parent.height; text: "CITY" }
+                                    ColumnTitle { width: root.colDay; height: parent.height; text: "DAY" }
+                                    ColumnTitle { width: root.colZone; height: parent.height; text: "ZONE" }
+                                    ColumnTitle {
+                                        width: root.colOffset
+                                        height: parent.height
+                                        horizontalAlignment: Text.AlignRight
+                                        text: "OFFSET"
+                                    }
+                                    ColumnTitle {
+                                        width: root.colTime
+                                        height: parent.height
+                                        horizontalAlignment: Text.AlignRight
+                                        text: "TIME"
+                                    }
+                                }
+
+                                Repeater {
+                                    model: root.zones
+
+                                    Rectangle {
+                                        id: tableRow
+
+                                        required property var modelData
+                                        required property int index
+
+                                        readonly property bool isLocal: tableRow.modelData.delta === "same"
+
+                                        width: table.width
+                                        height: 30
+                                        // As in the card view: square but for the
+                                        // last row's corner it shares with the card.
+                                        bottomLeftRadius: tableRow.index === root.zones.length - 1 ? root.cornerRadius : 0
+                                        color: hover.containsMouse && tableRow.contains(tableRow.mapFromItem(card, panel.pointer))
+                                            ? root.colRowHover : "transparent"
+
+                                        // Hairline above every line, the first one
+                                        // included: it sets the titles apart.
+                                        Rectangle {
+                                            x: root.padding
+                                            width: parent.width - root.padding * 2
+                                            height: 1
+                                            color: root.colSeparator
+                                        }
+
+                                        Row {
+                                            x: root.padding
+                                            height: parent.height
+                                            spacing: root.colGap
+
+                                            Cell {
+                                                width: root.colCity
+                                                height: parent.height
+                                                text: tableRow.modelData.label
+                                                font.weight: Font.Medium
+                                                elide: Text.ElideRight
+                                            }
+
+                                            Cell {
+                                                width: root.colDay
+                                                height: parent.height
+                                                text: tableRow.modelData.day
+                                                color: root.colDim
+                                                font.pixelSize: root.uiSize - 1
+                                            }
+
+                                            Cell {
+                                                width: root.colZone
+                                                height: parent.height
+                                                text: tableRow.modelData.abbr
+                                                color: root.colDim
+                                                font.pixelSize: root.uiSize - 1
+                                            }
+
+                                            Cell {
+                                                width: root.colOffset
+                                                height: parent.height
+                                                horizontalAlignment: Text.AlignRight
+                                                text: tableRow.isLocal ? "local" : tableRow.modelData.delta
+                                                color: root.colDim
+                                                font.pixelSize: root.uiSize - 1
+                                            }
+
+                                            Cell {
+                                                width: root.colTime
+                                                height: parent.height
+                                                horizontalAlignment: Text.AlignRight
+                                                text: tableRow.modelData.time
+                                                color: tableRow.isLocal ? root.colAccent : root.colFg
+                                                font.pixelSize: root.uiSize + 2
+                                                font.features: { "tnum": 1 }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
 
                         // The glass's cut edge: a hairline traced along the
@@ -628,12 +795,13 @@ ShellRoot {
                     // pushing the pointer against the edge opens the drawer.
                     // Bound to the target state rather than to the animating
                     // card, so the hit area does not shrink mid-slide. The
-                    // shadow margin is left out, so the shadow takes no clicks.
+                    // shadow margin is left out, so the shadow takes no clicks;
+                    // the inverted corners above and below the card are in.
                     mask: Region {
-                        x: panel.expanded ? root.shadowSize : hitSurface.width - root.edgeWidth
-                        y: root.shadowSize
+                        x: panel.expanded ? hitSurface.width - card.width : hitSurface.width - root.edgeWidth
+                        y: card.y - root.cornerRadius
                         width: panel.expanded ? card.width : root.edgeWidth
-                        height: hitSurface.height - root.shadowSize * 2
+                        height: card.height + root.cornerRadius * 2
                     }
 
                     MouseArea {
@@ -641,11 +809,16 @@ ShellRoot {
 
                         anchors.fill: parent
                         hoverEnabled: true
-                        cursorShape: panel.pinHovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        cursorShape: panel.pinHovered || panel.viewHovered ? Qt.PointingHandCursor : Qt.ArrowCursor
 
                         onClicked: {
-                            if (panel.pinHovered)
+                            if (panel.pinHovered) {
                                 panel.pinned = !panel.pinned;
+                            } else if (panel.viewHovered) {
+                                panel.switchingView = true;
+                                panel.tableView = !panel.tableView;
+                                panel.switchingView = false;
+                            }
                         }
                     }
                 }
