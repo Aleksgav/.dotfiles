@@ -1,7 +1,9 @@
 // Window-layout minimap — a drawer on the left screen edge, fully hidden until
 // the pointer touches that edge, then sliding out to a scaled-down map of the
-// windows on the monitor's current tag. A footer of dots, one per tag, previews
-// a tag's windows in the map on hover and switches to that tag on click.
+// windows on the monitor's current tag. Under the map, a strip of layout chips
+// shows the current tag's layout and sets another on click. A footer of dots,
+// one per tag, previews a tag's windows in the map on hover and switches to
+// that tag on click.
 //
 // Run with:  qs -c layout
 //
@@ -41,6 +43,10 @@ ShellRoot {
         "8": "󰒓 conf",
         "9": "󰇘 other"
     })
+
+    // Every layout mango has, by name, in its own order -- what the strip under
+    // the map offers. From `mmsg get layouts`, like layoutNames.
+    property var layoutChoices: []
 
     // Palette and fonts lifted from clocks/shell.qml, so the two drawers match.
     // Duplicated rather than shared: the two configs run as separate qs
@@ -87,6 +93,10 @@ ShellRoot {
     readonly property int dotSize: 8
     readonly property int dotActiveWidth: 24
     readonly property int dotGap: 8
+    // Layout chips: small, four to a row across the map's width.
+    readonly property int chipGap: 4
+    readonly property int chipHeight: 18
+    readonly property real chipWidth: (mapWidth - chipGap * 3) / 4
     // Invisible strip along the screen edge that still takes hover while the
     // drawer is closed, so pushing the pointer against the edge opens it.
     readonly property int edgeWidth: 2
@@ -146,6 +156,14 @@ ShellRoot {
         Corner { x: outline.w - root.cornerRadius; y: outline.h }
         PathLine { x: root.cornerRadius; y: outline.h }
         Corner { x: 0; y: outline.h + root.cornerRadius; direction: PathArc.Counterclockwise }
+    }
+
+    // "center_tile" -> "Center tile". The vertical variants trade the word
+    // for an arrow, "vertical_grid" -> "↕ Grid", so every label fits a chip.
+    function layoutLabel(name) {
+        const vertical = name.startsWith("vertical_");
+        const words = (vertical ? name.slice("vertical_".length) : name).replace(/_/g, " ");
+        return (vertical ? "↕ " : "") + words.charAt(0).toUpperCase() + words.slice(1);
     }
 
     function parse(what, text) {
@@ -220,6 +238,7 @@ ShellRoot {
                 for (const l of msg.layouts)
                     names[l.symbol] = l.name;
                 root.layoutNames = names;
+                root.layoutChoices = msg.layouts.map(l => l.name);
             }
         }
     }
@@ -424,6 +443,19 @@ ShellRoot {
                         const dot = dots.childAt(p.x, p.y);
                         return dot && dot.tag ? dot.tag : 0;
                     }
+                    // The current tag's layout, by name -- the one a chip click
+                    // replaces, so the strip shows it even while a dot preview
+                    // puts another tag in the map and header.
+                    readonly property string currentLayout: panel.mon ? (root.layoutNames[panel.mon.layout_symbol] || "") : ""
+                    // Layout of the chip under the pointer, or "". Found the way
+                    // hoveredTag finds its dot.
+                    readonly property string hoveredLayout: {
+                        if (!hover.containsMouse)
+                            return "";
+                        const p = chips.mapFromItem(card, panel.pointer);
+                        const chip = chips.childAt(p.x, p.y);
+                        return chip && chip.layoutName ? chip.layoutName : "";
+                    }
                     // A dot of a tag not on screen is hovered: the map and header show
                     // that tag instead. Windows on hidden tags keep their last geometry.
                     readonly property bool previewing: panel.hoveredTag > 0 && panel.mon !== null
@@ -597,7 +629,11 @@ ShellRoot {
                                 width: parent.width
                                 height: map.height + root.padding * 2
 
-                                // The monitor, scaled down to mapWidth.
+                                // The monitor, scaled down to mapWidth. Clipped, as the
+                                // screen is: a window partly off the monitor (a
+                                // scroller's neighbours, a floating window pushed
+                                // past the edge, one mid-animation) shows only its
+                                // on-screen part instead of spilling out of the card.
                                 Rectangle {
                                     id: map
 
@@ -607,6 +643,7 @@ ShellRoot {
                                     height: panel.mon ? Math.round(panel.mon.height * panel.scale) : 0
                                     radius: 2
                                     color: root.colMapBg
+                                    clip: true
 
                                     Repeater {
                                         model: panel.windows
@@ -646,6 +683,58 @@ ShellRoot {
                                         text: "empty"
                                         color: root.colDim
                                         font.pixelSize: root.uiSize - 2
+                                    }
+                                }
+                            }
+
+                            // The layout strip: a chip per layoutChoices entry, the
+                            // current tag's layout filled in the accent colour, a
+                            // hovered one lit. Clicked on the hit surface.
+                            Item {
+                                width: parent.width
+                                height: chips.height + root.padding / 2
+
+                                Grid {
+                                    id: chips
+
+                                    x: root.padding
+                                    columns: 4
+                                    columnSpacing: root.chipGap
+                                    rowSpacing: root.chipGap
+
+                                    Repeater {
+                                        model: root.layoutChoices
+
+                                        Rectangle {
+                                            id: chip
+
+                                            required property string modelData
+                                            readonly property string layoutName: chip.modelData
+                                            readonly property bool current: panel.currentLayout === chip.layoutName
+                                            readonly property bool hovered: panel.hoveredLayout === chip.layoutName
+
+                                            width: root.chipWidth
+                                            height: root.chipHeight
+                                            radius: 3
+                                            color: chip.current ? root.colWinFocused
+                                                : chip.hovered ? root.colWin
+                                                : "transparent"
+                                            border.width: 1
+                                            border.color: chip.current ? root.colAccent : root.colEdge
+
+                                            Behavior on color {
+                                                ColorAnimation {
+                                                    duration: 120
+                                                }
+                                            }
+
+                                            Cell {
+                                                anchors.centerIn: parent
+                                                text: root.layoutLabel(chip.layoutName)
+                                                color: chip.current || chip.hovered ? root.colFg : root.colDim
+                                                font.pixelSize: 10
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -778,13 +867,18 @@ ShellRoot {
 
                         anchors.fill: parent
                         hoverEnabled: true
+                        cursorShape: panel.hoveredLayout !== "" ? Qt.PointingHandCursor : Qt.ArrowCursor
 
                         // A click on a footer dot views that tag -- but not the tag
                         // already shown: with view_current_to_back set, mango takes
-                        // that as a jump back to the previous tag.
+                        // that as a jump back to the previous tag. A click on a
+                        // layout chip sets that layout on the current tag; on the
+                        // current layout's own chip it does nothing.
                         onClicked: {
                             if (panel.previewing)
                                 Quickshell.execDetached(["mmsg", "dispatch", "view," + panel.hoveredTag + ",0"]);
+                            else if (panel.hoveredLayout !== "" && panel.hoveredLayout !== panel.currentLayout)
+                                Quickshell.execDetached(["mmsg", "dispatch", "setlayout," + panel.hoveredLayout]);
                         }
                     }
                 }
