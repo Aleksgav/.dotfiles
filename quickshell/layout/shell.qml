@@ -7,9 +7,15 @@
 //
 // Everything shown comes from mango's IPC (mmsg). Its `watch` streams print the
 // full current state once on start, then again on every change.
+//
+// Styled like clocks/shell.qml: the card is smoked glass over a light blur of
+// whatever is behind it. The blur is mango's, not ours -- a client cannot see
+// past its own surface -- and mango/config.conf enables it for this widget's
+// and the clocks' layer namespaces only.
 
 import Quickshell
 import Quickshell.Io
+import Quickshell.Wayland
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Shapes
@@ -36,21 +42,42 @@ ShellRoot {
         "9": "󰇘 other"
     })
 
-    // Palette and font lifted from waybar/style.css, same as clocks/shell.qml.
-    // Duplicated rather than shared: the two configs run as separate qs instances.
-    readonly property color colFg: "#c5c8c6"
-    // colDim and colBg depart from waybar: at waybar's ~0.667 alpha, a light
-    // window behind the card blended it to ~#707174, the same grey as waybar's
-    // #707880 dim text, which made that text vanish.
-    readonly property color colDim: "#969896"
-    readonly property color colAccent: "#8abeb7"
-    readonly property color colBg: "#ee282a2e"       // #282a2e at ~0.933 alpha
-    readonly property color colHeaderBg: "#cc0d0e10" // waybar's "much darker" tone
-    readonly property color colWin: "#373b41"
-    readonly property color colWinFocused: "#448abeb7" // colAccent at ~0.267 alpha
-    readonly property color colUrgent: "#a54242"     // waybar's urgent-tag red
-    readonly property color colEmpty: "#59969896"    // colDim at ~0.35 alpha
-    readonly property string uiFont: "FiraCode Nerd Font"
+    // Palette and fonts lifted from clocks/shell.qml, so the two drawers match.
+    // Duplicated rather than shared: the two configs run as separate qs
+    // instances.
+    //
+    // Light text on clear glass. The glass is too clear to promise any one
+    // backdrop, so what keeps text readable is the shadow every glyph casts
+    // (colTextShadow), not the glass.
+    readonly property color colFg: "#f4f5f5"
+    readonly property color colDim: "#dfe1e3"
+    readonly property color colAccent: "#a3e0d6"
+    // A hard black copy of every glyph, a pixel right and a pixel down,
+    // unblurred. Over a dark window it vanishes into the dark; over a white
+    // one it is the edge the light text reads by.
+    readonly property color colTextShadow: "#000000"
+    // Glass tones. colBg smokes the glass with the desktop's #1d1f21, over
+    // mango's plain blur (mango/config.conf: light, no darkening, no grain).
+    readonly property color colBg: "#b31d1f21"         // #1d1f21 at 0.7 alpha
+    // A little more of it, under the card: the shadow surface fills the gap
+    // it leaves for the card with it (see there). The card's blur takes it in.
+    readonly property color colUnderTint: "#661d1f21"  // #1d1f21 at 0.4 alpha
+    readonly property color colHeaderBg: "#0affffff"   // white at ~0.04 alpha: a lighter title strip
+    readonly property color colEdge: "#5a5d61"         // solid dark grey: the card's border
+    readonly property color colDivider: "#33ffffff"    // white at 0.2 alpha: header/map seam
+    readonly property color colSheenTop: "#1affffff"   // white at 0.1 alpha
+    readonly property color colSheenBottom: "#00ffffff"
+    // The map: the screen as a darker pane sunk into the glass, its windows as
+    // lighter panes on it.
+    readonly property color colMapBg: "#40000000"      // black at 0.25 alpha
+    readonly property color colWin: "#1fffffff"        // white at ~0.12 alpha
+    readonly property color colWinBorder: "#8a8d91"
+    readonly property color colWinFocused: "#4da3e0d6" // colAccent at 0.3 alpha
+    readonly property color colUrgent: "#a54242"       // waybar's urgent-tag red
+    readonly property color colEmpty: "#4dffffff"      // white at 0.3 alpha
+    // Fira Sans for text, the sans sibling of the FiraCode used across the
+    // desktop. The tag icons come from the Nerd Font by fallback.
+    readonly property string uiFont: "Fira Sans"
     readonly property int uiSize: 13
 
     readonly property int mapWidth: 280
@@ -78,6 +105,19 @@ ShellRoot {
         font.family: root.uiFont
         font.pixelSize: root.uiSize
         verticalAlignment: Text.AlignVCenter
+
+        // The shadow. Text.Raised offers only a straight-down one, hence the
+        // effect. Its blurMax is no blur -- shadowBlur is 0 -- but the room
+        // the layer is padded by, which only has to fit the offset.
+        layer.enabled: true
+        layer.effect: MultiEffect {
+            shadowEnabled: true
+            shadowColor: root.colTextShadow
+            shadowBlur: 0
+            blurMax: 2
+            shadowHorizontalOffset: 1
+            shadowVerticalOffset: 1
+        }
     }
 
     component Corner: PathArc {
@@ -87,8 +127,8 @@ ShellRoot {
 
     // The card's silhouette, w x h: rounded outer corners, and at the screen
     // edge (the left) inverted corners that flare out to meet it, reaching
-    // cornerRadius above and below. Shared by the card's fill and by the mask
-    // that keeps the shadow out from under the card.
+    // cornerRadius above and below. Shared by the card's fill, its border,
+    // and by the mask that keeps the shadow out from under the card.
     component CardOutline: ShapePath {
         id: outline
 
@@ -204,117 +244,57 @@ ShellRoot {
         model: Quickshell.screens
 
         delegate: Component {
-            PanelWindow {
-                id: panel
+            // Three surfaces per screen, as in clocks/shell.qml: the card, its
+            // shadows, and an invisible one that takes the drawer's input. The
+            // card and its shadows must move in step, and a surface whose input
+            // region changes has its next frames reach the screen late (~100ms,
+            // measured under mango) -- so neither of them takes input at all,
+            // and the region that has to change as the drawer opens and closes
+            // lives on a surface that draws nothing.
+            Scope {
+                id: perScreen
 
                 // The screen from Quickshell.screens is injected here.
                 required property var modelData
 
-                screen: panel.modelData
+                // The card's drop shadows, in a surface of their own. mango blurs
+                // behind every pixel of a blurred surface that is not fully
+                // transparent, so in the card's surface the shadows would get a
+                // hard-edged blur out to where they fade. This surface keeps the
+                // default namespace, which mango does not blur. Sized and anchored
+                // like the card's surface, it lies exactly under it, and the
+                // shadows follow the card as it slides.
+                //
+                // Separate surfaces do not always reach the screen in the same
+                // frame, though: mid-slide, the shadows now and then land a
+                // frame ahead of the card or behind it. So the card-shaped gap
+                // cut in them is never left empty: it holds colUnderTint, which
+                // the card covers when the two are in step and which, when they
+                // are not, shows as a strip of the glass's tint, not a hole.
+                PanelWindow {
+                    screen: perScreen.modelData
+                    visible: panel.visible
 
-                // This screen's entry in mango's monitor list, matched by output
-                // name ("HDMI-A-1"). Hidden until it is found.
-                readonly property var mon: root.monitors.find(m => m.name === panel.modelData.name) || null
-                readonly property real scale: panel.mon ? root.mapWidth / panel.mon.width : 0
-                readonly property int monX: panel.mon ? panel.mon.x : 0
-                readonly property int monY: panel.mon ? panel.mon.y : 0
-
-                // Tag of the footer dot under the pointer, or 0. Read off the
-                // drawer's own MouseArea rather than a MouseArea per dot, so the
-                // hover that keeps the drawer open is never handed to a child.
-                readonly property int hoveredTag: {
-                    if (!hover.containsMouse)
-                        return 0;
-                    const p = dots.mapFromItem(hover, hover.mouseX, hover.mouseY);
-                    const dot = dots.childAt(p.x, p.y);
-                    return dot && dot.tag ? dot.tag : 0;
-                }
-                // A dot of a tag not on screen is hovered: the map and header show
-                // that tag instead. Windows on hidden tags keep their last geometry.
-                readonly property bool previewing: panel.hoveredTag > 0 && panel.mon !== null
-                    && !panel.mon.active_tags.includes(panel.hoveredTag)
-
-                // Windows shown on this monitor right now, or on the previewed tag;
-                // floating ones last so they draw on top of the tiled ones, as on
-                // screen. Hidden scratchpads have no tags, so a preview skips them.
-                readonly property var windows: panel.mon
-                    ? root.clients
-                        .filter(c => c.monitor === panel.mon.name && !c.is_minimized
-                            && (panel.previewing ? c.tags.includes(panel.hoveredTag) : c.is_visible))
-                        .sort((a, b) => a.is_floating - b.is_floating)
-                    : []
-
-                visible: panel.mon !== null
-
-                // Anchored to the left edge only, so the layer-shell protocol
-                // centers it vertically on that edge.
-                anchors {
-                    left: true
-                }
-
-                // aboveWindows is left at its default (true): on the bottom layer, a
-                // window covering the left edge would hide the tab from the pointer.
-
-                // An explicit zone of 0 reserves no space, so windows are never
-                // pushed aside, while still keeping clear of waybar's exclusive zone.
-                exclusiveZone: 0
-
-                color: "transparent"
-
-                // The surface is always sized for the expanded card and never moves
-                // or resizes; the card slides inside it instead, so hovering costs
-                // no compositor round-trip per animation frame. The extra size is
-                // room for the inverted corners above and below the card, and for
-                // its shadow on every side but the screen edge.
-                implicitWidth: card.width + root.shadowSize
-                implicitHeight: card.height + (root.cornerRadius + root.shadowSize) * 2
-
-                readonly property bool expanded: hover.containsMouse
-
-                // Only the visible part takes input; clicks on the transparent rest
-                // fall through to the windows underneath. Bound to the target state
-                // rather than to the animating card, so the hit area does not shrink
-                // mid-slide.
-                // The shadow margin is left out too, so the shadow takes no clicks.
-                mask: Region {
-                    x: 0
-                    y: root.shadowSize
-                    width: panel.expanded ? card.width : root.edgeWidth
-                    height: panel.height - root.shadowSize * 2
-                }
-
-                MouseArea {
-                    id: hover
-
-                    anchors.fill: parent
-                    hoverEnabled: true
-
-                    // A click on a footer dot views that tag -- but not the tag
-                    // already shown: with view_current_to_back set, mango takes
-                    // that as a jump back to the previous tag.
-                    onClicked: {
-                        if (panel.previewing)
-                            Quickshell.execDetached(["mmsg", "dispatch", "view," + panel.hoveredTag + ",0"]);
+                    anchors {
+                        left: true
                     }
 
+                    exclusiveZone: 0
+                    color: "transparent"
+                    implicitWidth: panel.implicitWidth
+                    implicitHeight: panel.implicitHeight
+
+                    // Empty, so it takes no input at all: hover and clicks reach
+                    // the hit surface or the windows underneath.
+                    mask: Region {}
+
+                    // Stands in for the card, so the shadow items keep their
+                    // card-relative coordinates.
                     Item {
-                        id: card
-
-                        // Closed, the whole card is past the left edge of the
-                        // surface and clipped away -- far enough that its shadow's
-                        // blur goes too; only the mask's edge strip remains,
-                        // invisible but hoverable.
-                        x: panel.expanded ? 0 : -width - root.shadowBlur
-                        y: root.shadowSize + root.cornerRadius
-                        width: content.width
-                        height: content.implicitHeight
-
-                        Behavior on x {
-                            NumberAnimation {
-                                duration: 180
-                                easing.type: Easing.OutCubic
-                            }
-                        }
+                        x: card.x
+                        y: card.y
+                        width: card.width
+                        height: card.height
 
                         // Drop shadows that float the card above the screen: a wide
                         // soft one falling below it, and a tight one hugging its edge.
@@ -355,7 +335,7 @@ ShellRoot {
                                 bottomLeftRadius: 0
                                 blur: root.shadowBlur
                                 offset.y: root.shadowDrop
-                                color: "#e6000000" // black at 0.9 alpha
+                                color: "#73000000" // black at 0.45 alpha
                             }
 
                             RectangularShadow {
@@ -367,7 +347,7 @@ ShellRoot {
                                 bottomLeftRadius: 0
                                 blur: 8
                                 offset.y: 3
-                                color: "#80000000" // black at 0.5 alpha
+                                color: "#40000000" // black at 0.25 alpha
                             }
                         }
 
@@ -396,6 +376,119 @@ ShellRoot {
                             }
                         }
 
+                        // The tint that fills that cutout.
+                        Shape {
+                            anchors.fill: parent
+                            preferredRendererType: Shape.CurveRenderer
+
+                            CardOutline {
+                                w: card.width
+                                h: card.height
+                                fillColor: root.colUnderTint
+                            }
+                        }
+                    }
+                }
+
+                PanelWindow {
+                    id: panel
+
+                    screen: perScreen.modelData
+
+                    // A name of its own, so mango's layer rules can blur behind
+                    // this widget (see the blur section of mango/config.conf).
+                    // Every other quickshell surface keeps the default
+                    // "quickshell".
+                    WlrLayershell.namespace: "quickshell-layout"
+
+                    // This screen's entry in mango's monitor list, matched by output
+                    // name ("HDMI-A-1"). Hidden until it is found.
+                    readonly property var mon: root.monitors.find(m => m.name === perScreen.modelData.name) || null
+                    readonly property real scale: panel.mon ? root.mapWidth / panel.mon.width : 0
+                    readonly property int monX: panel.mon ? panel.mon.x : 0
+                    readonly property int monY: panel.mon ? panel.mon.y : 0
+
+                    // The pointer, as the hit surface sees it, in card coordinates.
+                    // The surfaces lie exactly over each other, so its window
+                    // coordinates are this window's too.
+                    readonly property point pointer: Qt.point(hover.mouseX - card.x, hover.mouseY - card.y)
+
+                    // Tag of the footer dot under the pointer, or 0. Read off the
+                    // hit surface's one MouseArea rather than a MouseArea per dot,
+                    // so the hover that keeps the drawer open is never handed to a
+                    // child.
+                    readonly property int hoveredTag: {
+                        if (!hover.containsMouse)
+                            return 0;
+                        const p = dots.mapFromItem(card, panel.pointer);
+                        const dot = dots.childAt(p.x, p.y);
+                        return dot && dot.tag ? dot.tag : 0;
+                    }
+                    // A dot of a tag not on screen is hovered: the map and header show
+                    // that tag instead. Windows on hidden tags keep their last geometry.
+                    readonly property bool previewing: panel.hoveredTag > 0 && panel.mon !== null
+                        && !panel.mon.active_tags.includes(panel.hoveredTag)
+
+                    // Windows shown on this monitor right now, or on the previewed tag;
+                    // floating ones last so they draw on top of the tiled ones, as on
+                    // screen. Hidden scratchpads have no tags, so a preview skips them.
+                    readonly property var windows: panel.mon
+                        ? root.clients
+                            .filter(c => c.monitor === panel.mon.name && !c.is_minimized
+                                && (panel.previewing ? c.tags.includes(panel.hoveredTag) : c.is_visible))
+                            .sort((a, b) => a.is_floating - b.is_floating)
+                        : []
+
+                    visible: panel.mon !== null
+
+                    // Anchored to the left edge only, so the layer-shell protocol
+                    // centers it vertically on that edge.
+                    anchors {
+                        left: true
+                    }
+
+                    // aboveWindows is left at its default (true): on the bottom layer, a
+                    // window covering the left edge would hide the tab from the pointer.
+
+                    // An explicit zone of 0 reserves no space, so windows are never
+                    // pushed aside, while still keeping clear of waybar's exclusive zone.
+                    exclusiveZone: 0
+
+                    color: "transparent"
+
+                    // The surface is always sized for the expanded card and never moves
+                    // or resizes; the card slides inside it instead, so hovering costs
+                    // no compositor round-trip per animation frame. The extra size is
+                    // room for the inverted corners above and below the card, and for
+                    // its shadow on every side but the screen edge, which the shadow
+                    // surface (declared before this one) draws into this footprint.
+                    implicitWidth: card.width + root.shadowSize
+                    implicitHeight: card.height + (root.cornerRadius + root.shadowSize) * 2
+
+                    readonly property bool expanded: hover.containsMouse
+
+                    // Empty: all input goes to the hit surface (see the Scope above).
+                    mask: Region {}
+
+                    Item {
+                        id: card
+
+                        // Closed, the whole card is past the left edge of the
+                        // surface and clipped away -- far enough that its shadow's
+                        // blur goes too; only the hit surface's edge strip
+                        // remains, invisible but hoverable.
+                        x: panel.expanded ? 0 : -width - root.shadowBlur
+                        y: root.shadowSize + root.cornerRadius
+                        width: content.width
+                        height: content.implicitHeight
+
+                        Behavior on x {
+                            NumberAnimation {
+                                duration: 180
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+
                         // The card's fill. Drawn as one path, not a Rectangle plus
                         // corner pieces: translucent pieces abutting at a fractional
                         // device pixel (the screen is at 1.5x) would leave a visible
@@ -410,8 +503,22 @@ ShellRoot {
                                 fillColor: root.colBg
                             }
 
+                            // A faint top-down sheen over the tint. It fades to
+                            // nothing rather than to a hard band, which is what
+                            // keeps the glass matte instead of glossy.
+                            CardOutline {
+                                w: card.width
+                                h: card.height
+                                fillGradient: LinearGradient {
+                                    x1: 0; y1: 0
+                                    x2: 0; y2: card.height
+                                    GradientStop { position: 0; color: root.colSheenTop }
+                                    GradientStop { position: 1; color: root.colSheenBottom }
+                                }
+                            }
+
                             // The top inverted corner sits beside the header, so it
-                            // also takes the header's darker fill on top.
+                            // also takes the header's fill on top.
                             ShapePath {
                                 fillColor: root.colHeaderBg
                                 strokeWidth: -1
@@ -434,12 +541,14 @@ ShellRoot {
                             // the right.
                             Rectangle {
                                 width: parent.width
-                                height: layoutText.implicitHeight + 10
+                                height: layoutText.implicitHeight + 14
                                 // Square except the corner it shares with the
                                 // card, which would otherwise poke past the card's.
                                 topRightRadius: root.cornerRadius
                                 color: root.colHeaderBg
 
+                                // The layout name is the drawer's title, set
+                                // like the clocks' "WORLD CLOCKS".
                                 Cell {
                                     id: layoutText
 
@@ -456,11 +565,10 @@ ShellRoot {
                                         const name = root.layoutNames[symbol] || symbol;
                                         return "[" + name.charAt(0).toUpperCase() + name.slice(1) + "]";
                                     }
-                                    color: root.colAccent
-                                    font.pixelSize: root.uiSize - 2
-                                    font.bold: true
-                                    // FiraCode ships no italic, so Qt slants it.
+                                    font.pixelSize: (root.uiSize - 3) * 1.5
+                                    font.weight: Font.Black
                                     font.italic: true
+                                    font.letterSpacing: 1.5
                                 }
 
                                 Cell {
@@ -474,6 +582,14 @@ ShellRoot {
                                         : ""
                                     color: root.colDim
                                     font.pixelSize: root.uiSize - 2
+                                }
+
+                                // Hairline seam between the header and the map.
+                                Rectangle {
+                                    anchors.bottom: parent.bottom
+                                    width: parent.width
+                                    height: 1
+                                    color: root.colDivider
                                 }
                             }
 
@@ -489,7 +605,8 @@ ShellRoot {
                                     y: root.padding
                                     width: root.mapWidth
                                     height: panel.mon ? Math.round(panel.mon.height * panel.scale) : 0
-                                    color: root.colHeaderBg
+                                    radius: 2
+                                    color: root.colMapBg
 
                                     Repeater {
                                         model: panel.windows
@@ -508,7 +625,7 @@ ShellRoot {
                                             radius: 2
                                             color: win.modelData.is_focused ? root.colWinFocused : root.colWin
                                             border.width: 1
-                                            border.color: win.modelData.is_focused ? root.colAccent : root.colDim
+                                            border.color: win.modelData.is_focused ? root.colAccent : root.colWinBorder
                                             clip: true
 
                                             Cell {
@@ -602,6 +719,72 @@ ShellRoot {
                                     }
                                 }
                             }
+                        }
+
+                        // The card's border: a line traced along its outline,
+                        // over the header and map. The outline is an open path,
+                        // so no line is drawn down the screen edge; it runs out
+                        // along the inverted corners instead.
+                        Shape {
+                            anchors.fill: parent
+                            preferredRendererType: Shape.CurveRenderer
+
+                            CardOutline {
+                                w: card.width
+                                h: card.height
+                                fillColor: "transparent"
+                                strokeColor: root.colEdge
+                                strokeWidth: 1
+                            }
+                        }
+                    }
+                }
+
+                // The hit surface: takes every bit of the drawer's input for the
+                // card and shadow surfaces, which take none (see the Scope
+                // above). It draws nothing. Sized and anchored like them.
+                PanelWindow {
+                    id: hitSurface
+
+                    screen: perScreen.modelData
+                    visible: panel.visible
+
+                    anchors {
+                        left: true
+                    }
+
+                    exclusiveZone: 0
+                    color: "transparent"
+                    implicitWidth: panel.implicitWidth
+                    implicitHeight: panel.implicitHeight
+
+                    // Only the card's footprint takes input; clicks on the
+                    // transparent rest fall through to the windows underneath.
+                    // Closed, that is a thin strip along the screen edge, so
+                    // pushing the pointer against the edge opens the drawer.
+                    // Bound to the target state rather than to the animating
+                    // card, so the hit area does not shrink mid-slide. The
+                    // shadow margin is left out, so the shadow takes no clicks;
+                    // the inverted corners above and below the card are in.
+                    mask: Region {
+                        x: 0
+                        y: card.y - root.cornerRadius
+                        width: panel.expanded ? card.width : root.edgeWidth
+                        height: card.height + root.cornerRadius * 2
+                    }
+
+                    MouseArea {
+                        id: hover
+
+                        anchors.fill: parent
+                        hoverEnabled: true
+
+                        // A click on a footer dot views that tag -- but not the tag
+                        // already shown: with view_current_to_back set, mango takes
+                        // that as a jump back to the previous tag.
+                        onClicked: {
+                            if (panel.previewing)
+                                Quickshell.execDetached(["mmsg", "dispatch", "view," + panel.hoveredTag + ",0"]);
                         }
                     }
                 }
