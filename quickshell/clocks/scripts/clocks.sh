@@ -11,11 +11,14 @@
 
 set -euo pipefail
 
+# label|tz zone|latitude|longitude. The coordinates place the city on the
+# widget's map, so they are the city's own, not those of the zone's namesake
+# (Seattle is not Los Angeles). Leave them out and the city stays off the map.
 ZONES=(
-  'Moscow|Europe/Moscow'
-  'Seattle|America/Los_Angeles'
-  'Vladivostok|Asia/Vladivostok'
-  'Beijing|Asia/Shanghai'
+  'Moscow|Europe/Moscow|55.76|37.62'
+  'Seattle|America/Los_Angeles|47.61|-122.33'
+  'Vladivostok|Asia/Vladivostok|43.12|131.89'
+  'Beijing|Asia/Shanghai|39.90|116.40'
 )
 
 # Pin a single instant so every row describes the same moment, even if the loop
@@ -57,16 +60,16 @@ local_minutes=$(offset_minutes "$(date -d "@$now" +%z)")
 
 # One tab-separated line per zone, folded into JSON by a single jq call.
 for entry in "${ZONES[@]}"; do
-  label=${entry%%|*}
-  zone=${entry#*|}
+  IFS='|' read -r label zone lat lon <<< "$entry"
 
   # One date(1) call per zone yields time, weekday, abbreviation and offset at once.
   read -r ztime zday zabbr zoff < <(TZ="$zone" date -d "@$now" '+%H:%M %a %Z %z')
 
   delta=$(format_delta "$(($(offset_minutes "$zoff") - local_minutes))")
 
-  printf '%s\t%s\t%s\t%s\t%s\t%s\n' "$label" "$zone" "$ztime" "$zday" "$zabbr" "$delta"
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "$label" "$zone" "$ztime" "$zday" "$zabbr" "$delta" "$lat" "$lon"
 done | jq -R -s 'split("\n")
   | map(select(length > 0)
         | split("\t")
-        | { label: .[0], zone: .[1], time: .[2], day: .[3], abbr: .[4], delta: .[5] })'
+        | { label: .[0], zone: .[1], time: .[2], day: .[3], abbr: .[4], delta: .[5],
+            lat: (.[6] | tonumber? // null), lon: (.[7] | tonumber? // null) })'

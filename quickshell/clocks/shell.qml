@@ -1,7 +1,8 @@
 // World clocks — a drawer on the right screen edge, fully hidden until the
 // pointer touches that edge, then sliding out to the full card. The card has
-// two views, toggled from its header: a table, one line per zone in columns
-// (the default), or each zone on two lines.
+// three views, picked from its header: a table, one line per zone in columns
+// (the default), each zone on two lines, or a world map with the night side
+// shaded and each zone marked on it.
 //
 // Run with:  qs -c clocks
 //
@@ -53,6 +54,11 @@ ShellRoot {
     readonly property color colSeparator: "#1fffffff"  // white at ~0.12 alpha: between rows
     readonly property color colSheenTop: "#1affffff"   // white at 0.1 alpha
     readonly property color colSheenBottom: "#00ffffff"
+    // The map's land: land.svg's white, at this opacity -- smoke on the glass.
+    readonly property real landOpacity: 0.22
+    // The map's night shade, over land and sea alike. Its alpha is the
+    // shade's full strength, reached past the twilight band.
+    readonly property color colNight: "#b3000000"      // black at 0.7 alpha
     // Fira Sans for text, the sans sibling of the FiraCode used across the
     // desktop; the Nerd Font only for the pin glyphs, which Fira Sans lacks.
     readonly property string uiFont: "Fira Sans"
@@ -78,6 +84,25 @@ ShellRoot {
     readonly property int colTime: 44
     readonly property int colGap: 10
     readonly property int tableRowWidth: colCity + colDay + colZone + colOffset + colTime + colGap * 4
+    // The map view: equirectangular like land.svg, edge to edge across a card
+    // as wide as the table's, and cropped to mapLatTop..mapLatBottom -- the
+    // far north holds no land, and Antarctica no city. A degree is as many
+    // pixels down as across, so the width sets the height.
+    readonly property int mapWidth: tableRowWidth + padding * 2
+    readonly property real mapLatTop: 84
+    readonly property real mapLatBottom: -60
+    readonly property real mapScale: mapWidth / 360   // pixels per degree
+    readonly property int mapHeight: Math.round((mapLatTop - mapLatBottom) * mapScale)
+    // How far below the horizon the sun is where the night shade reaches
+    // full strength. From 0 down to this is twilight, which the shade fades
+    // in over: that soft edge is the day/night line.
+    readonly property real twilightDegrees: 12
+    // The map's zone markers: dot diameter, label size, and the gap between.
+    readonly property int mapDot: 6
+    readonly property int mapLabelSize: uiSize - 2
+    readonly property int mapLabelGap: 3
+    // How far labels keep in from the map's edges, which are the card's.
+    readonly property int mapLabelInset: padding / 2
     // Invisible strip along the screen edge that still takes hover while the
     // drawer is closed, so pushing the pointer against the edge opens it.
     readonly property int edgeWidth: 2
@@ -154,6 +179,99 @@ ShellRoot {
         precision: SystemClock.Minutes
     }
 
+    // Where the sun is overhead, as Qt.point(longitude, latitude) in degrees:
+    // the middle of the map's day side. Moves with the clock's minute tick.
+    readonly property point sun: sunPosition(clock.date)
+
+    // The Astronomical Almanac's low-precision sun, good to about 0.01 degree,
+    // far below a pixel here. Needs only the instant's UTC milliseconds, which
+    // a JS Date has right even without Intl.
+    function sunPosition(date) {
+        const rad = Math.PI / 180;
+        const n = date.getTime() / 86400000 - 10957.5; // days since J2000.0
+        const meanLon = 280.460 + 0.9856474 * n;
+        const anomaly = (357.528 + 0.9856003 * n) * rad;
+        const eclipticLon = (meanLon + 1.915 * Math.sin(anomaly) + 0.020 * Math.sin(2 * anomaly)) * rad;
+        const obliquity = (23.439 - 0.0000004 * n) * rad;
+        const decl = Math.asin(Math.sin(obliquity) * Math.sin(eclipticLon));
+        const ra = Math.atan2(Math.cos(obliquity) * Math.sin(eclipticLon), Math.cos(eclipticLon));
+        const gmst = 280.46061837 + 360.98564736629 * n; // Greenwich sidereal time, degrees
+        return Qt.point(((ra / rad - gmst) % 360 + 540) % 360 - 180, decl / rad);
+    }
+
+    // A longitude and a latitude in map pixels, projected as land.svg is (see
+    // scripts/land-svg.sh), less the north cropped off above mapLatTop.
+    function mapX(lon) {
+        return (lon + 180) * root.mapScale;
+    }
+
+    function mapY(lat) {
+        return (root.mapLatTop - lat) * root.mapScale;
+    }
+
+    function onMap(zone) {
+        return zone.lat !== null && zone.lon !== null;
+    }
+
+    function mapLabel(zone) {
+        return zone.label + "  " + zone.time;
+    }
+
+    // Measures map labels for placeMapLabels, in the font they are drawn in.
+    FontMetrics {
+        id: labelMetrics
+
+        font.family: root.uiFont
+        font.pixelSize: root.mapLabelSize
+    }
+
+    // Each zone's map label, as {x, y} in map pixels (null for a zone with
+    // no coordinates), beside its dot: right, left, above or below -- the
+    // first spot inside mapLabelInset that is clear of every dot and of every
+    // label placed before it, or, crowded out of all four, the least covered.
+    // Cities sit close at this scale: Beijing and Vladivostok are 12px apart.
+    readonly property var mapLabelSpots: placeMapLabels(zones)
+
+    function placeMapLabels(zones) {
+        const gap = root.mapDot / 2 + root.mapLabelGap;
+        const h = labelMetrics.height;
+        const taken = zones.filter(onMap).map(z => ({
+            x: mapX(z.lon) - root.mapDot / 2,
+            y: mapY(z.lat) - root.mapDot / 2,
+            w: root.mapDot,
+            h: root.mapDot
+        }));
+        const span = (a, aw, b, bw) => Math.max(0, Math.min(a + aw, b + bw) - Math.max(a, b));
+        const covered = s => taken.reduce((sum, t) => sum + span(s.x, s.w, t.x, t.w) * span(s.y, s.h, t.y, t.h), 0);
+        const inset = root.mapLabelInset;
+        const clamp = (v, max) => Math.min(Math.max(v, inset), max - inset);
+
+        return zones.map(z => {
+            if (!onMap(z))
+                return null;
+            const x = mapX(z.lon), y = mapY(z.lat);
+            const w = labelMetrics.advanceWidth(mapLabel(z));
+            // Above and below slide along to stay on the map; right and left
+            // cannot without covering the dot, so they are dropped instead.
+            const midY = clamp(y - h / 2, root.mapHeight - h);
+            const midX = clamp(x - w / 2, root.mapWidth - w);
+            const spots = [
+                { x: x + gap, y: midY, w: w, h: h },
+                { x: x - gap - w, y: midY, w: w, h: h },
+                { x: midX, y: y - gap - h, w: w, h: h },
+                { x: midX, y: y + gap, w: w, h: h }
+            ].filter(s => s.x >= inset && s.x + s.w <= root.mapWidth - inset
+                && s.y >= inset && s.y + s.h <= root.mapHeight - inset);
+            let best = spots[0] || { x: midX, y: midY, w: w, h: h };
+            for (const s of spots) {
+                if (covered(s) < covered(best))
+                    best = s;
+            }
+            taken.push(best);
+            return { x: best.x, y: best.y };
+        });
+    }
+
     // One helper run feeds every screen's panel: the process and the parsed rows
     // live here at the root, not inside the per-screen delegate.
     Process {
@@ -224,7 +342,25 @@ ShellRoot {
                 // the gap is never left empty: it holds colUnderTint, which the
                 // card covers when the two are in step and which, when they
                 // are not, shows as a strip of the glass's tint, not a hole.
+                // Draws the shadow surface once more, a moment after the card
+                // changes size (a view switch). Its frame for the change itself
+                // can go missing -- seen under mango: the shadows and their
+                // tint stay at the old view's size, beside or past the card --
+                // and nothing else redraws the surface while the drawer stands
+                // still. Toggling updatesEnabled is the redraw Quickshell offers.
+                Timer {
+                    id: shadowRedraw
+
+                    interval: 100
+                    onTriggered: {
+                        shadowSurface.updatesEnabled = false;
+                        shadowSurface.updatesEnabled = true;
+                    }
+                }
+
                 PanelWindow {
+                    id: shadowSurface
+
                     screen: perScreen.modelData
                     visible: panel.visible
 
@@ -379,14 +515,15 @@ ShellRoot {
                     color: "transparent"
 
                     // The surface is always sized for the expanded card -- in the
-                    // larger of its two views, each way -- and never moves or
+                    // largest of its three views, each way -- and never moves or
                     // resizes; the card slides inside it instead, so hovering costs
                     // no compositor round-trip per animation frame. The extra size is
                     // room for the inverted corners above and below the card, and for
                     // its shadow on every side but the screen edge, which the shadow
                     // surface (declared before this one) draws into this footprint.
-                    implicitWidth: Math.max(root.rowWidth, root.tableRowWidth) + root.padding * 2 + root.shadowSize
-                    implicitHeight: header.height + Math.max(rows.implicitHeight, table.implicitHeight)
+                    implicitWidth: Math.max(Math.max(root.rowWidth, root.tableRowWidth) + root.padding * 2, root.mapWidth)
+                        + root.shadowSize
+                    implicitHeight: header.height + Math.max(rows.implicitHeight, table.implicitHeight, worldMap.implicitHeight)
                         + (root.cornerRadius + root.shadowSize) * 2
 
                     // Toggled by the header's pin: a pinned drawer stays out after
@@ -404,12 +541,17 @@ ShellRoot {
                     // Toggled by the header's view icon: the table view (the
                     // default), or the card view. Per panel, like pinned.
                     property bool tableView: true
-                    // True only while tableView flips. The card changes width
+                    // Toggled by the header's map icon: the map view, shown in
+                    // place of whichever of the other two tableView picks.
+                    property bool mapView: false
+                    // True only while the view changes. The card changes width
                     // then, and its x with it, which must jump to place rather
                     // than slide like the drawer.
                     property bool switchingView: false
                     readonly property bool viewHovered: hover.containsMouse
                         && viewIcon.contains(viewIcon.mapFromItem(card, panel.pointer))
+                    readonly property bool mapHovered: hover.containsMouse
+                        && mapIcon.contains(mapIcon.mapFromItem(card, panel.pointer))
 
                     // Empty: all input goes to the hit surface (see the Scope above).
                     mask: Region {}
@@ -425,8 +567,12 @@ ShellRoot {
                         // edge, like the surface.
                         x: panel.expanded ? panel.width - card.width : panel.width + root.shadowBlur
                         y: Math.round((panel.height - card.height) / 2)
-                        width: (panel.tableView ? root.tableRowWidth : root.rowWidth) + root.padding * 2
+                        width: panel.mapView ? root.mapWidth
+                            : (panel.tableView ? root.tableRowWidth : root.rowWidth) + root.padding * 2
                         height: content.implicitHeight
+
+                        onWidthChanged: shadowRedraw.restart()
+                        onHeightChanged: shadowRedraw.restart()
 
                         Behavior on x {
                             enabled: !panel.switchingView
@@ -520,19 +666,38 @@ ShellRoot {
 
                                 // View toggle: shows the view a click switches
                                 // to -- a table from the card view, a list
-                                // from the table. Padded like the pin, and
+                                // from the table (from the map too, which a
+                                // click leaves). Padded like the pin, and
                                 // clicked the same way (panel.viewHovered).
+                                // The gap to the map icon is split likewise.
                                 Cell {
                                     id: viewIcon
 
                                     anchors.left: pinIcon.right
                                     height: parent.height
                                     leftPadding: root.padding / 2
-                                    rightPadding: root.padding
+                                    rightPadding: root.padding / 2
 
                                     text: panel.tableView ? "󰕲" : "󰓫"
                                     font.family: root.iconFont
                                     color: panel.viewHovered ? root.colAccent : root.colDim
+                                }
+
+                                // Map toggle: outline while the map is hidden,
+                                // filled in the accent colour while it shows,
+                                // like the pin. Padded and clicked like the
+                                // others (panel.mapHovered).
+                                Cell {
+                                    id: mapIcon
+
+                                    anchors.left: viewIcon.right
+                                    height: parent.height
+                                    leftPadding: root.padding / 2
+                                    rightPadding: root.padding
+
+                                    text: panel.mapView ? "󰍍" : "󰦂"
+                                    font.family: root.iconFont
+                                    color: panel.mapView || panel.mapHovered ? root.colAccent : root.colDim
                                 }
 
                                 Cell {
@@ -563,7 +728,7 @@ ShellRoot {
                             Column {
                                 id: rows
 
-                                visible: !panel.tableView
+                                visible: !panel.mapView && !panel.tableView
                                 width: parent.width
 
                                 Repeater {
@@ -646,7 +811,7 @@ ShellRoot {
                             Column {
                                 id: table
 
-                                visible: panel.tableView
+                                visible: !panel.mapView && panel.tableView
                                 width: parent.width
 
                                 Row {
@@ -750,6 +915,160 @@ ShellRoot {
                                     }
                                 }
                             }
+
+                            // The map view: the land, the night side's shade
+                            // over it, and a dot and a "city  time" label per
+                            // zone -- the local zone's in the accent colour,
+                            // as in the other views.
+                            Item {
+                                id: worldMap
+
+                                visible: panel.mapView
+                                width: parent.width
+                                implicitHeight: root.mapHeight
+
+                                // The map proper, cut off at mapLatTop and
+                                // mapLatBottom by its clip. It meets the card's
+                                // edges, so its bottom-left corner is rounded
+                                // off like the card's, by mapCorner.
+                                Item {
+                                    id: mapFrame
+
+                                    width: root.mapWidth
+                                    height: root.mapHeight
+                                    clip: true
+
+                                    layer.enabled: true
+                                    layer.effect: MultiEffect {
+                                        maskEnabled: true
+                                        maskSource: mapCorner
+                                        autoPaddingEnabled: false
+                                    }
+
+                                    // The whole world, 2:1, shifted up by the
+                                    // north the frame crops off.
+                                    Image {
+                                        y: -(90 - root.mapLatTop) * root.mapScale
+                                        width: root.mapWidth
+                                        height: root.mapWidth / 2
+                                        sourceSize: Qt.size(width, height)
+                                        source: Qt.resolvedUrl("land.svg")
+                                        opacity: root.landOpacity
+                                    }
+
+                                    // The night shade, worked out per pixel from
+                                    // the sun's altitude there: none while the
+                                    // sun is up, fading in through twilight to
+                                    // colNight past twilightDegrees below.
+                                    Canvas {
+                                        id: night
+
+                                        anchors.fill: parent
+
+                                        readonly property point sun: root.sun
+                                        onSunChanged: night.requestPaint()
+
+                                        onPaint: {
+                                            const ctx = night.getContext("2d");
+                                            // Sized by the canvas, but counted in
+                                            // device pixels, so every loop below
+                                            // goes by the image's own size.
+                                            const img = ctx.createImageData(night.width, night.height);
+                                            const w = img.width, h = img.height, px = img.data;
+                                            const rad = Math.PI / 180;
+                                            const sinDecl = Math.sin(night.sun.y * rad);
+                                            const cosDecl = Math.cos(night.sun.y * rad);
+                                            const fade = Math.sin(root.twilightDegrees * rad);
+                                            const c = root.colNight;
+
+                                            // Cosine of the sun's hour angle, per column.
+                                            const cosHour = [];
+                                            for (let i = 0; i < w; i++) {
+                                                const lon = (i + 0.5) / w * night.width / root.mapScale - 180;
+                                                cosHour.push(Math.cos((lon - night.sun.x) * rad));
+                                            }
+
+                                            for (let j = 0; j < h; j++) {
+                                                const lat = (root.mapLatTop - (j + 0.5) / h * night.height / root.mapScale) * rad;
+                                                const a = Math.sin(lat) * sinDecl, b = Math.cos(lat) * cosDecl;
+                                                for (let i = 0; i < w; i++) {
+                                                    // a + b * cosHour is the sine of
+                                                    // the sun's altitude: below 0, night.
+                                                    const shade = Math.min(Math.max(-(a + b * cosHour[i]) / fade, 0), 1);
+                                                    const k = (j * w + i) * 4;
+                                                    px[k] = Math.round(c.r * 255);
+                                                    px[k + 1] = Math.round(c.g * 255);
+                                                    px[k + 2] = Math.round(c.b * 255);
+                                                    px[k + 3] = Math.round(shade * c.a * 255);
+                                                }
+                                            }
+                                            // Qt blends putImageData over what the
+                                            // canvas holds rather than replacing it,
+                                            // so the last minute's shade goes first,
+                                            // or each repaint darkens the night more.
+                                            ctx.clearRect(0, 0, night.width, night.height);
+                                            // The dirty rectangle is not optional
+                                            // here: Qt 6.12 draws nothing without it.
+                                            ctx.putImageData(img, 0, 0, 0, 0, w, h);
+                                        }
+                                    }
+                                }
+
+                                // The mask for that corner: the frame's shape,
+                                // opaque. Rendered only into its layer.
+                                Rectangle {
+                                    id: mapCorner
+
+                                    width: mapFrame.width
+                                    height: mapFrame.height
+                                    bottomLeftRadius: root.cornerRadius
+                                    color: "black"
+                                    visible: false
+                                    layer.enabled: true
+                                }
+
+                                // Markers, outside the frame's clip so a label
+                                // at the map's edge is never cut.
+                                Repeater {
+                                    model: root.zones
+
+                                    Item {
+                                        id: marker
+
+                                        required property var modelData
+                                        required property int index
+
+                                        readonly property bool isLocal: marker.modelData.delta === "same"
+                                        readonly property var spot: root.mapLabelSpots[marker.index] ?? null
+
+                                        x: mapFrame.x
+                                        y: mapFrame.y
+                                        visible: marker.spot !== null
+
+                                        // Edged in the text shadow's black, so
+                                        // a dot stays a dot over light land.
+                                        Rectangle {
+                                            x: root.mapX(marker.modelData.lon) - width / 2
+                                            y: root.mapY(marker.modelData.lat) - height / 2
+                                            width: root.mapDot
+                                            height: root.mapDot
+                                            radius: root.mapDot / 2
+                                            color: marker.isLocal ? root.colAccent : root.colFg
+                                            border.color: root.colTextShadow
+                                            border.width: 1
+                                        }
+
+                                        Cell {
+                                            x: marker.spot?.x ?? 0
+                                            y: marker.spot?.y ?? 0
+                                            text: root.mapLabel(marker.modelData)
+                                            color: marker.isLocal ? root.colAccent : root.colFg
+                                            font.pixelSize: root.mapLabelSize
+                                            font.features: { "tnum": 1 }
+                                        }
+                                    }
+                                }
+                            }
                         }
 
                         // The glass's cut edge: a hairline traced along the
@@ -809,7 +1128,8 @@ ShellRoot {
 
                         anchors.fill: parent
                         hoverEnabled: true
-                        cursorShape: panel.pinHovered || panel.viewHovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        cursorShape: panel.pinHovered || panel.viewHovered || panel.mapHovered
+                            ? Qt.PointingHandCursor : Qt.ArrowCursor
 
                         onClicked: {
                             if (panel.pinHovered) {
@@ -817,6 +1137,11 @@ ShellRoot {
                             } else if (panel.viewHovered) {
                                 panel.switchingView = true;
                                 panel.tableView = !panel.tableView;
+                                panel.mapView = false;
+                                panel.switchingView = false;
+                            } else if (panel.mapHovered) {
+                                panel.switchingView = true;
+                                panel.mapView = !panel.mapView;
                                 panel.switchingView = false;
                             }
                         }
