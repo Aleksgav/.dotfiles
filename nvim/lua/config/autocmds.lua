@@ -10,3 +10,4 @@
 -- Per-filetype autocmds, commands and keymaps live in lua/config/autocmds/
 require("config.autocmds.markdown")
 require("config.autocmds.typst")
+require("config.autocmds.zellij")
