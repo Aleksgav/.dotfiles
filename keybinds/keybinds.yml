@@ -1379,9 +1379,9 @@
       key: "Space g e"
     - name: "Git Current File History"
       key: "Space g f"
-    - name: "Lazygit (cwd)"
+    - name: "Neogit (cwd)"
       key: "Space g G"
-    - name: "Lazygit (Root Dir)"
+    - name: "Neogit (Root Dir)"
       key: "Space g g"
     - name: "Blame Buffer"
       key: "Space g h B"
@@ -1413,6 +1413,10 @@
       key: "Space g s"
     - name: "Git Browse (copy)"
       key: "Space g Y"
+    - name: "Lazygit (cwd)"
+      key: "Space g Z"
+    - name: "Lazygit (Root Dir)"
+      key: "Space g z"
 
 - name: "nvim: leader (Space)"
   keybinds:
