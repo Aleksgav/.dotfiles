@@ -4,7 +4,19 @@
 
 -- vim.g.lazyvim_picker = "fzf"
 
-vim.opt.spell = true
+-- loading the ru/en spell files takes ~10ms, so turn spell on right after the first frame
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
+  once = true,
+  callback = function()
+    vim.go.spell = true
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.bo[vim.api.nvim_win_get_buf(win)].buftype == "" then
+        vim.wo[win].spell = true
+      end
+    end
+  end,
+})
 vim.opt.spelllang = { "ru_ru", "en_us" }
 
 vim.g.lazyvim_picker = "fzf"
