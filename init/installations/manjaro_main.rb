@@ -155,7 +155,6 @@ ManjaroMain = Packager::Installation.new do
   group('Git & tools') do
     package MnjPkg::Git
     package MnjPkg::GitDelta
-    package MnjPkg::GitUi
     package MnjPkg::Tig
     package MnjPkg::PreCommit
 

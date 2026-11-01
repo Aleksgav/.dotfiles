@@ -166,7 +166,6 @@ ArchMain = Packager::Installation.new do
   group('Git & tools') do
     # NOTE: Git itself (and its config linking) lives in 'Build prerequisites'.
     package ArchPkg::GitDelta
-    package ArchPkg::GitUi
     package ArchPkg::Tig
     package ArchPkg::PreCommit
     package ArchPkg::GithubCli
