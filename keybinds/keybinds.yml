@@ -1552,6 +1552,16 @@
       key: "Space o a"
     - name: "org capture"
       key: "Space o c"
+    - name: "Obsidian: backlinks"
+      key: "Space z b"
+    - name: "Obsidian: find note"
+      key: "Space z f"
+    - name: "Obsidian: new note"
+      key: "Space z n"
+    - name: "Obsidian: search notes"
+      key: "Space z s"
+    - name: "Obsidian: today's note"
+      key: "Space z t"
 
 - name: "nvim: refactor"
   keybinds:
