@@ -18,6 +18,9 @@ return {
     legacy_commands = false, -- silence the 3.x deprecation warning
     workspaces = { { name = "notes", path = vault } },
     picker = { name = "fzf-lua" },
+    -- markview renders markdown. obsidian.nvim only skips its own UI if markview is already on the
+    -- runtimepath when it sets up, and the startup load order of the two varies, so turn it off here.
+    ui = { enable = false },
     -- file name from the title, not a timestamp (wrapped so the require runs after the plugin loads)
     note_id_func = function(title, dir)
       return require("obsidian.builtin").title_id(title, dir)
