@@ -1,0 +1,9 @@
+# markdownlint defaults, used when no .markdownlint-cli2.yaml / .markdownlint.yaml is found
+# above the file (nvim/lua/plugins/nvim-lint.lua)
+config:
+  MD013:
+    line_length: 120
+    tables: false
+    code_blocks: false
+  MD033:
+    allowed_elements: [u, br, kbd, details, summary]
