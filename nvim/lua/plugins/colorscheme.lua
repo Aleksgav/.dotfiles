@@ -11,6 +11,7 @@ return {
   },
   {
     "rebelot/kanagawa.nvim",
+    lazy = true,
     config = function()
       require("kanagawa").setup({
         transparent = true,
@@ -49,7 +50,7 @@ return {
   },
   {
     "thesimonho/kanagawa-paper.nvim",
-    lazy = false,
+    lazy = true,
     priority = 1000,
     opts = function()
       return {
