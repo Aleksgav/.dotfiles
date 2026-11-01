@@ -1,10 +1,14 @@
 -- Markdown notes vault (obsidian.nvim community fork)
 local vault = "~/.obsidian_notes"
+local vault_md = vim.fn.expand(vault) .. "/*.md" -- in autocmd patterns `*` also matches `/`, so subfolders too
 
 return {
   "obsidian-nvim/obsidian.nvim",
   version = "*", -- latest release, as the README recommends
-  lazy = false, -- `keys` would otherwise make lazy.nvim lazy-load it; vault notes need it loaded
+  -- setup takes ~20ms (mostly the vault cache), so load it only for vault notes, :Obsidian and the keys below
+  cmd = "Obsidian",
+  event = { "BufReadPre " .. vault_md, "BufNewFile " .. vault_md },
+  dependencies = { "ibhagwan/fzf-lua" }, -- obsidian only uses fzf-lua if it is already loaded
   keys = {
     { "<leader>zn", "<cmd>Obsidian new<cr>", desc = "New note" },
     { "<leader>zf", "<cmd>Obsidian quick_switch<cr>", desc = "Find note" },
