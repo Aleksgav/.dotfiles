@@ -18,12 +18,7 @@ return {
   end,
   dependencies = {
     { "nvim-lua/plenary.nvim" },
-    -- optional picker
-    { "nvim-telescope/telescope.nvim", tag = "0.1.4" },
-    -- optional picker
-    { "ibhagwan/fzf-lua" },
-    -- optional picker
-    { "folke/snacks.nvim" },
+    -- no picker listed: picker.type (fzf-lua) is required on first use; listing it would load it at startup
     { "Shatur/neovim-session-manager" },
   },
   lazy = false,
