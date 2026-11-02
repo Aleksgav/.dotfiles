@@ -1,6 +1,6 @@
 # Template for per-machine monitor layout.
 # Copy to monitors.local.conf in this directory (that name is gitignored),
-# then edit for the machine. config.conf sources it with source-optional,
+# then edit for the machine. config.conf sources it with source_optional,
 # so installs without the file just fall back to the generic rule.
 #
 # Discover names, modes and scale with:  wlr-randr
@@ -20,5 +20,5 @@
 #  - comments must start in column 0 -- the parser tests line[0] == '#'.
 #
 # Example: two 4K panels side by side, DisplayPort on the left.
-monitorrule=name:^DP-1$,x:0,y:0,scale:1.50
-monitorrule=name:^HDMI-A-1$,x:2560,y:0,scale:1.50
+monitor_rule=name:^DP-1$,x:0,y:0,scale:1.50
+monitor_rule=name:^HDMI-A-1$,x:2560,y:0,scale:1.50
