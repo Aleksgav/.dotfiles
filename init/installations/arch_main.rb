@@ -408,7 +408,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::SwayNotificationCenter
     package ArchPkg::Hyprlock
     package ArchPkg::Hypridle
-    package ArchPkg::Hyprpolkitagent
+    package ArchPkg::LxqtPolicykit
     package ArchPkg::Kanshi
     package ArchPkg::Grim
     package ArchPkg::Slurp
