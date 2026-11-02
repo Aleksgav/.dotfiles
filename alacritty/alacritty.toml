@@ -34,11 +34,11 @@ builtin_box_drawing = true
 size = 10.0
 
 [font.bold]
-family = "FiraCode Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Bold"
 
 [font.bold_italic]
-family = "FiraCode Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Bold Italic"
 
 [font.glyph_offset]
@@ -46,11 +46,11 @@ x = 0
 y = 0
 
 [font.italic]
-family = "FiraCode Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Italic"
 
 [font.normal]
-family = "FiraCode Nerd Font Mono"
+family = "Hack Nerd Font Mono"
 style = "Regular"
 
 [font.offset]
