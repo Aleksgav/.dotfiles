@@ -131,6 +131,7 @@ window.top #workspaces button.hidden {
    (padding 0 10px, margin 0) → every cell is full bar height and flush, no 2px
    inset. Colors left per-module on purpose (launcher green, powermenu red,
    updates yellow-when-pending, notification gray). */
+#custom-theme,
 #custom-updates-pacman,
 #custom-updates-aur,
 #custom-notification,

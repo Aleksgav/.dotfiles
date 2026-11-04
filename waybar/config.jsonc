@@ -1,7 +1,7 @@
 // Waybar config for the mango (mangowm) Wayland compositor.
 // Launched by the waybar.service systemd user unit (see mango/config.conf).
 // Two bars (top + bottom) mirror the polybar/leftwm layout:
-//   top:    [tags, window]                    ...    [idle, notif, tray, launcher, powermenu]
+//   top:    [tags, window]                    ...    [idle, theme, notif, tray, launcher, powermenu]
 //   bottom: [workspaces, battery, disk, memory, cpu, network] ... [backlight, pulseaudio, keyboard, clock]
 // A single waybar process renders both bars from this top-level JSON array.
 // Like polybar, modules use TEXT labels (RAM/CPU/VOL/mountpoint/ifname); the only
@@ -19,7 +19,16 @@
 
     "modules-left": ["ext/workspaces"],
     "modules-center": ["custom/window"],
-    "modules-right": ["idle_inhibitor", "custom/updates-pacman", "custom/updates-aur", "custom/notification", "tray", "custom/launcher", "custom/powermenu"],
+    "modules-right": [
+      "idle_inhibitor",
+      "custom/theme",
+      "custom/updates-pacman",
+      "custom/updates-aur",
+      "custom/notification",
+      "tray",
+      "custom/launcher",
+      "custom/powermenu",
+    ],
 
     // Same module as the bottom bar, different settings: ignore-hidden:false keeps
     // all 9 tags on screen (mango marks an empty, unfocused tag hidden), so this
@@ -36,11 +45,11 @@
         "7": "󰋑 hearth",
         "8": "󰒓 conf",
         "9": "󰇘 other",
-        "default": "{name}"
+        "default": "{name}",
       },
       "ignore-hidden": false,
       "on-click": "activate",
-      "sort-by-id": true
+      "sort-by-id": true,
     },
 
     // Replaces dwl/window: mango has no dwl-ipc, so the title + layout symbol come
@@ -55,14 +64,22 @@
       "format": "{}",
       "escape": true,
       "max-length": 60,
-      "tooltip": false
+      "tooltip": false,
     },
 
     "idle_inhibitor": {
       "format": "{icon}",
       "format-icons": { "activated": "AWAKE", "deactivated": "idle" },
       "tooltip-format-activated": "Idle inhibitor: on",
-      "tooltip-format-deactivated": "Idle inhibitor: off"
+      "tooltip-format-deactivated": "Idle inhibitor: off",
+    },
+
+    "custom/theme": {
+      "format": "{}",
+      "return-type": "json",
+      "exec": "{ gsettings get org.gnome.desktop.interface color-scheme; gsettings monitor org.gnome.desktop.interface color-scheme; } | while read -r l; do case \"$l\" in *prefer-dark*) printf '{\"text\":\"\",\"tooltip\":\"Night (prefer-dark) — click for day\",\"class\":\"night\"}\\n';; *) printf '{\"text\":\"\",\"tooltip\":\"Day (prefer-light) — click for night\",\"class\":\"day\"}\\n';; esac; done",
+      "on-click": "if [ \"$(gsettings get org.gnome.desktop.interface color-scheme)\" = \"'prefer-dark'\" ]; then s=prefer-light; else s=prefer-dark; fi; gsettings set org.gnome.desktop.interface color-scheme \"$s\"",
+      "tooltip": true,
     },
 
     "custom/updates-pacman": {
@@ -74,7 +91,7 @@
       "exec-if": "which checkupdates",
       "exec": "n=$(checkupdates 2>/dev/null | wc -l); if [ \"$n\" -gt 0 ]; then printf '{\"text\":\"󰣇 %s\",\"tooltip\":\"%s official-repo updates pending\",\"class\":\"has-updates\"}' \"$n\" \"$n\"; else printf '{\"text\":\"\",\"tooltip\":\"\"}'; fi",
       "on-click": "pkill -RTMIN+8 waybar",
-      "tooltip": true
+      "tooltip": true,
     },
 
     "custom/updates-aur": {
@@ -86,7 +103,7 @@
       "exec-if": "which yay",
       "exec": "n=$(yay -Qua 2>/dev/null | wc -l); if [ \"$n\" -gt 0 ]; then printf '{\"text\":\"󰏔 %s\",\"tooltip\":\"%s AUR updates pending\",\"class\":\"has-updates\"}' \"$n\" \"$n\"; else printf '{\"text\":\"\",\"tooltip\":\"\"}'; fi",
       "on-click": "pkill -RTMIN+9 waybar",
-      "tooltip": true
+      "tooltip": true,
     },
 
     "custom/notification": {
@@ -99,7 +116,7 @@
         "inhibited-notification": "󰂛",
         "inhibited-none": "󰪑",
         "dnd-inhibited-notification": "󰂛",
-        "dnd-inhibited-none": "󰪑"
+        "dnd-inhibited-none": "󰪑",
       },
       "return-type": "json",
       "exec-if": "which swaync-client",
@@ -107,25 +124,25 @@
       "on-click": "swaync-client -t -sw",
       "on-click-right": "swaync-client -d -sw",
       "escape": true,
-      "tooltip": true
+      "tooltip": true,
     },
 
     "tray": {
       "icon-size": 16,
-      "spacing": 8
+      "spacing": 8,
     },
 
     "custom/launcher": {
       "format": "󰀻",
       "on-click": "tofi-drun --drun-launch=true",
-      "tooltip": false
+      "tooltip": false,
     },
 
     "custom/powermenu": {
       "format": "⏻",
       "on-click": "wlogout",
-      "tooltip": false
-    }
+      "tooltip": false,
+    },
   },
 
   // ── BOTTOM BAR ───────────────────────────────────────────────────────────
@@ -137,9 +154,23 @@
     "spacing": 6,
     "margin": "5px 5px 5px 5px",
 
-    "modules-left": ["ext/workspaces", "battery", "disk", "memory", "cpu", "network#wlan", "network#eth"],
+    "modules-left": [
+      "ext/workspaces",
+      "battery",
+      "disk",
+      "memory",
+      "cpu",
+      "network#wlan",
+      "network#eth",
+    ],
     "modules-center": ["mpris"],
-    "modules-right": ["backlight", "pulseaudio", "custom/keyboard", "clock", "keyboard-state"],
+    "modules-right": [
+      "backlight",
+      "pulseaudio",
+      "custom/keyboard",
+      "clock",
+      "keyboard-state",
+    ],
 
     "mpris": {
       "player": "cmus",
@@ -148,7 +179,7 @@
       "status-icons": { "playing": "󰐊", "paused": "󰏤", "stopped": "󰓛" },
       "dynamic-len": 50,
       "max-length": 60,
-      "tooltip-format": "{title}\n{artist}\n{album}"
+      "tooltip-format": "{title}\n{artist}\n{album}",
     },
 
     "ext/workspaces": {
@@ -163,12 +194,12 @@
         "7": "󰋑 hearth",
         "8": "󰒓 conf",
         "9": "󰇘 other",
-        "default": "{name}"
+        "default": "{name}",
       },
       "ignore-hidden": true,
       "on-click": "activate",
       "on-click-right": "deactivate",
-      "sort-by-id": true
+      "sort-by-id": true,
     },
 
     "battery": {
@@ -177,24 +208,24 @@
       "format-charging": "󰂄 {capacity}%",
       "format-plugged": "󰂄 {capacity}%",
       "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
-      "tooltip-format": "{timeTo} ({power}W)"
+      "tooltip-format": "{timeTo} ({power}W)",
     },
 
     "disk": {
       "path": "/",
       "format": "<span color='#707880'>{path}</span> {percentage_used}%",
       "interval": 25,
-      "tooltip-format": "{used} / {total} on {path}"
+      "tooltip-format": "{used} / {total} on {path}",
     },
 
     "memory": {
       "format": "<span color='#707880'>RAM</span> {percentage}%",
-      "interval": 5
+      "interval": 5,
     },
 
     "cpu": {
       "format": "<span color='#707880'>CPU</span> {usage}%",
-      "interval": 2
+      "interval": 2,
     },
 
     "network#wlan": {
@@ -202,7 +233,7 @@
       "format-wifi": "<span color='#707880'>{ifname}</span> {essid} {ipaddr}",
       "format-disconnected": "", // empty format → module is hidden while disconnected
       "tooltip-format-wifi": "{essid} ({signalStrength}%)  {ipaddr}",
-      "on-click": "alacritty --class scratch-nmtui -e nmtui"
+      "on-click": "alacritty --class scratch-nmtui -e nmtui",
     },
 
     "network#eth": {
@@ -210,44 +241,44 @@
       "format-ethernet": "<span color='#707880'>{ifname}</span> {ipaddr}",
       "format-disconnected": "", // empty format → module is hidden while disconnected
       "tooltip-format": "{ifname}: {ipaddr}",
-      "on-click": "alacritty --class scratch-nmtui -e nmtui"
+      "on-click": "alacritty --class scratch-nmtui -e nmtui",
     },
 
     "backlight": {
       "format": "<span color='#707880'>BRI</span> {percent}% |",
       "on-scroll-up": "brightnessctl set +5%",
-      "on-scroll-down": "brightnessctl set 5%-"
+      "on-scroll-down": "brightnessctl set 5%-",
     },
 
     "pulseaudio": {
       "format": "<span color='#707880'>VOL</span> {volume}%",
       "format-muted": "muted",
       "on-click": "pavucontrol",
-      "scroll-step": 5
+      "scroll-step": 5,
     },
 
     "keyboard-state": {
-      // Caps-lock indicator (polybar xkeyboard <label-indicator> analog), but EVENT-DRIVEN: 
-      // reads the keyboard via libevdev and updates instantly on a wlroots event loop -- no polling latency. 
+      // Caps-lock indicator (polybar xkeyboard <label-indicator> analog), but EVENT-DRIVEN:
+      // reads the keyboard via libevdev and updates instantly on a wlroots event loop -- no polling latency.
       // mango's IPC exposes no lock state, so this can't go through `mmsg watch` like custom/keyboard does.
       // Requires the waybar process to be in the `input` group (reads /dev/input).
       "capslock": true,
       "format": "{icon}",
       "format-icons": {
         "locked": "CAPS",
-        "unlocked": ""
-      }
+        "unlocked": "",
+      },
     },
 
     "custom/keyboard": {
-      // `mmsg watch keyboardlayout` streams a JSON line ({"layout":"..."}) on every switch; 
-      // jq maps the full xkb name to a short code and reshapes it into waybar's {"text":...} form. 
-      // The `// .layout` fallback shows the raw name for any layout not in the map. 
+      // `mmsg watch keyboardlayout` streams a JSON line ({"layout":"..."}) on every switch;
+      // jq maps the full xkb name to a short code and reshapes it into waybar's {"text":...} form.
+      // The `// .layout` fallback shows the raw name for any layout not in the map.
       // return-type:json + jq --unbuffered keep it a live EN/RU.
       "exec": "mmsg watch keyboardlayout | jq --unbuffered --compact-output '{text: ({\"English (US)\":\"EN\",\"Russian\":\"RU\"}[.layout] // .layout)}'",
       "return-type": "json",
       "format": "{}",
-      "tooltip": false
+      "tooltip": false,
     },
 
     "clock": {
@@ -258,9 +289,9 @@
       "calendar": {
         "mode": "month",
         "format": {
-          "today": "<span color='#707880'><b>{}</b></span>"
-        }
-      }
-    }
-  }
+          "today": "<span color='#707880'><b>{}</b></span>",
+        },
+      },
+    },
+  },
 ]
