@@ -445,6 +445,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Vial
     package ArchPkg::Firefox
     package ArchPkg::Anki
+    package ArchPkg::Obsidian
     package ArchPkg::Audacious
     package ArchPkg::Xournalpp
     package ArchPkg::Evince
