@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# zj-notify [--bell] <title> <message>
+#
+# Tell me that something finished in a zellij pane I'm NOT looking at:
+#   --bell  ring the bell on this pane's tty -> zellij marks the tab (zjstatus tab_normal_bell)
+#   always  zjstatus {notifications} message + swaync desktop popup
+# Does nothing outside zellij or when this pane is the one a client is focused on.
+# Callers: the long-command hook in ~/.zshrc and the Claude Code Stop/Notification hooks.
+
+bell=0
+[ "$1" = --bell ] && { bell=1; shift; }
+title=$1 msg=$2
+
+[ -n "$ZELLIJ_PANE_ID" ] || exit 0
+
+# list-clients: "CLIENT_ID ZELLIJ_PANE_ID RUNNING_COMMAND" -> focused pane per attached client
+zellij action list-clients 2>/dev/null | awk 'NR > 1 { print $2 }' \
+  | grep -qx "terminal_$ZELLIJ_PANE_ID" && exit 0
+
+tab=$(zellij action list-panes -t -j 2>/dev/null \
+  | jq -r --argjson id "$ZELLIJ_PANE_ID" \
+      '.[] | select(.is_plugin == false and .id == $id) | .tab_name' 2>/dev/null)
+
+((bell)) && printf '\a'
+
+# zjstatus message: one line, no "::" (protocol separator), keep it short
+line="$title $msg${tab:+ [$tab]}"
+line=${line//$'\n'/ }
+line=${line//::/:}
+((${#line} > 80)) && line="${line:0:79}…"
+zellij pipe "zjstatus::notify::$line" >/dev/null 2>&1
+
+command -v notify-send >/dev/null && notify-send -a zellij "$title" "$msg${tab:+ — tab $tab}"
+exit 0

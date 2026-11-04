@@ -100,6 +100,11 @@ github = "zsh-users/zsh-history-substring-search"
 github = "junegunn/fzf"
 use = ["shell/completion.zsh", "shell/key-bindings.zsh"]
 
+# long-command alerts for zellij panes (tab marker + zjstatus message + popup)
+[plugins.zj-notify]
+local = "~/.config/zellij/scripts"
+use = ["zj-notify.plugin.zsh"]
+
 # this oh-my-zsh plugins panicked:
 # kubectl
 # rails
