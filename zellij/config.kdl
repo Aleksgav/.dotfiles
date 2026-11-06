@@ -37,6 +37,7 @@ keybinds {
         bind "w" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
         bind "c" { SwitchToMode "RenamePane"; PaneNameInput 0;}
+        bind ";" { FocusLastPane; }
     }
     move {
         bind "Ctrl h" { SwitchToMode "Normal"; }
@@ -80,6 +81,10 @@ keybinds {
         bind "Ctrl b" "PageUp" "Left" "h" { PageScrollUp; }
         bind "d" { HalfPageScrollDown; }
         bind "u" { HalfPageScrollUp; }
+        bind "[" { ScrollToPreviousPrompt; }
+        bind "]" { ScrollToNextPrompt; }
+        bind "m" { SelectCommandAtScrollPosition; }
+        bind "c" { CopyLastCommandOutput; SwitchToMode "Normal"; }
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
     }
@@ -114,6 +119,9 @@ keybinds {
         bind "Ctrl o" { SwitchToMode "Normal"; }
         bind "Ctrl s" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
+        bind "[" { FocusGuestSession; SwitchToMode "Normal"; }
+        bind "]" { FocusHostSession; SwitchToMode "Normal"; }
+        bind "f" { ToggleHostFullscreen; SwitchToMode "Normal"; }
         bind "w" {
             LaunchOrFocusPlugin "zellij:session-manager" {
                 floating true
@@ -218,6 +226,23 @@ keybinds {
                 close_on_exit true
             }
             SwitchToMode "Normal"
+        }
+    }
+
+    ///////////// pane picker /////////////
+    // `shared` = every mode, incl. locked, so it also fires inside nvim (autolock).
+    shared {
+        // Alt v: fzf over every pane in every tab (preview = pane screen); Enter jumps there.
+        bind "Alt v" {
+            Run "sh" "-c" "exec ~/.config/zellij/scripts/zj-pick" {
+                floating true
+                name "pane picker"
+                x "10%"
+                y "10%"
+                width "80%"
+                height "80%"
+                close_on_exit true
+            }
         }
     }
 }

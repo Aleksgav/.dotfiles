@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# zj-pick — fuzzy-pick any terminal pane in any tab of this zellij session and jump to it.
+#
+# Bound to Alt v in zellij/config.kdl (runs in a floating popup, every mode incl. locked,
+# so it also works from nvim). Preview shows the pane's current screen.
+# Enter jumps (focus-pane-id switches tab too), Esc cancels.
+# Toggle: Alt v while a picker is open in this tab closes it instead of stacking another.
+
+self="terminal_${ZELLIJ_PANE_ID}" # the popup itself — don't list it
+state="${XDG_RUNTIME_DIR:-/tmp}/zj-pick.${ZELLIJ_SESSION_NAME}" # pane id of the open picker
+
+panes=$(zellij action list-panes -a -j 2>/dev/null) || exit 1
+tab_of() { jq -r --arg p "$1" '.[] | select((.is_plugin | not) and "terminal_\(.id)" == $p) | .tab_id' <<<"$panes"; }
+
+# A picker is already open: close it. Same tab -> that was the toggle, stop here.
+old=$(cat "$state" 2>/dev/null)
+if [ -n "$old" ] && [ "$old" != "$self" ] && old_tab=$(tab_of "$old") && [ -n "$old_tab" ]; then
+  zellij action close-pane -p "$old"
+  if [ "$old_tab" = "$(tab_of "$self")" ]; then
+    rm -f "$state"
+    exit 0
+  fi
+fi
+echo "$self" >"$state"
+trap '[ "$(cat "$state" 2>/dev/null)" = "$self" ] && rm -f "$state"' EXIT
+
+# shellcheck disable=SC2016  # $FZF_PREVIEW_LINES in --preview is expanded by fzf, not here
+jq -r --arg self "$self" --arg old "$old" --arg home "$HOME" '
+    def pad($n): tostring | if length >= $n then .[:$n - 1] + "…" else . + " " * ($n - length) end;
+    sort_by(.tab_position, .id)[]
+    | select((.is_plugin | not) and (.exited | not) and (.is_suppressed | not))
+    | "terminal_\(.id)" as $pid
+    | select($pid != $self and $pid != $old)
+    | [ $pid,
+        (.tab_name | pad(18)) + "  "
+        + ((.pane_command // "-") | pad(10)) + "  "
+        + (.title | pad(44)) + "  "
+        + ((.pane_cwd // "") | if startswith($home) then "~" + .[($home | length):] else . end)
+      ] | @tsv' <<<"$panes" |
+  fzf --delimiter='\t' --with-nth=2 --layout=reverse --prompt='pane> ' \
+    --header='Enter: jump   Esc / Alt v: close' \
+    --preview='zellij action dump-screen --ansi -p {1} | tail -n "$FZF_PREVIEW_LINES"' \
+    --preview-window='down,60%,border-top' |
+  cut -f1 |
+  { read -r pane && [ -n "$pane" ] && zellij action focus-pane-id "$pane"; }
+exit 0 # Esc/cancel is not an error; keep the popup closing cleanly
