@@ -1,0 +1,116 @@
+{
+  "version": 3,
+  "skills": {
+    "playwright-cli": {
+      "source": "microsoft/playwright-cli",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/microsoft/playwright-cli.git",
+      "skillPath": "skills/playwright-cli/SKILL.md",
+      "skillFolderHash": "cc70f6e5f0cf42b82d3f72f6f1c3a4134694d518",
+      "installedAt": "2026-11-13T21:14:59.128Z",
+      "updatedAt": "2026-11-13T21:14:59.128Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+      "installedAt": "2026-11-13T21:15:00.445Z",
+      "updatedAt": "2026-11-13T21:15:00.445Z"
+    },
+    "prompt-engineering": {
+      "source": "CodeAlive-AI/ai-driven-development",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/CodeAlive-AI/ai-driven-development.git",
+      "skillPath": "skills/prompt-engineering/SKILL.md",
+      "skillFolderHash": "f2ac3780b79c2aa025bd58bba253060110e90e21",
+      "installedAt": "2026-11-13T21:15:07.002Z",
+      "updatedAt": "2026-11-13T21:15:07.002Z"
+    },
+    "ccbox": {
+      "source": "diskd-ai/ccbox",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/diskd-ai/ccbox.git",
+      "skillPath": "skills/ccbox/SKILL.md",
+      "skillFolderHash": "a9510149a382dd72d64eaf13d662ac4e53113284",
+      "installedAt": "2026-11-13T21:15:10.530Z",
+      "updatedAt": "2026-11-13T21:15:10.530Z"
+    },
+    "ccbox-insights": {
+      "source": "diskd-ai/ccbox",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/diskd-ai/ccbox.git",
+      "skillPath": "skills/ccbox-insights/SKILL.md",
+      "skillFolderHash": "b0a6fbafb0020a74056aa721de1752b94250ac11",
+      "installedAt": "2026-11-13T21:15:14.167Z",
+      "updatedAt": "2026-11-13T21:15:14.167Z"
+    },
+    "context7-cli": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/upstash/context7.git",
+      "skillPath": "skills/context7-cli/SKILL.md",
+      "skillFolderHash": "d1e0858ade200121aeb7a929e9b7054c4bc8c6e0",
+      "installedAt": "2026-11-13T21:16:39.573Z",
+      "updatedAt": "2026-11-13T21:16:39.573Z"
+    },
+    "context7-mcp": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/upstash/context7.git",
+      "skillPath": "skills/context7-mcp/SKILL.md",
+      "skillFolderHash": "64c610d258d8ca4096a548f27476bfa3501557d9",
+      "installedAt": "2026-11-13T21:16:39.574Z",
+      "updatedAt": "2026-11-13T21:16:39.574Z"
+    },
+    "find-docs": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/upstash/context7.git",
+      "skillPath": "skills/find-docs/SKILL.md",
+      "skillFolderHash": "909aeb8682313970ebfe48b63b149400c8bd65b5",
+      "installedAt": "2026-11-13T21:16:39.575Z",
+      "updatedAt": "2026-11-13T21:16:39.575Z"
+    },
+    "coss": {
+      "source": "cosscom/ui",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/cosscom/ui.git",
+      "skillPath": "apps/ui/skills/coss/SKILL.md",
+      "skillFolderHash": "32246f59c427a97c4448f067309521594f672d2d",
+      "installedAt": "2026-11-13T21:17:44.028Z",
+      "updatedAt": "2026-11-13T21:17:44.028Z"
+    },
+    "coss-particles": {
+      "source": "cosscom/ui",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/cosscom/ui.git",
+      "skillPath": "apps/ui/skills/coss-particles/SKILL.md",
+      "skillFolderHash": "be85d8e3ed1c5ce8bdc795e7aff5425b6772b91c",
+      "installedAt": "2026-11-13T21:17:44.030Z",
+      "updatedAt": "2026-11-13T21:17:44.030Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "droid",
+    "fx",
+    "gemini-cli",
+    "github-copilot",
+    "kilo",
+    "kimi-code-cli",
+    "opencode",
+    "pi",
+    "warp",
+    "zed",
+    "claude-code",
+    "crush"
+  ]
+}

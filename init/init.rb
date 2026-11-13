@@ -8,6 +8,9 @@ ENV['PATH'] = (user_bindirs + ENV.fetch('PATH', '').split(File::PATH_SEPARATOR))
               .uniq
               .join(File::PATH_SEPARATOR)
 
+# Fresh TTY/SSH runs have no XDG_STATE_HOME (uwsm and sheldon's autoenv set it only inside a session/zsh).
+ENV['XDG_STATE_HOME'] = File.expand_path('~/.local/state') if ENV.fetch('XDG_STATE_HOME', '').empty?
+
 installator = Executor.new
 manjaro_install_command = CLI::Commands::Install[ManjaroMain, installator]
 arch_install_command = CLI::Commands::Install[ArchMain, installator]

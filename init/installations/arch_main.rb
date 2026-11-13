@@ -366,6 +366,7 @@ ArchMain = Packager::Installation.new do
     package ArchPkg::Crush
     package ArchPkg::Forgecode
     package ArchPkg::ClaudeCode
+    package ArchPkg::Skills
   end
 
   group('Editors tools') do
