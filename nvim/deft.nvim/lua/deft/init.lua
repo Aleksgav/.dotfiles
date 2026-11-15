@@ -154,7 +154,8 @@ function M.open(dir)
       ["enter"] = file_actions["enter"],
       ["ctrl-s"] = file_actions["ctrl-s"],
       ["ctrl-v"] = file_actions["ctrl-v"],
-      ["ctrl-t"] = file_actions["ctrl-t"],
+      ["ctrl-t"] = file_actions["ctrl-t"], -- LazyVim: send to Trouble
+      ["alt-t"] = fzf.actions.file_tabedit, -- new tab
       ["alt-q"] = file_actions["alt-q"],
       -- full-text search in the same notes; the default rg_opts end with `-e`, so the glob goes first
       ["ctrl-g"] = function(_, opts)
