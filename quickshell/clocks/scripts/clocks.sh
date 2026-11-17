@@ -19,6 +19,7 @@ ZONES=(
   'Seattle|America/Los_Angeles|47.61|-122.33'
   'Vladivostok|Asia/Vladivostok|43.12|131.89'
   'Beijing|Asia/Shanghai|39.90|116.40'
+  'UTC|UTC'
 )
 
 # Pin a single instant so every row describes the same moment, even if the loop
